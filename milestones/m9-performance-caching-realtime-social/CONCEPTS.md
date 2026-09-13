@@ -1,7 +1,39 @@
-# Problems and mental models
+# M9 concepts through a slow feed
 
-Performance begins with user-facing targets and representative size/skew/request mix—not a profiler screenshot. Measure p50/p95/p99, throughput, errors, saturation, environment, warmup, and duration. Query optimization follows evidence: bound N+1, read `EXPLAIN (ANALYZE, BUFFERS)`, understand cardinality, then change SQL/indexes and account for write cost.
+## “One page caused 101 queries”
 
-Cursor pagination needs stable total order and insertion-between-pages semantics. Redis cache-aside adds staleness, invalidation, outage, stampede, key/tenant scope, TTL, and operational cost; it is optional even though the curriculum requires exercising it. A controlled branch can prove then remove it if net value is absent.
+**Example:** one post query triggers one profile query per post. **Term — N+1:**
+one collection query plus one query for each item. **Rule:** count statements and
+read the plan before changing SQL or indexes.
 
-Polling, SSE, and WebSockets answer different directionality/latency needs. SSE is simple one-way streaming; WebSockets support bidirectional messages but add connection/protocol state. Neither creates durable replay automatically; define restart, reconnect, gap, and slow-consumer behavior.
+## “The cache served a deleted private post”
+
+**Example:** PostgreSQL changed but Redis did not. **Term — cache invalidation:**
+removing or replacing a cached copy when authoritative truth changes. **Rule:**
+experiment with Redis, test its failure modes, and remove it if net value is
+absent.
+
+## “The benchmark did not represent real feed traffic”
+
+**Example:** a tiny uniform dataset hides high-fan-out users. **Term — percentile
+latency:** the response time below which a percentage such as 95% of requests
+finish. **Rule:** predeclare size, skew, request mix, concurrency, environment,
+warmup, duration, throughput, errors, and p50/p95/p99.
+
+## “Offset pages duplicated posts during insertion”
+
+**Example:** a new row shifts every later offset. **Term — cursor pagination:**
+the next page starts after a value in a stable total order. **Rule:** prove no
+duplicates or omissions while inserts occur.
+
+## “Redis was faster but made private data stale”
+
+**Example:** a cache key omits user scope. **Term — cache-aside:** the application
+reads authoritative storage on a miss and stores a copy. **Rule:** test staleness,
+invalidation, outage, stampede, key scope, and time-to-live; removal is valid.
+
+## “The realtime transport could not replay a gap”
+
+**Example:** server-sent events reconnect after process restart. **Term — replay
+policy:** which missed events can be recovered and from where. **Rule:** choose
+polling, SSE, or WebSockets by directionality and define restart, gaps, and slow consumers.

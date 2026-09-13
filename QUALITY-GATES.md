@@ -8,7 +8,7 @@
 
 These are cumulative, contextual gates—not three versions of every feature. For example, M1 proves selected Level B qualities at the API boundary but cannot claim Level C while state is volatile and operational controls do not exist. Each milestone `ACCEPTANCE.md` declares what applies now.
 
-## Reusable definition of done
+## Universal definition of done
 
 Every milestone is complete only when:
 
@@ -17,11 +17,26 @@ Every milestone is complete only when:
 3. Acceptance behavior is proven at the public boundary; important rules are also proven at their owning unit/database/integration boundary.
 4. At least one seeded defect fails for the intended reason, is diagnosed rather than replaced wholesale, and gains a regression test.
 5. Failure drills record environment, command/setup, expected result, actual result, interpretation, recovery, and date.
-6. Security, data, migration, dependency, and rollback impacts are reviewed; no unresolved critical/high correctness or security defect remains.
-7. Actions pass, the PR self-review is complete, and `PROGRESS.md` links the issue, final PR, evidence index, and release/tag.
-8. The learner answers `REVIEW.md` in their own words and can reproduce, explain, modify, and debug the result.
-9. A cold reviewer reproduces one Core path and one failure from a clean checkout using repository instructions, records confusion/defects and their resolution, and gives a verdict against the same gate.
-10. Any claimed durable work begins with persisted intent and survives the declared kill point; any claimed production deployment names the controls supplied outside Docker Compose. Optional tools retain their trigger, source-of-truth boundary, proof, operational owner/cost, and removal condition.
+6. Actions pass, the milestone-gate PR self-review is complete, and
+   `PROGRESS.md` links the issue, PR, evidence index, and tag.
+7. The learner answers `REVIEW.md` in their own words and can reproduce,
+   explain, modify, and debug the result.
+
+## Conditional gates
+
+Apply a row only when its condition is true. In the evidence index, write
+`N/A — condition not present` instead of inventing evidence.
+
+| Condition | Additional required proof |
+|---|---|
+| Stores durable data | clean migration, existing-data case, constraints, rollback/roll-forward decision |
+| Handles identity or private data | threat cases, authorization scope, secret/personal-data scan, redacted logs |
+| Calls an external system | timeout/retry/idempotency contract, unknown outcome, reconciliation |
+| Accepts durable background work | persisted intent, kill point, duplicate execution, replay/recovery |
+| Claims performance improvement | representative workload, equal harness, correctness guard, before/after evidence |
+| Uses cache or realtime state | authority, staleness/gap/outage policy, invalidation or replay proof |
+| Claims production deployment | immutable artifact, readiness, migration order, secret custody, backup/restore, rollback/roll-forward |
+| Reaches a milestone gate | cold reviewer reproduces one Core path and one failure; record verdict |
 
 A screenshot alone is not correctness evidence. Prefer tests, sanitized HTTP captures, migration transcripts, constraint failures, query plans, load summaries, telemetry correlations, and restore records. Never fabricate a passing result.
 
@@ -40,7 +55,9 @@ Use a [complexity rejection record](templates/COMPLEXITY-REJECTION.md) for a mea
 ## Advancement workflow
 
 1. Open one milestone issue; translate ambiguity into acceptance examples and identify seeded scenarios.
-2. Work in focused branches/PRs. Draft PRs expose assumptions early; multiple coherent PRs are welcome.
+2. Use a **working PR** for one focused behavior: narrow tests, risk note, and
+   next step. Use one **milestone-gate PR** only after all Core work: full
+   acceptance evidence, failure/recovery, review, progress update, and tag plan.
 3. Follow the complete learning cycle and update the evidence index as facts emerge.
 4. Let Actions run the repository validator plus project-specific Ruff, mypy, tests, migration checks, and immutable-image build when those artifacts exist. Treat this as CI; add deployment only after the M10 CD gates exist.
 5. Perform written self-review and cold review, close all Core gaps, merge through normal review, and update `PROGRESS.md`.

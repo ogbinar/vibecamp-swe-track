@@ -1,7 +1,34 @@
-# Problems and mental models
+# M2 concepts through data problems
 
-Persistence is not replacing a dictionary with an ORM. Start from identities, cardinality, lifecycle, access paths, and invariants; then choose tables, keys, normalization, constraints, indexes, and timestamps. SQL is the database contract; ORM mappings are one client of it.
+## “The product vanished after restart”
 
-Boundary validation improves errors, while unique/foreign-key/check/not-null constraints protect truth from every writer. Indexes accelerate particular reads but charge writes and storage. A session/transaction must have an explicit request/use-case lifetime and recover after rollback.
+**Example:** a catalog held only in a Python dictionary disappears. **Term —
+persistence:** keeping facts beyond one process lifetime. **Rule:** model product
+identity, relationships, and required reads before choosing tables.
 
-Migrations are deployed product behavior. Empty-database success does not prove an existing-data backfill is safe, restartable, compatible, or reversible. N+1 is diagnosed by query count/shape, not assumed from latency alone.
+## “One write bypassed the API check”
+
+**Example:** direct SQL inserts negative quantity. **Term — constraint:** a
+database rule that protects every writer. **Rule:** keep friendly validation in
+the application and critical truth in the database too.
+
+## “The tables do not support the required reads”
+
+**Example:** a cart needs several fragile joins because identities and relationships
+were never written down. **Term — relational model:** tables, keys, and
+relationships representing product facts. **Rule:** begin with identity,
+cardinality, lifecycle, access paths, and invariants; treat ORM mappings as one
+client of the SQL design.
+
+## “The index made writes slower but did not help the query”
+
+**Example:** an index does not match the cart filter or ordering. **Term — query
+plan:** the database’s chosen path for executing SQL. **Rule:** connect every
+index to a named read and compare the plan while accounting for write/storage cost.
+
+## “The empty migration passed but existing data failed”
+
+**Example:** a required column cannot be added to legacy rows in one unsafe step.
+**Term — migration:** a versioned schema/data change. **Rule:** test empty and
+existing-data paths, interruption, restart, compatibility, and rollback or
+roll-forward. Diagnose N+1 by query count and shape, not latency alone.

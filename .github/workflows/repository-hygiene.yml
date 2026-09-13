@@ -11,6 +11,115 @@ jobs:
   curriculum:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
       - name: Verify structure, concept traceability, and relative links
         run: python3 scripts/check_curriculum.py
+
+  catalog:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: projects/catalog
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+      - uses: astral-sh/setup-uv@d0cc045d04ccac9d8b7881df0226f9e82c39688e # v6
+        with:
+          version: "0.9.21"
+          enable-cache: true
+      - name: Sync locked environment
+        run: uv sync --locked
+      - name: Lint
+        run: uv run --locked ruff check .
+      - name: Check formatting
+        run: uv run --locked ruff format --check .
+      - name: Check types
+        run: uv run --locked mypy
+      - name: Test HTTP behavior and configuration
+        run: uv run --locked pytest
+      - name: Collect the opt-in M1 contract without running it
+        run: uv run --locked pytest --collect-only contracts/test_m1_contract.py
+
+  python-starters:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        include:
+          - project: ecommerce
+            prefix: ECOMMERCE
+            database: vibecamp_ecommerce
+          - project: booking
+            prefix: BOOKING
+            database: vibecamp_booking
+          - project: social
+            prefix: SOCIAL
+            database: vibecamp_social
+    services:
+      postgres:
+        image: postgres:17-alpine
+        env:
+          POSTGRES_DB: ${{ matrix.database }}
+          POSTGRES_USER: vibecamp
+          POSTGRES_PASSWORD: vibecamp
+        ports: ["5432:5432"]
+        options: >-
+          --health-cmd "pg_isready -U vibecamp -d ${{ matrix.database }}"
+          --health-interval 5s --health-timeout 5s --health-retries 10
+    defaults:
+      run:
+        working-directory: projects/${{ matrix.project }}
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+      - uses: astral-sh/setup-uv@d0cc045d04ccac9d8b7881df0226f9e82c39688e # v6
+        with:
+          version: "0.9.21"
+          enable-cache: true
+      - run: uv sync --locked
+      - run: uv run --locked ruff check .
+      - run: uv run --locked ruff format --check .
+      - run: uv run --locked mypy
+      - name: Migrate and test against PostgreSQL
+        env:
+          ECOMMERCE_DATABASE_URL: postgresql+psycopg://vibecamp:vibecamp@localhost:5432/${{ matrix.database }}
+          ECOMMERCE_TEST_DATABASE_URL: postgresql+psycopg://vibecamp:vibecamp@localhost:5432/${{ matrix.database }}
+          BOOKING_DATABASE_URL: postgresql+psycopg://vibecamp:vibecamp@localhost:5432/${{ matrix.database }}
+          BOOKING_TEST_DATABASE_URL: postgresql+psycopg://vibecamp:vibecamp@localhost:5432/${{ matrix.database }}
+          SOCIAL_DATABASE_URL: postgresql+psycopg://vibecamp:vibecamp@localhost:5432/${{ matrix.database }}
+          SOCIAL_TEST_DATABASE_URL: postgresql+psycopg://vibecamp:vibecamp@localhost:5432/${{ matrix.database }}
+        run: |
+          uv run --locked alembic upgrade head
+          uv run --locked pytest
+          if [ "${{ matrix.project }}" = "ecommerce" ]; then
+            uv run --locked pytest --collect-only contracts/test_m5_security_contract.py
+          fi
+
+  pos:
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres:17-alpine
+        env:
+          POSTGRES_DB: vibecamp_pos
+          POSTGRES_USER: vibecamp
+          POSTGRES_PASSWORD: vibecamp
+        ports: ["5432:5432"]
+        options: >-
+          --health-cmd "pg_isready -U vibecamp -d vibecamp_pos"
+          --health-interval 5s --health-timeout 5s --health-retries 10
+    defaults:
+      run:
+        working-directory: projects/pos
+    env:
+      POS_DATABASE_URL: postgresql+psycopg://vibecamp:vibecamp@localhost:5432/vibecamp_pos
+      POS_TEST_DATABASE_URL: postgresql+psycopg://vibecamp:vibecamp@localhost:5432/vibecamp_pos
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+      - uses: astral-sh/setup-uv@d0cc045d04ccac9d8b7881df0226f9e82c39688e # v6
+        with:
+          version: "0.9.21"
+          enable-cache: true
+      - run: uv sync --locked
+      - run: uv run --locked ruff check .
+      - run: uv run --locked ruff format --check .
+      - run: uv run --locked mypy
+      - run: uv run --locked alembic upgrade head
+      - run: uv run --locked pytest

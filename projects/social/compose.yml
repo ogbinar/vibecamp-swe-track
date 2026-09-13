@@ -1,0 +1,16 @@
+services:
+  postgres:
+    image: postgres:17-alpine
+    environment:
+      POSTGRES_DB: vibecamp_social
+      POSTGRES_USER: vibecamp
+      POSTGRES_PASSWORD: vibecamp
+    ports: ["5435:5432"]
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U vibecamp -d vibecamp_social"]
+      interval: 1s
+      timeout: 3s
+      retries: 20
+    volumes: ["social-postgres:/var/lib/postgresql/data"]
+volumes:
+  social-postgres:

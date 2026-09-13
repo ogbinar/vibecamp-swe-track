@@ -1,13 +1,25 @@
-# Review
+# M0 review
 
-Answer in the evidence index:
+Answer these in `projects/catalog/evidence/M0/index.md` using your own words:
 
-1. Which tracked inputs recreate the workspace, and which hidden assumptions did C1 expose?
-2. What does the lockfile guarantee—and not guarantee?
-3. Why cross the HTTP boundary in the smoke test?
-4. How did you prove the test detects its claimed regression?
-5. Which configuration detail could leak, and how is it prevented?
+1. Which tracked files recreate the environment? What remained local?
+2. What does `uv.lock` guarantee, and what does it not guarantee?
+3. Why does the smoke test send an HTTP request instead of calling the endpoint function directly?
+4. How did you prove each test or check could detect its claimed defect?
+5. What happened when configuration was missing or malformed?
+6. What is the difference between Ruff, mypy, and pytest?
+7. Why is `/health` liveness rather than full dependency readiness?
 
-Self-review the diff for generated junk, undocumented commands, over-structure, platform assumptions, and mismatched CI. Re-run one failure without notes and explain diagnosis before advancing.
+Review the diff for generated files, secrets, undocumented commands, unnecessary
+folders, platform assumptions, and disagreement between local and CI commands.
+Repeat one failure without your notes and state your hypothesis before inspecting
+the cause.
 
-Lens prompt (same A0–A3 gate): a career-shifter may translate one prior-domain troubleshooting habit into the C1 hypothesis; a data specialist may explain how a familiar data check differs from an HTTP/configuration contract. Either must still demonstrate every diagnostic signal and Core criterion.
+For a **cold review**, use a peer or return later in a clean checkout without
+implementation notes. The reviewer repeats one Core API path and one failure,
+records confusion and fixes, and gives `PASS` or `NEEDS WORK`.
+
+Optional background lens, with the same A0–A3 gate:
+
+- A career shifter may connect a prior troubleshooting habit to the C1 hypothesis.
+- A data specialist may contrast a data-value check with an HTTP/configuration contract.

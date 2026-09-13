@@ -1,5 +1,10 @@
-# Resource guide
+# Resources for M5
 
-Use current primary guidance from OWASP for authentication/authorization/password/storage and API object authorization; official password-hashing library docs; the JWT standard plus pinned library validation docs; and FastAPI security references.
+Read after an attack case fails, not as a security-themed tutorial dump. Reviewed 2026-09-13.
 
-Reject examples that decode without validation, store plaintext tokens/passwords, trust roles from request bodies, or test only happy paths. Record versions, threat addressed, and local verification for every security-sensitive example.
+- [FastAPI OAuth2 with JWT and password hashing](https://fastapi.tiangolo.com/tutorial/security/oauth2-jwt/) — How are PyJWT, pwdlib, Argon2, expiry, and bearer tokens connected? Applicable tools: current FastAPI, PyJWT, pwdlib.
+- [OWASP Authorization Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/Authorization_Cheat_Sheet.html) — What must be checked beyond “the user is logged in”? Applicable guidance: current OWASP Cheat Sheet Series.
+- [OWASP Password Storage Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/Password_Storage_Cheat_Sheet.html) — Which password-storage properties and parameters matter? Applicable guidance: current OWASP Cheat Sheet Series.
+- [PyJWT usage](https://pyjwt.readthedocs.io/en/stable/usage.html) — Which claims and algorithms must decoding verify explicitly? Applicable tool: PyJWT 2.
+
+Examples are starting points; the milestone threat cases decide the policy.

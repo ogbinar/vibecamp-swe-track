@@ -1,5 +1,10 @@
-# Resource guide
+# Resources for M6
 
-Select current HTTPX timeout/limits documentation, provider-primary webhook/signature/idempotency specifications used by the project, relevant HTTP retry semantics, and official structured-logging guidance for the chosen library/platform.
+Open these after observing timeout, duplicate, signature, or unknown-outcome behavior. Reviewed 2026-09-13.
 
-Prefer failure tables and protocol specs over “resiliency pattern” lists. Reject unbounded retry snippets and webhook examples without replay protection. Verify provider docs at implementation time because contracts change.
+- [HTTPX timeouts](https://www.python-httpx.org/advanced/timeouts/) — Which phase timed out and what limit should be bounded? Applicable tool: HTTPX 0.28+.
+- [HTTPX exceptions](https://www.python-httpx.org/exceptions/) — Which failures are safe to classify or retry? Applicable tool: HTTPX 0.28+.
+- [Stripe idempotent requests](https://docs.stripe.com/api/idempotent_requests) — What does a mature provider require for safe request replay? Applicable example: current Stripe API.
+- [Stripe webhook signatures](https://docs.stripe.com/webhooks/signature) — What exact bytes and secret are authenticated? Applicable example: current Stripe API.
+
+Stripe is an evidence-rich example, not a required payment vendor.

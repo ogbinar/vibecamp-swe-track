@@ -1,5 +1,9 @@
-# Resource guide
+# Resources for M7
 
-Use PostgreSQL primary docs for row locking/`SKIP LOCKED`/transactions/indexes, SQLAlchemy transaction docs, and official guidance for process shutdown and the metrics library chosen. If evaluating Taskiq/Redis, use current primary durability/acknowledgement documentation.
+Consult these after proving that accepted work can be lost or repeated. Reviewed 2026-09-13.
 
-Reject “exactly once” claims without a failure model and queue examples that omit poison work, leases, replay, or retention. Reproduce crash boundaries; prose guarantees alone are insufficient.
+- [FastAPI background tasks](https://fastapi.tiangolo.com/tutorial/background-tasks/) — What does in-process post-response work provide, and what does it not make durable? Applicable tool: current FastAPI.
+- [PostgreSQL SELECT](https://www.postgresql.org/docs/current/sql-select.html) — How can FOR UPDATE SKIP LOCKED coordinate competing workers? Applicable tool: current PostgreSQL.
+- [Taskiq guide](https://taskiq-python.github.io/guide/) — When does an external broker/worker earn its operational cost? Applicable tool: current Taskiq.
+
+Build and test the database-backed durable-intent path before adding Taskiq.

@@ -16,11 +16,15 @@ Preserve this as a GitHub-only, self-paced software engineering curriculum. Fast
 - Prefer a modular monolith, one PostgreSQL database, and `STACK.md`. Optional tools need observed need, evidence, operational cost, and removal criteria. FastCRUD follows fundamentals.
 - Keep progress and assessment in GitHub issues, PRs, Actions, project-local evidence, `PROGRESS.md`, and annotated tags/releases. ADRs record only consequential architecture decisions.
 - Preserve the diagnostic, complexity-rejection, portfolio, and data-lifecycle templates as focused evidence contracts. Career-shifter and data-specialist lenses use identical Core gates and must never become separate tracks.
+- Treat `USABILITY.md` as the learner-experience gate. Write learner material in plain language before terminology; define terms at first use; expand acronyms; use consistent vocabulary; show examples before abstractions; and structure instructions as action, reason, expected observation, and recovery.
+- Keep `README.md` as the only learner front door. Put one next action before reference or maintainer material, and validate the presentation pattern on M0 before broad milestone rewrites.
+- Every milestone README is the learner controller in this order: Why, Starting checkpoint, Terms used here, Product brief, Ordered work, Failures and hints, Evidence, Done, Recovery, and Next milestone. Keep the seven-file contract; do not add an eighth lesson file.
+- Every active command names its working directory, expected observation, and recovery route. Expand each C/A ID into atomic learner checks. Hints progress from observation questions, to the relevant boundary/files, to one targeted reference without supplying final code.
 - Do not implement learner applications unless explicitly asked. Never fabricate passing evidence.
 
 ## Change discipline
 
-Read `README.md`, `CURRICULUM.md`, `STACK.md`, `QUALITY-GATES.md`, `PLAN.md`, and `TODO.md` before curriculum changes. Treat `PLAN.md` as the canonical revision rationale, scope, dependencies, and sequence; treat `TODO.md` as the single active curriculum-maintenance tracker. When implementation work is performed, update its checklist in the same change. Do not use `PROGRESS.md` for maintenance work: it is the learner course transcript.
+Read `README.md`, `CURRICULUM.md`, `STACK.md`, `QUALITY-GATES.md`, `USABILITY.md`, `PLAN.md`, and `TODO.md` before curriculum changes. Treat `PLAN.md` as the canonical revision rationale, scope, dependencies, and sequence; treat `TODO.md` as the single active curriculum-maintenance tracker. When implementation work is performed, update its checklist in the same change. Do not use `PROGRESS.md` for maintenance work: it is the learner course transcript.
 
 Keep canonical content consolidated, links relative, milestone concept/challenge/acceptance IDs traceable, and run `python3 scripts/check_curriculum.py`. Preserve unchecked future work when making planning-only changes.
 

@@ -36,6 +36,14 @@ For one meaningful candidate by M4, preserve the decision to say “not yet” i
 
 ## Operational boundaries
 
+CI grows with the risk being introduced: M0 adds locked lint/type/unit/API
+checks; M2 adds PostgreSQL and migrations; M5 adds isolated security contract
+collection and secret review; M7 adds worker/kill-point checks created by the
+learner; M9 adds a deterministic performance guard; M10 builds the immutable
+image. A later gate is not copied into an earlier milestone merely to look
+“production ready.” Continuous deployment begins only at the M10 real-target
+endorsement.
+
 - **CI before CD:** GitHub Actions runs reproducible lint, type, test, migration, and build checks early. Automated deployment is earned only when a real target, immutable artifact, environment-scoped secrets, migration ordering, readiness gate, and rollback/roll-forward procedure exist.
 - **Compose is bounded:** Compose may run a documented single-host deployment, but it does not supply TLS, secret custody, backup/restore, monitoring, safe migration rollout, or rollback by itself. M10 must prove those controls and state the deployment boundary honestly.
 - **Durability begins with persisted intent:** an HTTP response or in-process callback is not a queue. Correctness-critical work is committed to PostgreSQL with its business state, then claimed by an idempotent worker. Taskiq is an optional transport/worker accelerator, not exactly-once semantics.

@@ -2,86 +2,144 @@
 
 > **“Practical engineering without compromise. Use the smallest tool that preserves correctness, security, maintainability, and operability. Add complexity only when the product earns it.”**
 
-This is a self-paced, GitHub-only path from an ambiguous product request to software that can be changed, secured, operated, recovered, and released responsibly. FastAPI is the teaching vehicle; software engineering is the subject.
+This is a self-paced course for learning how to build, test, break, repair,
+deploy, and operate software. FastAPI is the vehicle; software engineering is
+the subject.
 
-## Course outcome
+You can begin if you know basic Python syntax, can use a terminal, and have seen
+basic Git commands. You do not need production experience. Unfamiliar words are
+defined when they first matter and collected in the [learner glossary](GLOSSARY.md).
 
-> **“I can take a product idea, choose a small architecture, build it quickly, prove that it is correct, understand its failure modes, deploy it reproducibly, operate it confidently, and make it good enough that I could realistically charge someone to use it.”**
+You will evolve five familiar products: a catalog, point-of-sale system,
+ecommerce application, booking system, and social platform. The final product
+is a multi-tenant software-as-a-service candidate that another person could
+realistically evaluate and operate.
 
-## How learning works
+## Start now
 
-Every piece of work follows the same visible cycle:
+Supported learning environments are Linux, macOS, and Windows Subsystem for
+Linux 2 (WSL2). Native Windows PowerShell commands have not been verified.
+
+Before cloning, create a repository you can write to:
+
+1. Sign in to GitHub and open the course repository.
+2. Select **Use this template** → **Create a new repository**.
+3. Leave **Include all branches** unchecked, choose your account, and create it.
+4. Copy the clone URL shown for that new repository.
+
+That repository will be your `origin`: the default remote you pull from and
+push to. Install [Git](https://git-scm.com/downloads) and
+[uv](https://docs.astral.sh/uv/getting-started/installation/) first. Then replace
+`YOUR-REPOSITORY-URL` below with the URL you copied:
+
+```bash
+git clone YOUR-REPOSITORY-URL vibecamp-swe-track
+cd vibecamp-swe-track
+git remote -v
+cd projects/catalog
+cp .env.example .env
+uv sync --locked
+uv run --locked pytest
+```
+
+Expected result: `git remote -v` shows your repository as `origin`, then pytest
+reports **four passing tests**. You now have a working
+application and repeatable Python environment. If a command fails, use the
+[starter troubleshooting guide](projects/catalog/README.md#if-setup-fails).
+
+Next: follow the numbered lesson in
+**[M0 — Engineering Baseline](milestones/m0-engineering-baseline/README.md)**.
+
+Later product changes start from the runnable launch kits in
+[`projects/`](projects/README.md). Do not set all five up now; open a project
+only when its milestone tells you to.
+
+## How the course works
+
+A **milestone** is a capability you prove, not a calendar week. `M0` is the
+first milestone; `M10` is the capstone. Every milestone follows this loop:
 
 **Understand problem → Design smallest correct solution → Build → Test → Break deliberately → Debug → Refactor → Operate → Ship**
 
-Tools appear only when a product problem earns them. You first observe duplicated database code, an unsafe race, a slow query, or lost work; then introduce a boundary, lock, index, or queue and prove that it addresses the problem. Later milestones increasingly start from existing software and seeded faults: about 70% new build / 30% change-and-repair in M0–M2, 40/60 in M3–M5, and 20/80 in M6–M10. “Change-and-repair” includes incident diagnosis, failure injection, refactoring, migration recovery, and operation—not cosmetic edits.
+- A **challenge** such as `C1` gives you a problem or safe seeded fault.
+- A **Core acceptance criterion** such as `A1` must pass before you advance.
+- **Stretch** work is optional and never replaces Core work.
+- Levels A, B, and C mean **Works**, **Engineered**, and **Production**. They are
+  explained in the [quality gates](QUALITY-GATES.md).
+- **Evidence** is a reproducible result supporting a claim: a test, HTTP
+  response, migration transcript, or recovery record—not only a screenshot.
+- A **cold review** repeats part of the work from a clean checkout without
+  relying on the author's memory.
 
-## Start here
+At the start of each milestone, create its evidence index from the repository
+root (replace `MN` with `M0`, `M1`, and so on):
 
-1. Read the [roadmap and concept coverage](CURRICULUM.md), [stack policy](STACK.md), and [quality gates](QUALITY-GATES.md).
-2. For curriculum maintenance, follow the ranked [revision plan](PLAN.md) and keep the active [maintenance TODO](TODO.md) current.
-3. For course work, open a milestone issue using `.github/ISSUE_TEMPLATE/milestone.yml` and begin [M0 — Engineering Baseline](milestones/m0-engineering-baseline/README.md).
-4. Work through the milestone sequence and its challenge brief. Use focused branches and pull requests.
-5. Store actual evidence using [the evidence index template](templates/EVIDENCE-INDEX.md); do not pre-fill claims.
-6. Advance only when Actions pass, the milestone acceptance file is satisfied, and [PROGRESS.md](PROGRESS.md) links the evidence.
+```bash
+mkdir -p "evidence/MN"
+cp templates/EVIDENCE-INDEX.md "evidence/MN/index.md"
+```
 
-## Curriculum deliverables
+Expected: one editable index exists for commands, observations, decisions, and
+links. Write `N/A — condition not present` for a conditional gate that does not
+apply. The [synthetic examples](templates/EVIDENCE-EXAMPLES.md) show useful
+evidence without pretending to be learner results.
 
-| Need | Canonical source |
-|---|---|
-| Curriculum revision rationale and sequence | [PLAN.md](PLAN.md) |
-| Active curriculum-maintenance work | [TODO.md](TODO.md) |
-| Full milestone curriculum | [Curriculum roadmap](CURRICULUM.md) and the eleven [milestone folders](milestones/) |
-| Recommended tools per milestone | Each milestone's `TOOLS.md`, governed by [STACK.md](STACK.md) |
-| Expected concepts | Each milestone's `CONCEPTS.md` and the [concept coverage matrix](CURRICULUM.md#concept-coverage-matrix) |
-| Exit criteria | Each milestone's `ACCEPTANCE.md` |
-| Repository structure | This README's GitHub course model and milestone file contract |
-| Quality gates | [QUALITY-GATES.md](QUALITY-GATES.md) |
-| Learning workflow | The cycle below, [challenge lifecycle](challenges/README.md), and advancement workflow in [QUALITY-GATES.md](QUALITY-GATES.md) |
-| Complexity to avoid | [Stack policy](STACK.md), including earned tools and explicit exclusions |
-| Entry diagnostic | [Targeted diagnostic and remediation](templates/ENTRY-DIAGNOSTIC.md), used by M0 |
-| Independent review | [Cold-review protocol](QUALITY-GATES.md#cold-review-protocol) and [evidence index](templates/EVIDENCE-INDEX.md) |
-| Simplicity decision | [Complexity rejection record](templates/COMPLEXITY-REJECTION.md), distinct from an ADR |
-| Portfolio narrative | [Evidence-backed case-study template](templates/PORTFOLIO-CASE-STUDY.md) |
-| Data handling | [Data-lifecycle review](templates/DATA-LIFECYCLE.md), used only where applicable |
+First get the supplied M0 starter green. Then the lesson introduces the
+professional GitHub loop: issue → branch → pull request → automated checks →
+evidence → annotated milestone tag.
 
-## GitHub is the course model
+For branch, pull request, and authentication details, use the
+[learner-owned workflow](CONTRIBUTING.md#milestone-change-loop).
 
-| GitHub surface | Course role |
-|---|---|
-| README | Course home and operating philosophy |
-| [CURRICULUM](CURRICULUM.md) | Roadmap, dependencies, and concept traceability |
-| [Milestones](milestones/) | Lessons, local challenges, tools, acceptance, and review |
-| [Projects](projects/README.md) | Evolving product laboratories; no milestone copies |
-| Issues | Requirements, backlog, defects, and advancement plan |
-| Pull requests | Development history, review, evidence, and change discussion |
-| Actions | Repeatable automated feedback and repository checks |
-| ADRs | Only consequential architecture decisions, stored with the owning project |
-| Releases and annotated tags | Reviewed product milestones and immutable evidence references |
-| [PROGRESS](PROGRESS.md) | Engineering journal and progress transcript |
+You need Git, a GitHub account, Python 3.12, and uv now. Docker Desktop or
+Docker Engine is first needed at M2. PostgreSQL runs through Docker; you do not
+need to install it separately. M10 explains optional real-host accounts, cost,
+Transport Layer Security (TLS), and domain prerequisites only when you reach it.
 
-## Milestone file contract
+## Roadmap
 
-Each of the exactly eleven milestone directories contains exactly seven files:
+M0 is the stable label for **Milestone 1 of 11**; M5 is Milestone 6 of 11.
+The table describes repository support, not your completion. Record your own
+status in [PROGRESS](PROGRESS.md#active-milestone-dashboard).
 
-- `README.md` — capability, product/deliverable, sequence, prerequisites, and outputs.
-- `CONCEPTS.md` — problem-driven mental models used by that milestone.
-- `CHALLENGE.md` — build/change/break/debug/refactor/operate/ship work and seeded failures.
-- `TOOLS.md` — why tools enter now, when to avoid or remove them, and earned options.
-- `ACCEPTANCE.md` — objective Core/Stretch criteria, commands, evidence, and A/B/C applicability.
-- `REVIEW.md` — learner explanation, self-review, debugging, and reflection prompts.
-- `RESOURCES.md` — resource-selection categories and standards, without unverified citations.
+| Position | Label | Capability / product | You will produce | Gate | Repository support |
+|---|---|---|---|---|---|
+| Milestone 1 of 11 | [M0](milestones/m0-engineering-baseline/README.md) | Reproducible / Catalog | Green baseline transcript; Failure diagnosis and reset record; CI-backed gate PR and annotated tag | A1–A3 plus A0 diagnostic / Level A | Starter locally verified; learner gate not started |
+| Milestone 2 of 11 | [M1](milestones/m1-production-api-foundation/README.md) | Functional / Catalog | Tested HTTP request matrix; Compatibility-change evidence | A1–A4 / A + selected B | Starter locally verified; learner gate not started |
+| Milestone 3 of 11 | [M2](milestones/m2-pos-persistence-data-modeling/README.md) | Persistent / POS | Schema and migration; Query/persistence evidence | A1–A5 / Level B | Starter locally verified; learner gate not started |
+| Milestone 4 of 11 | [M3](milestones/m3-transactions-correctness/README.md) | Correct / POS | Atomic checkout regression; Money/repeat and final-unit race evidence | A1–A4 / Level B | Starter locally verified; learner gate not started |
+| Milestone 5 of 11 | [M4](milestones/m4-maintainability-testing-refactoring/README.md) | Maintainable / POS | Cashier-name change and boundary check; Refactor evidence and portfolio draft | A1–A6 / Level B | Starter locally verified; learner gate not started |
+| Milestone 6 of 11 | [M5](milestones/m5-secure-multi-user-ecommerce/README.md) | Secure / Ecommerce | Session and role/object matrix; Order-state attack regressions and threat record | A1–A6 / B + contextual C | Starter locally verified; learner gate not started |
+| Milestone 7 of 11 | [M6](milestones/m6-resilient-external-integrations/README.md) | Resilient / Ecommerce | Provider boundary and retry/webhook tests; Reconciliation and incident record | A1–A4 / B + contextual C | Starter locally verified; learner gate not started |
+| Milestone 8 of 11 | [M7](milestones/m7-durable-async-background-processing/README.md) | Durable / Ecommerce | Persisted job/outbox flow; Crash/duplicate/quarantine/replay evidence | A1–A5 / C for async slice | Starter locally verified; learner gate not started |
+| Milestone 9 of 11 | [M8](milestones/m8-concurrency-booking/README.md) | Concurrent / Booking | Final-seat race reproduction and repair; Time/contention evidence | A1–A4 / Level B | Starter locally verified; learner gate not started |
+| Milestone 10 of 11 | [M9](milestones/m9-performance-caching-realtime-social/README.md) | Performant / Social | Feed query comparison; Redis retain/remove decision; One-way update evidence | A1–A4 / B + contextual C | Starter locally verified; learner gate not started |
+| Milestone 11 of 11 | [M10](milestones/m10-production-multitenant-saas-capstone/README.md) | Operable/sellable candidate / Multi-tenant POS SaaS | Tenant-isolation proof; Release/recovery record; Runbooks and cold-reviewed handoff | A1–A7 / Level C local Core; real-target endorsement optional | Starter locally verified; learner gate not started |
 
-The files collaborate rather than repeat: `README` routes; `CONCEPTS` teaches; `CHALLENGE` creates evidence; `ACCEPTANCE` judges it.
+See the [full curriculum](CURRICULUM.md) when you want the detailed roadmap or
+concept coverage. Use [PROGRESS.md](PROGRESS.md) to stop and resume.
 
-## Architecture and scope
+## Reference
 
-The default is a modular monolith: one FastAPI deployable and one PostgreSQL database per project. Use Python, Pydantic, SQLAlchemy, Alembic, pytest, HTTPX, Ruff, uv, GitHub Actions, and—when its milestone earns it—Docker. FastCRUD may accelerate routine persistence only after explicit SQL/repository fundamentals are proven and its trade-offs are recorded.
+- [Stack and tools](STACK.md)
+- [Quality gates](QUALITY-GATES.md)
+- [Evolving projects](projects/README.md)
+- [Challenge system](challenges/README.md)
+- [Evidence template](templates/EVIDENCE-INDEX.md)
 
-Redis, Taskiq, SSE, WebSockets, OpenTelemetry, Logfire, Sentry, and similar tools are optional and must have measured need, failure analysis, ownership, and removal criteria. Kubernetes, Kafka, microservices, service meshes, CQRS, event sourcing, Elasticsearch, complex DI frameworks, and multiple databases are excluded unless an explicit product constraint and real ADR justify an exception.
+Each milestone keeps seven predictable reference files. Its `README.md` is the
+learner route; `CONCEPTS.md`, `CHALLENGE.md`, `TOOLS.md`, `ACCEPTANCE.md`,
+`REVIEW.md`, and `RESOURCES.md` support the relevant step. You do not read all
+seven before starting.
 
-Use synthetic data. Never commit secrets, customer data, generated environments, or database volumes. No LMS or project board is required.
+Use one modular FastAPI application and one PostgreSQL database when persistence
+begins. The [stack policy](STACK.md#explicit-exclusions) owns advanced-tool
+exclusions and the evidence required for exceptions.
 
-## License
+## For curriculum maintainers
 
-This repository is licensed under the [MIT License](LICENSE), matching the existing GitHub repository license. Dependency licenses remain their own.
+Learners can ignore this section. Use the [curriculum maintenance index](docs/maintainers/README.md)
+for the active plan, checklist, rubric, audit inputs, and provenance.
+
+This repository uses the [MIT License](LICENSE). Dependency licenses remain
+their own.

@@ -1,0 +1,1 @@
+"""VibeCamp ecommerce starting checkpoint."""

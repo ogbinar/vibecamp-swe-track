@@ -1,9 +1,68 @@
-# Challenge brief
+# M4 challenge brief
 
-- **C1 — Stakeholder-driven technical-debt change:** Use the [requirements brief](../../templates/REQUIREMENTS.md) to record the decision owner, conflicting promotion/compatibility need, accepted behavior, and rejected scope. Implement the change badly across handlers/models/queries, record files and reasons touched, then refactor by cohesion. Seed a circular/forbidden module dependency and make an automated boundary check catch it.
-- **C2 — Duplicated DB behavior:** Seed repeated transaction/query code across endpoints. Introduce only the service/repository boundaries and dependency injection needed to localize return/promotion variants; preserve transaction ownership and explicit SQL.
-- **C3 — False-confidence tests:** Supply a mock-heavy test that passes while mappings/routes are broken. Diagnose why, replace it with the appropriate integration/API test, and retain focused unit tests for pure policies.
+Run from `projects/pos/`. Preserve behavior before restructuring code.
 
-Operate the same monolith and migration chain. Ship separate behavior/refactor commits or PRs with before/after change-scatter evidence.
+## **C1 — Stakeholder-driven technical-debt change**
 
-Before the final review, complete one [complexity rejection record](../../templates/COMPLEXITY-REJECTION.md) for a meaningful abstraction/tool considered and rejected or removed. This is not an ADR and must name a measurable revisit trigger.
+**PROVIDED** — the fixed cashier-name change brief is supplied.
+
+### Steps
+
+1. Record decision owner, compatibility need, accepted behavior, and rejected scope.
+2. Create `tests/m4/test_characterization.py`; count files touched by the awkward change.
+3. Run README Blocks 1–2 and keep behavior change separate from refactoring.
+
+### Hints
+
+1. List observable behavior before judging structure.
+2. Inspect each route, model, query, and serializer touched by cashier name.
+3. Use the pytest characterization link in `RESOURCES.md`.
+
+### Reset
+
+Stash only the current learner edit, then run
+`uv run --locked pytest tests/m4/test_characterization.py -q`.
+
+## **C2 — Duplicated database behavior**
+
+**YOU BUILD** — localize only the duplication the change exposes.
+
+### Steps
+
+1. Record repeated session, transaction, and query behavior.
+2. Add the smallest service/repository or injected dependency that reduces scatter.
+3. Run `uv run --locked pytest tests/m4/test_cashier_name.py -q` and compare counts.
+
+### Hints
+
+1. Ask which behavior changes together instead of applying a layer template.
+2. Inspect transaction ownership and repeated data access.
+3. Use the dependency-injection link in `RESOURCES.md`; reject pass-through layers.
+
+### Reset
+
+Remove the proposed boundary while keeping characterization tests, then rerun
+`uv run --locked pytest tests/m4/test_cashier_name.py -q`.
+
+## **C3 — False-confidence tests**
+
+**YOU BUILD** — create a reversible test or dependency-boundary mutation.
+
+### Steps
+
+1. Show one mock-heavy test staying green while a mapping or route is broken.
+2. Replace it with the owning integration/API test; create `tests/m4/test_architecture.py`.
+3. Add one forbidden import, observe failure, restore it, and rerun Block 3.
+
+### Hints
+
+1. Name the real boundary the test never crossed.
+2. Inspect serialization, mappings, dependency direction, and fixture realism.
+3. Use the testing-boundaries link in `RESOURCES.md`.
+
+### Reset
+
+Remove the forbidden import and run `uv run --locked pytest tests/m4/test_architecture.py -q`.
+
+Complete one [complexity rejection record](../../templates/COMPLEXITY-REJECTION.md)
+with a measurable revisit trigger.

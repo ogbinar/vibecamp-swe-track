@@ -1,0 +1,1 @@
+"""VibeCamp POS starting checkpoint."""

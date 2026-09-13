@@ -1,6 +1,18 @@
 # Seeded challenge system
 
-Milestone `CHALLENGE.md` files are executable briefs, not implemented defects. Each scenario has an ID (`C1`, `C2`, …), initial condition, trigger, observable symptom, constraints, and required proof. A mentor may provide a prepared branch or the learner may inject the fault, but the final production path must be repaired.
+Milestone `CHALLENGE.md` files are executable briefs. Each scenario has an ID
+(`C1`, `C2`, …), initial condition, trigger, observable symptom, constraints,
+and required proof. M0 supplies a dependency-free activation script because
+diagnosis is the skill and a solo learner should not need a mentor to prepare a
+fault. Later milestones use one of two forms:
+
+- supply a deterministic fixture or activation command when finding the cause
+  is the skill, especially for races, duplicate jobs, and slow queries;
+- ask the learner to construct the failure when building the test or load
+  harness is itself the engineering skill.
+
+Every released challenge must name which form it uses. The final production
+path must be repaired.
 
 ## Brief lifecycle
 

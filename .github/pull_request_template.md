@@ -1,10 +1,17 @@
 ## Outcome
 
+PR mode: `WORKING` / `MILESTONE GATE`
+
+For a working PR, complete Outcome, narrow checks, risk, and next step; mark
+later gate-only fields `N/A — milestone gate not reached`. For a milestone-gate
+PR, complete every applicable section and link evidence.
+
 What observable behavior or course artifact changed?
 
 Closes #
 
 - Stakeholder/decision owner and changed acceptance (when applicable):
+- Smallest next action if this is a working PR:
 
 ## Gate evidence
 

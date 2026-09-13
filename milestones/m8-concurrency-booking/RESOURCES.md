@@ -1,5 +1,9 @@
-# Resource guide
+# Resources for M8
 
-Prioritize PostgreSQL primary documentation for transaction isolation, explicit/advisory locking, constraints, deadlocks, and database time; use SQLAlchemy docs for transaction APIs and Python docs for the chosen coordination primitive.
+Use these after the supplied barrier reproduces the final-seat race. Reviewed 2026-09-13.
 
-Select resources with explicit transaction timelines. Reject generic “use a lock” advice that omits process/database scope, lock ordering, timeouts, or isolation. Confirm every behavior on the pinned PostgreSQL version.
+- [PostgreSQL transaction isolation](https://www.postgresql.org/docs/current/transaction-iso.html) — Why can two individually valid requests conflict? Applicable tool: current PostgreSQL.
+- [PostgreSQL explicit locking](https://www.postgresql.org/docs/current/explicit-locking.html) — Which row, table, or advisory lock matches the protected resource? Applicable tool: current PostgreSQL.
+- [PostgreSQL constraints](https://www.postgresql.org/docs/current/ddl-constraints.html) — Can the database reject the invalid final state regardless of writer? Applicable tool: current PostgreSQL.
+
+Choose from measured interleavings; do not reach for a distributed lock by default.

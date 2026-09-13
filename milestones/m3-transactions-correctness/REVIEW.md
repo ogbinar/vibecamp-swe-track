@@ -1,5 +1,14 @@
 # Review
 
-Explain what belongs in one transaction, why the use case—not an endpoint helper or repository—owns commit/rollback, each ACID property as observed, immutable versus current facts, application versus database invariant placement, sale transition semantics, and the exact C2 interleaving.
+Answer one question at a time in `evidence/M3/index.md`:
 
-Self-review for hidden commits, overly broad transactions, rounding at inconsistent layers, swallowed database errors, and tests that never inspect final state. Predict the result of a mid-checkout crash before rerunning it.
+1. Which facts must commit or roll back together?
+2. Why does the use case own commit and rollback?
+3. What observation demonstrates each ACID property in this checkout?
+4. Which receipt facts are immutable snapshots?
+5. Which invariants are enforced by application code, database rules, or both?
+6. Which sale transitions are allowed?
+7. What is the exact two-request C2 interleaving?
+8. Where could a hidden commit create partial work?
+9. Where is rounding applied, and why only there?
+10. What final state do you predict after a mid-checkout crash?

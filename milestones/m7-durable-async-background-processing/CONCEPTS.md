@@ -1,9 +1,38 @@
-# Problems and mental models
+# M7 concepts through lost and repeated work
 
-An HTTP 202 or committed order creates an obligation. In-process tasks can vanish; atomically storing business state plus outbox intent closes the commit/publish gap. A queue records durable work; a worker claims it with a lease, performs it, and acknowledges outcome.
+## “The API accepted work, then died”
 
-FastAPI `BackgroundTasks` runs in the API process and is therefore a best-effort convenience, not durable acceptance. A framework such as Taskiq supplies worker/broker abstractions but does not manufacture exactly-once behavior: durability depends on persisted intent, broker acknowledgement/failure semantics, retry state, idempotent effects, and operational recovery.
+**Example:** an in-process callback never runs. **Term — durable intent:** a
+committed record that work is owed. **Rule:** store business state and outbox
+intent atomically before acknowledging acceptance.
 
-Crashes make at-least-once execution normal: the worker may repeat after the side effect but before acknowledgement. Idempotent consumers use stable semantic identity and recorded result so repetition converges; “exactly once” is not claimed across a database, broker, and external provider. Eventual consistency means accepted and completed states differ temporarily and must be visible to users/operators.
+## “The worker sent the email twice”
 
-Bounded retries, backoff, poison quarantine, manual replay, retention, graceful shutdown, and backpressure are product behavior. Queue depth, oldest-ready age, processing duration, retry count, and terminal failure metrics show whether the obligation is being met.
+**Example:** it dies after the effect but before acknowledgement. **Term —
+at-least-once execution:** the job may run again. **Rule:** use stable semantic
+identity so repetition produces one business effect.
+
+## “The order committed but its job did not”
+
+**Example:** the process dies between database commit and queue publication.
+**Term — transactional outbox:** durable work intent stored with the business
+change. **Rule:** persist both atomically before acknowledging the obligation.
+
+## “BackgroundTasks disappeared on restart”
+
+**Example:** process-local work dies with the API. **Term — best-effort work:**
+work whose loss is acceptable. **Rule:** use FastAPI `BackgroundTasks` only for
+that case; a worker framework does not itself create durability or exactly-once behavior.
+
+## “The worker repeated an external effect”
+
+**Example:** it crashes after sending but before acknowledging. **Term —
+idempotent consumer:** repeated delivery converges to one business effect.
+**Rule:** use stable semantic identity and stored results; expose accepted versus
+completed states as eventual consistency.
+
+## “One poison job stopped healthy work”
+
+**Example:** the same invalid item consumes every retry slot. **Term — quarantine:**
+a terminal holding area for failed work. **Rule:** bound retries, isolate poison,
+audit replay, shut down gracefully, and monitor depth, oldest age, duration, and failures.

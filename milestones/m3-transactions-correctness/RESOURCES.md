@@ -1,5 +1,9 @@
-# Resource guide
+# Resources for M3
 
-Choose current PostgreSQL documentation on transactions/isolation/constraints, SQLAlchemy transaction management, and authoritative decimal/money guidance. Add state-machine material only if it models forbidden and repeated transitions, not just diagrams.
+Use these after reproducing partial writes or conflicting checkouts. Reviewed 2026-09-13.
 
-Prefer resources with concrete interleavings and rollback examples. Reject claims of “ACID compliant” without isolation assumptions or evidence. Verify framework examples against pinned versions and reproduce all failure paths locally.
+- [PostgreSQL transaction isolation](https://www.postgresql.org/docs/current/transaction-iso.html) — What can concurrent transactions observe? Applicable tool: current PostgreSQL.
+- [PostgreSQL explicit locking](https://www.postgresql.org/docs/current/explicit-locking.html) — Which lock protects the invariant, and what can it block? Applicable tool: current PostgreSQL.
+- [SQLAlchemy transactions](https://docs.sqlalchemy.org/en/20/orm/session_transaction.html) — Where should commit and rollback boundaries live? Applicable tool: SQLAlchemy 2.0.
+
+Read database behavior first; an ORM cannot strengthen an invariant by itself.

@@ -1,7 +1,34 @@
-# Problems and mental models
+# M6 concepts through provider failures
 
-A timeout means the outcome is unknown, not necessarily failed. Every outbound call needs connect/read/overall bounds, a retry classification, exponential backoff with jitter, a total budget, and an idempotency strategy. Retrying non-idempotent effects blindly duplicates money or shipments.
+## “The request timed out after the charge”
 
-Webhooks are untrusted, duplicated, delayed, reordered messages. Verify signature against raw bytes, timestamp/replay window, event identity, and account context; acknowledge only durable handling and make processing idempotent. Model pending/succeeded/failed/unknown states and reconcile uncertainty rather than lying to users.
+**Example:** the provider completed work but its response never arrived. **Term —
+unknown outcome:** neither success nor failure is yet proven. **Rule:** preserve
+that state and reconcile; do not blindly retry a money effect.
 
-Structured logs with request/correlation IDs connect inbound request, outbound attempt, webhook, and state change. Emit safe fields and useful failure classification. Incident thinking asks impact, timeline, detection, contributing conditions, recovery, and prevention—not blame.
+## “The webhook arrived twice and out of order”
+
+**Example:** fulfilled arrives before paid, then paid repeats. **Term —
+idempotent consumer:** repeated delivery converges to one intended effect.
+**Rule:** verify raw signed input, identify the event, and apply declared state
+rules.
+
+## “Retries made the outage worse”
+
+**Example:** every request retries immediately during a provider failure. **Term —
+exponential backoff with jitter:** progressively longer, slightly randomized
+delays. **Rule:** classify retryability and bound connect/read/overall time,
+attempts, and total elapsed budget.
+
+## “The webhook signature passed after parsing changed the bytes”
+
+**Example:** normalized JSON differs from the signed request body. **Term — replay
+window:** the allowed age of a signed event. **Rule:** verify raw bytes, timestamp,
+event identity, and account before durable, idempotent handling.
+
+## “Nobody could connect the request to the later webhook”
+
+**Example:** logs omit the operation and correlation IDs. **Term — correlation
+ID:** a safe identifier joining related work across boundaries. **Rule:** correlate
+attempts and state changes, preserve uncertainty, redact data, and review incidents
+through impact, timeline, recovery, and prevention rather than blame.

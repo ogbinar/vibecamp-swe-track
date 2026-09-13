@@ -1,0 +1,120 @@
+name: M10 immutable image
+
+on:
+  workflow_dispatch:
+  push:
+    tags: ["m10-production-saas"]
+
+permissions:
+  contents: read
+  packages: write
+
+jobs:
+  curriculum:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+      - name: Validate curriculum and controlled failures
+        run: |
+          python3 scripts/check_curriculum.py
+          python3 scripts/test_validator_mutations.py
+
+  starters:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - project: catalog
+            database: vibecamp_catalog_ci
+            prefix: ""
+          - project: pos
+            database: vibecamp_pos
+            prefix: POS
+          - project: ecommerce
+            database: vibecamp_ecommerce
+            prefix: ECOMMERCE
+          - project: booking
+            database: vibecamp_booking
+            prefix: BOOKING
+          - project: social
+            database: vibecamp_social
+            prefix: SOCIAL
+    services:
+      postgres:
+        image: postgres:17-alpine
+        env:
+          POSTGRES_DB: ${{ matrix.database }}
+          POSTGRES_USER: vibecamp
+          POSTGRES_PASSWORD: vibecamp
+        ports: ["5432:5432"]
+        options: >-
+          --health-cmd "pg_isready -U vibecamp -d ${{ matrix.database }}"
+          --health-interval 5s --health-timeout 5s --health-retries 10
+    defaults:
+      run:
+        working-directory: projects/${{ matrix.project }}
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+      - uses: astral-sh/setup-uv@d0cc045d04ccac9d8b7881df0226f9e82c39688e # v6
+        with:
+          version: "0.9.21"
+          enable-cache: true
+      - name: Verify lock and install
+        run: |
+          uv lock --check
+          uv sync --locked
+      - name: Lint, format, and type-check
+        run: |
+          uv run --locked ruff check .
+          uv run --locked ruff format --check .
+          uv run --locked mypy
+      - name: Migrate and test
+        env:
+          DATABASE_URL: postgresql+psycopg://vibecamp:vibecamp@localhost:5432/${{ matrix.database }}
+        run: |
+          if [ -n "${{ matrix.prefix }}" ]; then
+            export "${{ matrix.prefix }}_DATABASE_URL=$DATABASE_URL"
+            export "${{ matrix.prefix }}_TEST_DATABASE_URL=$DATABASE_URL"
+            uv run --locked alembic upgrade head
+          fi
+          uv run --locked pytest
+      - name: Audit runtime dependencies
+        run: uv run --with pip-audit==2.9.0 pip-audit --local
+
+  build:
+    needs: [curriculum, starters]
+    runs-on: ubuntu-latest
+    outputs:
+      digest: ${{ steps.build.outputs.digest }}
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+      - uses: docker/login-action@c94ce9fb468520275223c153574b00df6fe4bcc9 # v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+      - uses: docker/metadata-action@c299e40c65443455700f0fdfc63efafe5b349051 # v5
+        id: meta
+        with:
+          images: ghcr.io/${{ github.repository_owner }}/vibecamp-pos
+          tags: type=sha
+      - uses: docker/build-push-action@10e90e3645eae34f1e60eeb005ba3a3d33f178e8 # v6
+        id: build
+        with:
+          context: projects/pos
+          push: true
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}
+
+  approve-digest-handoff:
+    needs: build
+    runs-on: ubuntu-latest
+    environment: m10-production
+    permissions:
+      contents: read
+    steps:
+      - name: Record exact deployment input
+        run: |
+          echo "Approved handoff: ghcr.io/${{ github.repository_owner }}/vibecamp-pos@${{ needs.build.outputs.digest }}"
+          echo "This job does not deploy. A learner-authorized target must record migration, readiness, rollback, and this exact digest before claiming deployment."

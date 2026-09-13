@@ -1,0 +1,1 @@
+"""VibeCamp catalog starter."""
