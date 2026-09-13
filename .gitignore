@@ -1,0 +1,33 @@
+# Python
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
+.coverage
+htmlcov/
+.venv/
+
+# Secrets and local configuration
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+
+# Packaging and editors
+dist/
+build/
+*.egg-info/
+.idea/
+.vscode/
+*.swp
+.DS_Store
+
+# Runtime data and generated evidence
+*.sqlite3
+*.db
+postgres-data/
+coverage.xml
+junit.xml
+*.log

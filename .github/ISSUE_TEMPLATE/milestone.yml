@@ -1,0 +1,50 @@
+name: Milestone gate
+description: Plan and track one capability milestone
+title: "[Mxx] "
+labels: [milestone]
+body:
+  - type: markdown
+    attributes:
+      value: Link every checked criterion to reproducible repository evidence.
+  - type: input
+    id: spec
+    attributes:
+      label: Milestone specification
+      placeholder: milestones/m0-engineering-baseline/README.md
+    validations:
+      required: true
+  - type: textarea
+    id: requirements
+    attributes:
+      label: Product requirements and acceptance examples
+    validations:
+      required: true
+  - type: textarea
+    id: stakeholders
+    attributes:
+      label: Stakeholders, decision owner, and requirement changes
+      description: Name real or explicitly synthetic roles, conflicting needs, accepted interpretation, and rejected scope when applicable.
+  - type: textarea
+    id: core
+    attributes:
+      label: Core exit criteria
+      description: Copy the core criteria as task-list items; add evidence links as work lands.
+    validations:
+      required: true
+  - type: textarea
+    id: drills
+    attributes:
+      label: Failure drills
+      description: Link C-IDs and state how failures will be induced, observed, diagnosed, and recovered.
+    validations:
+      required: true
+  - type: textarea
+    id: stretch
+    attributes:
+      label: Stretch work (non-blocking)
+  - type: textarea
+    id: risks
+    attributes:
+      label: Risks, decisions, and evidence plan
+    validations:
+      required: true
