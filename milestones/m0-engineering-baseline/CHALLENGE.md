@@ -4,7 +4,7 @@ Use the full learning cycle for each scenario and capture hypotheses plus recove
 
 Before C1, run D1–D5 in the [entry diagnostic](../../templates/ENTRY-DIAGNOSTIC.md). For each `REMEDIATE`, do only the named short exercise and one re-check; unresolved gaps become focused issues. Diagnostic success changes practice routing, not acceptance criteria.
 
-- **C1 — Hidden workspace state:** Build the catalog slice, then remove the environment/caches and run from an unexpected directory. Seed a path/import fault and a health-response regression. Debug until clean setup, API test, project structure, and health check are deterministic.
+- **C1 — Hidden workspace state:** Build the catalog slice, then remove the environment/caches and run from an unexpected directory. Seed a path/import fault, a health-response regression, and a type error that linting alone does not catch. Debug until clean setup, mypy, API test, project structure, and the declared ASGI run command are deterministic.
 - **C2 — Configuration leak:** Make one setting required, then omit and malform it. Ensure startup fails concisely, `.env.example` reveals names only, and test/log output contains no seeded secret.
 - **C3 — Automation drift:** Alter a local command or dependency without updating CI/lock state. Diagnose the local/Actions disagreement, restore one canonical command path, and document release impact.
 

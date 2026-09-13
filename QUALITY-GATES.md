@@ -13,7 +13,7 @@ These are cumulative, contextual gates—not three versions of every feature. Fo
 Every milestone is complete only when:
 
 1. Every Core criterion links to reproducible evidence; Stretch is separately marked and non-blocking.
-2. The documented clean-checkout setup, lint, test, and relevant run/migration commands succeed.
+2. The documented clean-checkout setup, Ruff lint/format, mypy, test, and relevant run/migration commands succeed. The production run command uses the declared ASGI runtime without development reload.
 3. Acceptance behavior is proven at the public boundary; important rules are also proven at their owning unit/database/integration boundary.
 4. At least one seeded defect fails for the intended reason, is diagnosed rather than replaced wholesale, and gains a regression test.
 5. Failure drills record environment, command/setup, expected result, actual result, interpretation, recovery, and date.
@@ -21,6 +21,7 @@ Every milestone is complete only when:
 7. Actions pass, the PR self-review is complete, and `PROGRESS.md` links the issue, final PR, evidence index, and release/tag.
 8. The learner answers `REVIEW.md` in their own words and can reproduce, explain, modify, and debug the result.
 9. A cold reviewer reproduces one Core path and one failure from a clean checkout using repository instructions, records confusion/defects and their resolution, and gives a verdict against the same gate.
+10. Any claimed durable work begins with persisted intent and survives the declared kill point; any claimed production deployment names the controls supplied outside Docker Compose. Optional tools retain their trigger, source-of-truth boundary, proof, operational owner/cost, and removal condition.
 
 A screenshot alone is not correctness evidence. Prefer tests, sanitized HTTP captures, migration transcripts, constraint failures, query plans, load summaries, telemetry correlations, and restore records. Never fabricate a passing result.
 
@@ -41,7 +42,7 @@ Use a [complexity rejection record](templates/COMPLEXITY-REJECTION.md) for a mea
 1. Open one milestone issue; translate ambiguity into acceptance examples and identify seeded scenarios.
 2. Work in focused branches/PRs. Draft PRs expose assumptions early; multiple coherent PRs are welcome.
 3. Follow the complete learning cycle and update the evidence index as facts emerge.
-4. Let Actions run the repository validator plus project-specific lint/tests/migration checks when code exists.
+4. Let Actions run the repository validator plus project-specific Ruff, mypy, tests, migration checks, and immutable-image build when those artifacts exist. Treat this as CI; add deployment only after the M10 CD gates exist.
 5. Perform written self-review and cold review, close all Core gaps, merge through normal review, and update `PROGRESS.md`.
 6. Create an annotated `mN-short-name` tag on the reviewed commit. Add a GitHub Release when behavior, artifacts, or operational instructions are user-facing.
 7. If later evidence invalidates a gate, mark it `REOPENED`, link a regression issue, fix forward, and add a regression test. Never move a passed tag.

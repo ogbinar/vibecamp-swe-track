@@ -2,6 +2,30 @@
 
 This is the single execution checklist for [PLAN.md](PLAN.md). Update it in the same change as implementation work. `PROGRESS.md` remains the learner’s course transcript.
 
+## Active follow-up — minimal stack hardening
+
+### Tier 1 — Required
+
+- [x] S1: Added `fastapi[standard]`/Uvicorn and Psycopg 3 explicitly to the core stack and focused M0–M2 tool/acceptance guidance.
+- [x] S2: Added mypy as the single default static type checker, distinct from Ruff, with executable M0 and cross-module M4 gates.
+- [x] S3: Documented synchronous SQLAlchemy/Psycopg as the default and made async database access depend on equal-harness evidence plus pool/failure/complexity analysis.
+- [x] S4: Bounded Docker Compose, early CI versus earned CD, FastAPI `BackgroundTasks`, and Taskiq durability claims in global and focused M0/M7/M10 guidance.
+- [x] S5: Made M5 authentication problem-driven; the product selects secure cookie sessions or JWT while PyJWT validation and `pwdlib[argon2]` competence remain objectively required.
+
+### Tier 2 — Implement if the edits remain focused
+
+- [x] S6: Gave FastCRUD, fastapi-pagination, Redis, SSE/WebSockets, object storage, OpenTelemetry, Logfire, and Sentry explicit trigger, source-of-truth, proof, operational-cost, and removal guidance without making them defaults.
+- [x] S7: Clarified that service/repository boundaries are earned by orchestration or data-access pressure, prohibited pass-through layering, and put transaction ownership at the use-case boundary.
+
+### Follow-up verification
+
+- [x] Ran `python3 scripts/check_curriculum.py`; all relative links and all 58 concept traces pass.
+- [x] Independently verified exactly 11 milestone directories × exactly 7 required files and parsed all GitHub YAML.
+- [x] Audited for duplicated stack policy, conflicting sync/async advice, SQLite standing in for PostgreSQL integration gates, and claims that best-effort work is durable; no conflict remains.
+- [x] Confirmed the revision adds no application code, infrastructure service, dependency lockfile, new milestone files, deployment, or fabricated learner evidence.
+
+## Completed persona-review revision
+
 ## Tier 1 — Required
 
 ### Phase 1: entry and review credibility

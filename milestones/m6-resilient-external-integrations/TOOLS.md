@@ -6,4 +6,8 @@
 - **HMAC/signature library and constant-time comparison:** implement provider-specified verification with replay bounds.
 - **Structured logging:** stable fields and correlation/request IDs, with redaction.
 
-No circuit-breaker library, queue, broker, or fallback provider until measured need. Remove retries that amplify load or obscure terminal outcomes. Durable async work is earned in M7.
+FastAPI `BackgroundTasks` is allowed only for short, noncritical, same-process work whose loss or repetition is explicitly acceptable. It may not carry an accepted payment, fulfillment, webhook, or reconciliation obligation. Persist durable intent and defer its worker semantics to M7.
+
+S3-compatible object storage is earned only if the integration introduces files that must outlive application instances. Prefer direct presigned transfer; define authorization, checksums, size/type limits, retention/deletion, orphan cleanup, and provider failure behavior. Do not proxy large media through FastAPI or add object storage for JSON records.
+
+No circuit-breaker library, queue, broker, fallback provider, or object store without its trigger. Remove retries that amplify load or obscure terminal outcomes. Durable async work is earned in M7.

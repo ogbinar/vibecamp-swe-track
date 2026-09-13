@@ -28,6 +28,16 @@ TEMPLATE_HEADINGS = {
     "PORTFOLIO-CASE-STUDY.md": {"## Problem, user, and constraints", "## Failure → diagnosis → change", "## Reader path"},
     "DATA-LIFECYCLE.md": {"## Review questions"},
 }
+REQUIRED_STACK_MARKERS = {
+    "fastapi[standard]",
+    "Psycopg 3",
+    "mypy",
+    "synchronous SQLAlchemy",
+    "FastAPI `BackgroundTasks`",
+    "PostgreSQL owns durable truth",
+    "CI before CD",
+    "service when orchestration",
+}
 REQUIRED_CONCEPTS = {
     "HTTP semantics", "API contracts", "Typing and validation", "Dependency injection",
     "Project structure", "Configuration", "Relational modeling", "SQL", "Constraints",
@@ -109,6 +119,13 @@ def main() -> int:
     extra = set(rows) - REQUIRED_CONCEPTS
     if missing or extra:
         errors.append(f"coverage matrix mismatch: missing={sorted(missing)}, extra={sorted(extra)}")
+
+    stack = (ROOT / "STACK.md").read_text(encoding="utf-8")
+    absent_stack_markers = REQUIRED_STACK_MARKERS - set(
+        marker for marker in REQUIRED_STACK_MARKERS if marker in stack
+    )
+    if absent_stack_markers:
+        errors.append(f"STACK.md: missing stable stack-policy markers: {sorted(absent_stack_markers)}")
 
     for concept, (_, practice, proof) in rows.items():
         for cell, expected_prefix, filename in (

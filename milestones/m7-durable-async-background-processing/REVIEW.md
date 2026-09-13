@@ -1,6 +1,6 @@
 # Review
 
-Explain why accepted in-process work can vanish; how outbox closes the gap; at-least-once versus exactly-once; idempotent consumer identity; lease expiry; eventual-consistency UX; and which metric catches stuck work first.
+Explain why accepted FastAPI `BackgroundTasks` work can vanish; how outbox closes the gap; at-least-once versus exactly-once; why Taskiq cannot erase the commit/broker/external-effect boundaries; idempotent consumer identity; lease expiry; eventual-consistency UX; and which metric catches stuck work first.
 
 Self-review atomic insertion, double claims, clock source, retry storms, infinite poison loops, unsafe replay authorization, hidden jobs on shutdown, and retention growth. Predict each kill-point outcome before executing C1/C2.
 

@@ -6,6 +6,99 @@ Close the highest-leverage gaps identified by the seven-persona review and ranke
 
 This file is the canonical rationale, scope, dependency map, and implementation order. [TODO.md](TODO.md) is the single active execution checklist.
 
+## Active follow-up — minimal stack hardening
+
+The persona-driven curriculum revision below is complete. The next bounded
+revision incorporates the 2026-09-13 stack review without adding application
+code or turning optional infrastructure into course-wide defaults.
+
+### Outcome
+
+Make the recommended stack executable rather than merely conceptual, and make
+its boundaries explicit enough that learners do not accidentally equate
+"FastAPI" with an application server, `async def` with an async database,
+`BackgroundTasks` with durable execution, JWT with universal authentication,
+or Docker Compose with a complete production platform.
+
+### Pareto-ranked changes
+
+| ID | Priority | Change | Why it matters | Primary files |
+|---|---|---|---|---|
+| S1 | Tier 1 | Add the ASGI runtime and PostgreSQL driver explicitly: `fastapi[standard]` (including Uvicorn) and Psycopg 3 | The documented core must be installable and capable of serving requests and connecting to PostgreSQL | `STACK.md`, M0/M1/M2 `TOOLS.md` |
+| S2 | Tier 1 | Add exactly one static type checker, defaulting to mypy, alongside Ruff | Ruff linting/formatting does not prove cross-module type consistency | `STACK.md`, M0/M4 `TOOLS.md` and acceptance gates |
+| S3 | Tier 1 | Establish synchronous SQLAlchemy/Psycopg as the teaching baseline; require measured need before async DB access | Avoids incidental complexity while preserving an evidence-based path to async I/O | `STACK.md`, M2/M9 `TOOLS.md`/`REVIEW.md` |
+| S4 | Tier 1 | Correct operational boundaries for Compose, GitHub Actions CD, `BackgroundTasks`, and Taskiq | Prevents best-effort or local tooling from being mistaken for durable production behavior | `STACK.md`, M0/M7/M10 milestone files, `QUALITY-GATES.md` |
+| S5 | Tier 1 | Make authentication choice problem-driven: cookie session or JWT; retain PyJWT plus `pwdlib[argon2]` when JWT/password auth is earned | Avoids teaching JWT as a universal default while preserving concrete security practice | `STACK.md`, M5 `CONCEPTS.md`/`TOOLS.md`/`REVIEW.md` |
+| S6 | Tier 2 | Tighten optional-tool contracts for FastCRUD, pagination, Redis, realtime, object storage, and observability | Ensures each addition has a source-of-truth boundary, trigger, proof, and removal condition | `STACK.md`, focused M6/M7/M9/M10 files |
+| S7 | Tier 2 | Clarify that service/repository is an earned shape, not a mandatory four-layer pipeline; place transaction ownership at the use-case boundary | Prevents pass-through layers and repository-local commits from becoming architecture theater | `STACK.md`, M3/M4 `CONCEPTS.md`/`REVIEW.md` |
+
+### Decisions to preserve
+
+- PostgreSQL remains the durable source of truth; Redis must not own
+  correctness-critical inventory, booking, payment, or tenant state.
+- PostgreSQL-backed integration tests prove constraints, locks, migrations, and
+  concurrency behavior; SQLite is not a substitute for those gates.
+- `BackgroundTasks` is limited to short, noncritical, best-effort work. A
+  durable obligation must first be persisted and then handled by an idempotent
+  worker; Taskiq does not create exactly-once execution.
+- Docker Compose remains valid for local development, integration/CI, and a
+  deliberately bounded single-host deployment. M10 must still prove TLS,
+  secrets, restart behavior, migrations, backups, monitoring, and rollback.
+- CI begins early. Automated deployment is earned only after a real target,
+  migration sequence, secrets boundary, health checks, and rollback exist.
+- OpenTelemetry is instrumentation, not a telemetry backend. Begin with
+  structured logs and request IDs, then select the smallest useful managed or
+  self-hosted backend; do not require OpenTelemetry, Logfire, and Sentry
+  together.
+- FastCRUD and pagination libraries remain accelerators after learners have
+  implemented and explained the underlying SQLAlchemy, transaction, and API
+  contract behavior.
+
+### Implementation sequence and gates
+
+1. Update `STACK.md` as the single source of truth for S1–S7.
+2. Add only milestone-local exercises or review prompts that make those policy
+   decisions observable; do not copy the entire stack policy into milestones.
+3. Extend acceptance and validator checks only for stable, objective claims:
+   runtime starts, PostgreSQL connects, type checking passes, and prohibited
+   durability claims do not appear.
+4. Run the full repository validator, concept traceability, Markdown links,
+   GitHub YAML parsing, exact 11×7 milestone contract, and a duplication scan.
+5. Update [TODO.md](TODO.md) in the same implementation change. Do not mark an
+   item complete from documentation intent alone when its acceptance evidence
+   has not been checked.
+
+### Implementation outcome — 2026-09-13
+
+- **S1–S3 implemented:** the canonical stack now names `fastapi[standard]`,
+  Uvicorn, Psycopg 3, and mypy; M0–M4 contain focused executable gates; sync
+  SQLAlchemy/Psycopg is the baseline and async database access requires an
+  equal-harness measured justification.
+- **S4–S5 implemented:** CI and CD are separated; Compose's single-host role
+  and missing production controls are explicit; `BackgroundTasks` is bounded
+  to loss-tolerant work; durable work begins with persisted intent; M5 selects
+  cookie session or JWT from the client boundary while every learner still
+  proves the required JWT validation concepts in-product or in an isolated
+  lab.
+- **S6–S7 implemented:** every optional tool now has a concrete trigger,
+  correctness/source-of-truth boundary, evidence requirement, operational
+  cost, and removal condition. Direct route-to-SQLAlchemy remains valid for a
+  simple path; services/repositories are earned, pass-through layers are
+  rejected, and use cases own transactions.
+- **Validation passed:** the dependency-free validator, all relative links,
+  58 concept traces, exact 11×7 milestone structure, GitHub YAML parsing,
+  whitespace checks, empty-file scan, and policy-conflict audit passed. The
+  validator now guards a small set of stable stack-policy markers without
+  grading prose.
+- **Scope held:** no learner application, infrastructure service, dependency
+  lockfile, new milestone file, deployment, or learner evidence was created.
+
+This follow-up is complete when S1–S5 are implemented and validated. S6–S7 may
+be implemented in the same pass only if they remain focused edits; otherwise
+retain them explicitly as deferred work. No new infrastructure, learner
+application code, dependency lockfile, deployment, or fabricated evidence is
+part of this documentation revision.
+
 ## Non-goals and invariants
 
 - Do not change the exactly eleven M0–M10 milestones or their maturity arc.
