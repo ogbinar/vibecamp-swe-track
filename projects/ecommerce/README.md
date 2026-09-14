@@ -30,16 +30,39 @@ fails with missing routes. Implement one published behavior at a time; never add
 an `X-Test-Actor` bypass to runtime code—replace that synthetic header with your
 real authenticated test fixture.
 
+## M6 preflight after completing M5
+
+Use this checkpoint only after the M5 Core gate is green. It validates the
+identity, authorization, and order-state work you now own; the anonymous-shell
+expectations above apply only when starting M5.
+
+From `projects/ecommerce/`:
+
+```bash
+test -s tests/m5/test_identity.py
+test -s tests/m5/test_authorization_matrix.py
+test -s tests/m5/test_order_state.py
+ECOMMERCE_TEST_DATABASE_URL=postgresql+psycopg://vibecamp:vibecamp@127.0.0.1:5433/vibecamp_ecommerce uv run --locked pytest tests/m5 -q
+uv run --locked pytest tests/test_failure_harnesses.py -q
+```
+
+Expected: the learner-built M5 tests pass and the supplied provider-failure
+harness remains green. If an M5 target is missing or red, return to that M5
+block and its saved evidence; do not remove completed identity routes or reset
+the database merely to recreate the anonymous starter. If only the supplied
+failure harness is red, leave M5 intact and diagnose the fake/fixture boundary.
+
 M6 also supplies `FakeProvider`, with success, decline, timeout-before, and
 timeout-after modes. M7 supplies `outbox_lab.py` with deterministic process-death
 windows. These reproduce uncertainty; they do not implement retries, durable
 work, idempotent consumers, or reconciliation for you.
 
-If configuration fails, copy `.env.example` from this directory. If an identity
-route exists before you build it, inspect the diff and remove accidental shared
-business code. Security scenarios live in `fixtures/` and are documentation,
-never enabled vulnerable endpoints. The doubles keep state only in memory, so
-rerun pytest for a clean case.
+If configuration fails, copy `.env.example` from this directory. When starting
+M5 only, if an identity route exists before you build it, inspect the diff and
+remove accidental shared business code. Never apply that anonymous-shell repair
+after completing M5 or while working in M6. Security scenarios live in
+`fixtures/` and are documentation, never enabled vulnerable endpoints. The
+doubles keep state only in memory, so rerun pytest for a clean case.
 
 Pause with `docker compose stop`; resume with `docker compose up -d --wait`.
 To erase only the course database, export the exact URL from `.env`, run

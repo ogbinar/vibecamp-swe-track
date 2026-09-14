@@ -57,11 +57,17 @@ The supplied walking skeleton serves health and one typed product response. Keep
 
 ### 1. Run the supplied baseline `[REQUIRED]`
 
-Start from the starting checkpoint above. Work in `projects/catalog/`;
-focus on `src/catalog_api/` and `tests/test_api.py` and the output named below. Record `evidence/M0/index.md`.
-Stop when all baseline checks and both HTTP responses pass.
-Resume at [Block 1](#1-run-the-supplied-baseline-required) using that saved result; continue to Block 2.
-When needed: [what the checks do](TOOLS.md#m0-tools-and-why-they-are-here); [tool references](RESOURCES.md#m0-resources). Do not activate a fault yet.
+- **Do:** start from the checkpoint above; work in `projects/catalog/` on the
+  supplied `src/catalog_api/` and `tests/test_api.py`, then run the commands below.
+- **Understand:** a reproducible baseline is the last-green state that makes a
+  later failure diagnostic meaningful. Use [what the checks do](TOOLS.md#m0-tools-and-why-they-are-here)
+  and [tool references](RESOURCES.md#m0-resources) only when that question appears.
+- **Check:** all baseline checks and both HTTP responses pass; record the exact
+  commands and observations in `evidence/M0/index.md`.
+- **If it fails:** do not activate a fault. Use the targeted troubleshooting
+  route below, preserve `.env` and evidence, and return to the narrowest red command.
+- **Stop/resume:** stop with the green transcript saved. Resume at
+  [Block 1](#1-run-the-supplied-baseline-required) from that result, then continue to Block 2.
 
 From the repository root:
 

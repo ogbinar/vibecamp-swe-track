@@ -5,6 +5,7 @@ from ecommerce_api.provider_fake import (
     FakeProvider,
     ProviderMode,
     ProviderTimeout,
+    RetryBudget,
     signed_webhook_fixtures,
     webhook_scenario,
 )
@@ -13,8 +14,9 @@ from ecommerce_api.provider_fake import (
 def test_provider_exposes_unknown_outcome() -> None:
     provider = FakeProvider(mode=ProviderMode.TIMEOUT_AFTER)
     with pytest.raises(ProviderTimeout, match="after provider processing"):
-        provider.charge(idempotency_key="order-1")
+        provider.pay(operation_id="payment-1", idempotency_key="order-1")
     assert provider.completed_keys == {"order-1"}
+    assert provider.lookup(operation_id="payment-1") == "succeeded"
 
 
 @pytest.mark.parametrize(
@@ -24,8 +26,9 @@ def test_provider_exposes_unknown_outcome() -> None:
 def test_timeout_phase_is_controllable(mode: ProviderMode) -> None:
     provider = FakeProvider(mode=mode)
     with pytest.raises(ProviderTimeout, match="before provider processing"):
-        provider.charge(idempotency_key="order-1")
+        provider.pay(operation_id="payment-1", idempotency_key="order-1")
     assert provider.completed_keys == set()
+    assert provider.lookup(operation_id="payment-1") == "unknown"
 
 
 def test_worker_harness_exposes_duplicate_effect_window() -> None:
@@ -38,7 +41,7 @@ def test_worker_harness_exposes_duplicate_effect_window() -> None:
 @pytest.mark.parametrize(
     ("mode", "result"),
     [
-        (ProviderMode.SUCCESS, "charged"),
+        (ProviderMode.SUCCESS, "succeeded"),
         (ProviderMode.DECLINED, "declined"),
         (ProviderMode.RATE_LIMITED, "429:retry-after=2"),
         (ProviderMode.SERVER_ERROR, "503"),
@@ -46,7 +49,37 @@ def test_worker_harness_exposes_duplicate_effect_window() -> None:
     ],
 )
 def test_provider_modes_are_controllable(mode: ProviderMode, result: str) -> None:
-    assert FakeProvider(mode=mode).charge(idempotency_key="order-1") == result
+    assert (
+        FakeProvider(mode=mode).pay(operation_id="payment-1", idempotency_key="order-1") == result
+    )
+
+
+def test_refund_success_failure_and_unknown_are_controllable() -> None:
+    assert (
+        FakeProvider().refund(
+            payment_id="payment-1", operation_id="refund-1", idempotency_key="refund-key-1"
+        )
+        == "refunded"
+    )
+    assert (
+        FakeProvider(mode=ProviderMode.REFUND_FAILED).refund(
+            payment_id="payment-1", operation_id="refund-1", idempotency_key="refund-key-1"
+        )
+        == "failed"
+    )
+    provider = FakeProvider(mode=ProviderMode.REFUND_TIMEOUT_AFTER)
+    with pytest.raises(ProviderTimeout, match="refund timed out after provider processing"):
+        provider.refund(
+            payment_id="payment-1", operation_id="refund-1", idempotency_key="refund-key-1"
+        )
+    assert provider.lookup(operation_id="refund-1") == "refunded:payment-1"
+
+
+def test_combined_retry_budget_bounds_attempts_and_elapsed_time() -> None:
+    budget = RetryBudget(max_attempts=3, total_seconds=5.0)
+    assert budget.permits(attempt=3, elapsed_seconds=5.0)
+    assert not budget.permits(attempt=4, elapsed_seconds=4.0)
+    assert not budget.permits(attempt=2, elapsed_seconds=5.01)
 
 
 def test_webhook_scenario_is_out_of_order_and_duplicated() -> None:

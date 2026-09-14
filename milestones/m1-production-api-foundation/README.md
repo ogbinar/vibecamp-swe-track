@@ -55,6 +55,12 @@ Use the [fixed catalog client contract](../../projects/catalog/specs/M1-PRODUCT-
 
 ## Work blocks
 
+Use the five visible cues in each block: **Do** is its start/work/command;
+**Understand** is the exact concept or support link; **Check** is its expected
+observation and evidence; **If it fails** is the named hint/reset/recovery; and
+**Stop/resume** is its saved last-green boundary and return anchor. The compact
+scope lines below state those facts in that order without replacing C/A IDs.
+
 ### 1. Describe client behavior before routes `[REQUIRED]`
 
 Start from the starting checkpoint above. Work in `projects/catalog/`;

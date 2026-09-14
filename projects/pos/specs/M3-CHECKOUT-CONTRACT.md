@@ -1,7 +1,8 @@
 # M3 checkout and correctness contract
 
-`POST /checkouts` accepts a cart identifier, payment reference, and idempotency
-key. On success it returns 201 with sale, payment, inventory, and receipt facts.
+`POST /checkouts` accepts a cart identifier, local payment-intent reference, and
+idempotency key. On success it returns 201 with local sale, payment-intent,
+inventory, and receipt facts.
 Unknown cart is 404; empty/already-checked-out cart is 409; insufficient stock
 is 409. The same key and request returns the same sale; the same key with a
 different request is 409.
@@ -14,6 +15,11 @@ State rules:
 - payment success without a committed sale becomes an explicit unknown outcome,
   never an invented failure;
 - a receipt exists exactly once for a completed sale.
+
+M3 deliberately has no remote money call. Its database transaction can roll
+back only local facts. When M6 adds a provider, a timeout-after-effect becomes
+unknown and must be resolved by durable idempotency, provider lookup, and
+reconciliation; database rollback cannot undo provider money.
 
 Money uses `Decimal`: line subtotal is quantity × unit price; a fixed 10%
 discount applies only when subtotal is at least 100.00; tax is 12% after

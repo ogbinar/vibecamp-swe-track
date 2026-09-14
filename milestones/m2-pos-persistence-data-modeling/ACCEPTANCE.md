@@ -17,6 +17,7 @@ Required maturity: **Level B** for the persistent POS slice.
   - [ ] Compose persistence/reset behavior is proven.
 - **A4:**
   - [ ] Request/use-case session scope is explicit
+  - [ ] a simple route may call SQLAlchemy directly; any service/repository names the observed orchestration, invariant, duplication, or substitution that earned it, and repositories never commit
   - [ ] induced flush error rolls back and leaves later work usable
   - [ ] synchronous session behavior is the documented baseline, and any async proposal includes representative before/after evidence plus pool/failure/complexity analysis
   - [ ] M2 API, PostgreSQL integration, migration, Ruff, mypy, and validator commands pass cleanly.

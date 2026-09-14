@@ -1,5 +1,11 @@
 # M2 persistence contract
 
+Route-to-SQLAlchemy is acceptable for a simple endpoint. Add a service only
+when orchestration or invariants need one owner; add a repository only for
+repeated/complex access or a real substitution seam. The request/use case owns
+commit and rollback. Repositories expose persistence operations and never
+commit independently.
+
 Core uses these fixed examples; the learner owns table and repository design.
 
 | Request | Success | Domain error |

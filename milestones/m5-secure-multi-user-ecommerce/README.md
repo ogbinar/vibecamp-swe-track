@@ -50,18 +50,33 @@ personal data.
 
 ## Work blocks
 
+Use the five visible cues in each block: **Do** is its start/work/command;
+**Understand** is the exact concept or support link; **Check** is its expected
+observation and evidence; **If it fails** is the named hint/reset/recovery; and
+**Stop/resume** is its saved last-green boundary and return anchor. The compact
+scope lines below state those facts in that order without replacing C/A IDs.
+
 ### 1. Establish identity safely `[REQUIRED]`
 
 Start from the starting checkpoint above. Work in `projects/ecommerce/`;
-focus on `tests/m5/test_identity.py` and the output named below. Record `evidence/M5/identity.md`.
-Stop when this block’s [command-map row](#literal-command-map) passes and its evidence is saved.
-Resume at [Block 1](#1-establish-identity-safely-required) using that saved result; continue to Block 2.
-When needed: [C1 scenario and hints](CHALLENGE.md#c1--broken-identity) and [concept explanation](CONCEPTS.md#the-password-database-leaked). [Tool boundaries](TOOLS.md#tools-earned-here) apply to this product.
+focus on the supplied `contracts/test_m5_security_contract.py`, then create
+`tests/m5/test_identity.py`. Use the [C1 scenario and hints](CHALLENGE.md#c1--broken-identity),
+[password example](CONCEPTS.md#the-password-database-leaked), and
+[tool boundaries](TOOLS.md#tools-earned-here) only when the concrete failure
+raises that question. Run the supplied contract first; its missing-route
+failures are the intended red behavior, while a missing learner test is only a
+setup signal. Record the learner check in `evidence/M5/identity.md`. If it fails,
+follow C1 recovery and rerun the narrow check without resetting unrelated state.
+Stop when this block's [command-map row](#literal-command-map) passes and its
+evidence is saved. Resume at [Block 1](#1-establish-identity-safely-required)
+using that saved result; continue to Block 2.
 
 **Supplied:** PostgreSQL shell and the [security contract](../../projects/ecommerce/specs/M5-SECURITY-CONTRACT.md).
 **You build:** user model, Argon2 password hashing, generic registration/login/
 recovery responses, and opaque cookie sessions in `projects/ecommerce/`. Run
-focused API tests; observe cookie rotation and no identity enumeration. Record
+`uv run --locked pytest contracts/test_m5_security_contract.py -q` once to
+observe the supplied red contract, then run focused learner API tests; observe
+cookie rotation and no identity enumeration. Record
 `evidence/M5/identity.md`. Stop after login/logout/recovery are green.
 
 ### 2. Enforce role and object policy `[REQUIRED]`
@@ -94,7 +109,8 @@ regression test. JWT implementation remains Stretch.
 
 Run from `projects/ecommerce/`; create each named learner test before expecting green.
 
-Before: the learner test is absent or its synthetic attack succeeds. After: the
+Before: create the named test and observe its synthetic attack assertion fail.
+File-not-found is not evidence. After: the
 row’s stop condition is green with unchanged protected state.
 
 | Block | Learner target | Copyable command | Expected stop condition |
@@ -103,7 +119,8 @@ row’s stop condition is green with unchanged protected state.
 | 2 | `tests/m5/test_authorization_matrix.py` | `ECOMMERCE_TEST_DATABASE_URL=postgresql+psycopg://vibecamp:vibecamp@127.0.0.1:5433/vibecamp_ecommerce uv run --locked pytest tests/m5/test_authorization_matrix.py -q` | Every role/object denial preserves state and reveals no object existence. |
 | 3 | `tests/m5/test_order_state.py` | `ECOMMERCE_TEST_DATABASE_URL=postgresql+psycopg://vibecamp:vibecamp@127.0.0.1:5433/vibecamp_ecommerce uv run --locked pytest tests/m5/test_order_state.py -q` | Allowed transitions pass and every denial preserves rows. |
 
-An absent target is the create-it signal. Recover with the ecommerce bounded
+Create an absent target before recording a red result; setup failure is not the
+security observation. Recover with the ecommerce bounded
 reset and one synthetic identity; record the next action before pausing.
 
 Pause: record the active synthetic actor, failing policy case, and next test.

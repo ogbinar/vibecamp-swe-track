@@ -38,7 +38,20 @@ Apply a row only when its condition is true. In the evidence index, write
 | Claims production deployment | immutable artifact, readiness, migration order, secret custody, backup/restore, rollback/roll-forward |
 | Reaches a milestone gate | cold reviewer reproduces one Core path and one failure; record verdict |
 
+External evidence is classified separately. All milestones complete their local
+Core without credentials. M6 has one required, separately authorized sandbox
+experiment for the stronger real-provider claim; unavailable access remains
+`PENDING — ACCESS/PROVIDER OUTAGE`. M7 email and M10 storage, OAuth/OIDC,
+monitoring, SQLAdmin, and real deployment are optional endorsements. No fake,
+local simulation, or CI run may be presented as provider or deployment evidence.
+
 A screenshot alone is not correctness evidence. Prefer tests, sanitized HTTP captures, migration transcripts, constraint failures, query plans, load summaries, telemetry correlations, and restore records. Never fabricate a passing result.
+
+Evidence is owned by the active product: while working in
+`projects/<product>/`, write `evidence/MN/...`, which resolves to
+`projects/<product>/evidence/MN/...`. Root documents spell out the qualified
+path. Keep an existing index on resume; never overwrite it by copying the
+template again.
 
 ## Cold-review protocol
 

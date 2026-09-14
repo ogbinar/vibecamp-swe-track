@@ -32,3 +32,11 @@ index to a named read and compare the plan while accounting for write/storage co
 **Term — migration:** a versioned schema/data change. **Rule:** test empty and
 existing-data paths, interruption, restart, compatibility, and rollback or
 roll-forward. Diagnose N+1 by query count and shape, not latency alone.
+
+## “A repository only forwarded one call”
+
+**Example:** a route and repository have identical signatures and no repeated
+query or substitution need. **Term — earned boundary:** a layer introduced by
+observed orchestration, invariants, duplication, or substitution. **Rule:** keep
+simple route-to-SQLAlchemy code direct; the use case owns commit/rollback, and a
+repository never commits independently.

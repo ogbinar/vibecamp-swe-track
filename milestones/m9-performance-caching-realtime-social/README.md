@@ -51,6 +51,12 @@ WebSocket implementation is Stretch. Complete C1–C3 in
 
 ## Work blocks
 
+Use the five visible cues in each block: **Do** is its start/work/command;
+**Understand** is the exact concept or support link; **Check** is its expected
+observation and evidence; **If it fails** is the named hint/reset/recovery; and
+**Stop/resume** is its saved last-green boundary and return anchor. The compact
+scope lines below state those facts in that order without replacing C/A IDs.
+
 ### 1. Measure and repair the database feed `[REQUIRED]`
 
 Start from the starting checkpoint above. Work in `projects/social/`;
@@ -91,6 +97,10 @@ reconnect, last-event ID, gaps, restart, malformed events, and slow consumers.
 Record `evidence/M9/realtime.md`. Stop when the published replay/loss policy is
 observable. A WebSocket implementation is Stretch.
 
+The neutral starter intentionally does not supply the SSE application or
+`tests/m9/test_sse.py`: the contract, lesson, and acceptance requirements are
+provided, while that implementation and its behavioral tests are learner work.
+
 ### Literal command map
 
 Run from `projects/social/`; create the M9 learner tests named below.
@@ -104,7 +114,8 @@ row’s correctness and measurement stop condition is recorded.
 | 2 | `SOCIAL_TEST_DATABASE_URL=postgresql+psycopg://vibecamp:vibecamp@127.0.0.1:5435/vibecamp_social uv run --locked pytest tests/m9/test_cache_experiment.py -q` | Staleness, outage, key scope, invalidation, and retain/remove decision are recorded. |
 | 3 | `uv run --locked pytest tests/m9/test_sse.py -q` | Reconnect, gap, restart, malformed-event, and slow-consumer behavior match the replay policy. |
 
-An absent target is the create-it signal. Recover by disabling the experimental
+Create an absent target before recording a red result; file-not-found is setup
+feedback, not performance/realtime evidence. Recover by disabling the experimental
 cache/SSE path, proving PostgreSQL remains authoritative, and recording the next
 action before pausing.
 

@@ -50,6 +50,12 @@ database access. The learner owns tables, constraints, indexes, and boundaries.
 
 ## Work blocks
 
+Use the five visible cues in each block: **Do** is its start/work/command;
+**Understand** is the exact concept or support link; **Check** is its expected
+observation and evidence; **If it fails** is the named hint/reset/recovery; and
+**Stop/resume** is its saved last-green boundary and return anchor. The compact
+scope lines below state those facts in that order without replacing C/A IDs.
+
 ### 1. Model the fixed queries `[REQUIRED]`
 
 Start from the starting checkpoint above. Work in `projects/pos/`;
@@ -66,16 +72,18 @@ migration, and constraint tests in `projects/pos/`. Run
 constraint failures. Record `evidence/M2/schema.md`. Diagnose with
 `uv run --locked alembic current`; stop when a fresh database upgrades cleanly.
 
-### 2. Add repository boundaries `[REQUIRED]`
+### 2. Earn a data-access boundary `[REQUIRED]`
 
 Start from Block 1 green with its result recorded. Work in `projects/pos/`;
 focus on `tests/m2/test_persistence_api.py` and the output named below. Record `evidence/M2/persistence.md`.
 Stop when this block’s [command-map row](#literal-command-map) passes and its evidence is saved.
-Resume at [Block 2](#2-add-repository-boundaries-required) using that saved result; continue to Block 3.
+Resume at [Block 2](#2-earn-a-data-access-boundary-required) using that saved result; continue to Block 3.
 When needed: [C2 scenario and hints](CHALLENGE.md#c2--slow-and-duplicated-data-access) and [concept explanation](CONCEPTS.md#the-product-vanished-after-restart).
 
-Create request-scoped session injection, repositories for repeated SQL, and
-API/integration tests while keeping transaction completion in the service. Run
+Create request-scoped session injection and API/integration tests. A simple
+route may call SQLAlchemy directly. Add a repository only for demonstrated
+repeated/complex data access, and a service only for orchestration or invariants;
+the use case owns commit/rollback and repositories never commit. Run
 the POS README test block; observe data after an API restart. Record
 `evidence/M2/persistence.md`. Stop when it passes twice across a restart.
 
@@ -96,7 +104,8 @@ stop when both legacy rows survive and the index decision cites the plan.
 
 Run from `projects/pos/`. Create the named learner test before expecting green.
 
-Before: the learner test is absent or red. After: the row’s stop condition is
+Before: create the named test, then make its published invalid-row, restart, or
+migration behavior fail for the intended assertion. After: the row’s stop condition is
 green against PostgreSQL and its evidence is recorded.
 
 | Block | Learner target | Copyable command | Expected stop condition |
@@ -105,7 +114,8 @@ green against PostgreSQL and its evidence is recorded.
 | 2 | `tests/m2/test_persistence_api.py` | `POS_TEST_DATABASE_URL=postgresql+psycopg://vibecamp:vibecamp@127.0.0.1:5432/vibecamp_pos uv run --locked pytest tests/m2/test_persistence_api.py -q` | The API retains data across an application restart and transaction ownership is explicit. |
 | 3 | `tests/m2/test_migration_query.py` | `POS_TEST_DATABASE_URL=postgresql+psycopg://vibecamp:vibecamp@127.0.0.1:5432/vibecamp_pos uv run --locked pytest tests/m2/test_migration_query.py -q` | Legacy rows survive restartable migration and the fixed cart load meets its query boundary. |
 
-If a target is absent, pytest’s “file not found” is the create-it signal. Recover
+If a target is absent, create it from the contract before claiming a red test;
+file-not-found is setup feedback, not behavioral proof. Recover
 with `uv run --locked alembic current` and the POS README’s bounded reset. Record
 the result and next row before pausing.
 

@@ -22,7 +22,8 @@ Threat boundaries to test before repair:
 - login/recovery reveals whether an identity exists;
 - a client supplies its own role;
 - one customer guesses another customer's object or list filter;
-- an expired, wrong-audience, or wrong-type token is accepted;
+- an expired or revoked cookie session is accepted; Stretch bearer-token work
+  additionally tests wrong audience and wrong token type;
 - a repeated or forbidden transition mutates the order.
 
 M5 excludes external payment calls, queues, Redis, social login, and a custom

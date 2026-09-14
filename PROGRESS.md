@@ -24,6 +24,10 @@ Status: `NOT STARTED`, `ACTIVE`, `GATE REVIEW`, `PASSED`, or `REOPENED`.
 ## Active milestone dashboard
 
 Keep values short and link to the issue/evidence rather than duplicating detail.
+Evidence-index links use the qualified project path, for example
+`projects/catalog/evidence/M0/index.md`; milestone commands may use the shorter
+`evidence/M0/index.md` only after stating `projects/catalog/` as the working
+directory.
 
 | Field | Current value |
 |---|---|

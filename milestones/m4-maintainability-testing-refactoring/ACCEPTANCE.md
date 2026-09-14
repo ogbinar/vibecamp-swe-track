@@ -9,7 +9,7 @@ Required maturity: **Level B**, emphasizing changeability and test fitness.
   - [ ] C1 preserves stakeholder/decision-owner/accepted-and-rejected-scope evidence
   - [ ] module map states ownership/dependency direction
   - [ ] the forbidden dependency fails automation
-  - [ ] two requirement variants reduce demonstrated change scatter without speculative layers.
+  - [ ] the cashier-name change reduces demonstrated change scatter without speculative layers; no second Core variant is required.
 - **A2:**
   - [ ] C2 proves only earned dependency-injection/service/repository boundaries localize demonstrated orchestration or persistence change
   - [ ] a simple path remains direct, no retained layer merely forwards calls, and the use case owns transaction/invariant intent while repositories do not commit.

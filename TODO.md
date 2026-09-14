@@ -1,13 +1,14 @@
-# Career-shifter self-study implementation checklist
+# Career-shifter self-paced curriculum implementation checklist
 
-Status: **REPOSITORY REMEDIATION COMPLETE — LOCAL LEARNER IA AND CLEANUP COMPLETE — EXTERNAL EVIDENCE PENDING**
+Status: **PARETO GAP REPAIR COMPLETE — CS0–CS6 LOCAL WORK COMPLETE — EXTERNAL EVIDENCE PENDING**
 
 This is the active completion ledger for [PLAN.md](PLAN.md). Checked items were
-implemented and locally verified to the scope stated. The earlier repository
-remediation is complete. All locally actionable IA/CU work is verified or resolved by an evidenced KEEP/DEFER
-decision. Current unchecked items require a human learner, GitHub-hosted
-observation, or learner-authorized real target. Partial substitutes are recorded honestly and do not
-count as completion of the stronger original requirement.
+implemented and locally verified to the scope stated. Repository remediation,
+IA/CU, and CS0–CS6 remain complete; their checked history is not reopened. The
+short PG follow-up below is the only active local phase. Pre-existing unchecked
+items still require provider authority, a human learner, GitHub-hosted
+observation, or a learner-authorized real target. Partial substitutes are
+recorded honestly and do not count as stronger external evidence.
 
 ## Audit correction and priority order
 
@@ -171,7 +172,8 @@ open; do not use it to bypass the pilot-first IA sequence.
 - [ ] Human cold-test M7 → M8, M8 → M9, and M9 → M10.
 - [ ] Record reviewer, date, Git reference, environment, wrong turns, help,
   recovery, next action, and rubric score for each transition.
-- [ ] Repair and repeat any transition below 4/5 in any rubric dimension.
+- [ ] Repair and repeat any transition below the current nine-dimension threshold
+  (at least 85/100 and no dimension below 3); the older 4/5 wording is historical.
 - [ ] Set `HUMAN SELF-STUDY VERIFIED` only after those observations pass.
 
 ## Release invariants
@@ -642,4 +644,559 @@ not named human or hosted evidence. CU3/CU4 archive/compaction/template/workflow
 candidates resolve KEEP where recorded; no deletion is implied by those checks.
 All remaining unchecked items are external: hosted rendering/Actions, named target
 humans and their review/repair/retest records, human-readiness designation, or
-the optional real-target endorsement. No new locally actionable item remains.
+the optional real-target endorsement. At the IA/CU closeout, no locally
+actionable item remained; the new CS phase below now supersedes that historical
+statement without reopening any checked item.
+
+## ACTIVE PHASE — CS career-shifter/self-paced revision
+
+Status: **LOCAL CLOSEOUT COMPLETE — EXTERNAL EVIDENCE REMAINS PENDING**
+
+Canonical rationale and frozen decisions: [active CS plan](PLAN.md#active-plan--career-shifterself-paced-instructional-revision).
+Execution order is CS0 → CS1 → Stop/Go 1 → CS2 → CS3 → Stop/Go 2 → CS4 →
+Stop/Go 3 → CS5 → CS6. The explicit root-table override is the only completed
+CS implementation item; every unrelated item remains unchecked. Checking an item
+requires its stated observation, commands, completion condition, and rollback
+record. Preserve all earlier checked R/IA/CU items and all pre-existing unchecked
+hosted/human/real-target evidence.
+
+When a bundle says **YAML parse**, run this from the repository root:
+
+```bash
+python3 - <<'PY'
+from pathlib import Path
+import yaml
+
+for path in sorted(Path(".github").rglob("*.y*ml")):
+    yaml.safe_load(path.read_text())
+    print(path)
+PY
+```
+
+### Immediate root-table override — binding note
+
+The user-directed primary six-column course table explicitly overrides the
+earlier compact-root/eight-column-only-`CURRICULUM.md` placement and the normal
+CS dependency order. Do not add the superseded eight-column table to
+`CURRICULUM.md` or create a second root roadmap. Future changes update the root
+table in place. CS2.1 below is the single checklist item for this override; no
+other CS item is completed by it.
+
+### CS0 — Baseline and decision freeze (planning/local, no learner edits)
+
+- [x] **CS0.1 Capture the implementation baseline.** Depends on: this planning
+  phase only. Targets: read-only `README.md`, `CURRICULUM.md`, `STACK.md`,
+  `QUALITY-GATES.md`, `PROGRESS.md`, `USABILITY.md`, `milestones/*/*.md`,
+  `projects/**`, `scripts/*`, `.github/**/*.yml`, plus `PLAN.md`/`TODO.md` status.
+  Expected: cleanly separated prior completion, external pending work, current
+  tree state, 11×7 count, concept count, current commands, and no assumed
+  provider access. Validate from root: `git status --short --branch`; `python3
+  -B scripts/check_curriculum.py`; `python3 -B
+  scripts/test_validator_mutations.py`; `git diff --check`. Complete when the
+  baseline reference and dirty-path ownership are recorded before learner edits;
+  rollback: discard only new baseline notes.
+
+- [x] **CS0.2 Decide the evidence-path convention.** Depends on: CS0.1. Targets:
+  `README.md`, `QUALITY-GATES.md`, `PROGRESS.md`,
+  `templates/EVIDENCE-INDEX.md`, `milestones/*/{README,CHALLENGE,ACCEPTANCE}.md`,
+  and existing project `evidence/` examples. Expected: one explicit convention
+  that resolves identically from every stated working directory and a migration
+  map that preserves existing evidence. Validate: `rg -n 'evidence/' README.md
+  QUALITY-GATES.md PROGRESS.md templates milestones projects`; `python3 -B
+  scripts/check_curriculum.py`. Complete when root-versus-project ownership and
+  command resolution are unambiguous; rollback: retain current paths and mark
+  the decision unresolved rather than moving evidence.
+
+- [x] **CS0.3 Decide the M4 Core change and variant policy.** Depends on: CS0.1.
+  Targets: M4 seven-file set and `projects/pos/specs/M4-CHANGE-BRIEF.md`.
+  Expected: one Core stakeholder request used everywhere; proposed default is
+  cashier name, with returns/promotions and any second variant removed from Core
+  or explicitly bounded as Stretch. Validate: `rg -n
+  'cashier|return|promotion|variant' milestones/m4-maintainability-testing-refactoring
+  projects/pos/specs/M4-CHANGE-BRIEF.md`; `python3 -B
+  scripts/check_curriculum.py`. Complete when a Given/When/Then contract and
+  variant disposition are recorded; rollback: no M4 learner edit until decided.
+
+- [x] **CS0.4 Decide the M6 provider reference and interface vocabulary.**
+  Depends on: CS0.1. Targets: M6 seven-file set,
+  `projects/ecommerce/specs/M6-INTEGRATION-CONTRACT.md`, provider fake/tests, and
+  proposed Stripe-like sandbox evidence. Expected: one named reference flow and
+  consistent `authorize`/`capture`/`refund`/`lookup` or documented immediate-
+  payment vocabulary, with the current fake `charge` conflict mapped. Validate:
+  `rg -n 'authorize|capture|charge|refund|lookup|real call|sandbox'
+  milestones/m6-resilient-external-integrations projects/ecommerce`; `python3
+  -B scripts/check_curriculum.py`. Complete when fake, learner port, webhook,
+  refund, lookup, and sandbox terms can align; rollback: retain deterministic
+  fake and prohibit implementation expansion.
+
+- [x] **CS0.5 Decide the M9 SSE classification.** Depends on: CS0.1. Targets: M9
+  seven-file set, `projects/social/specs/M9-FEED-CONTRACT.md`, `STACK.md`, and
+  relevant social tests. Expected: one decision: polling Core followed by an
+  earned SSE experiment, or SSE Core justified by a fixed measurable one-way
+  latency need; WebSockets remain Stretch. Validate: `rg -n
+  'poll|SSE|server-sent|WebSocket|latency' STACK.md
+  milestones/m9-performance-caching-realtime-social projects/social`; `python3
+  -B scripts/check_curriculum.py`. Complete when contract, gate, and tool policy
+  agree; rollback: no M9 rollout while classification conflicts.
+
+- [x] **CS0.6 Freeze the remaining causal grammar and integration
+  taxonomy.** Depends on: CS0.2–CS0.5. Targets: the active section of `PLAN.md`
+  and implementation map in `TODO.md`; learner files remain read-only. Expected:
+  preserve the already implemented exact root six-column M0–M10/five-product
+  table without duplicating it in `CURRICULUM.md`; freeze the visible
+  Do/Understand/Check/If it fails/Stop-resume cues, deterministic offline Core
+  everywhere, exactly one required M6 sandbox experiment, and only listed M7/M10
+  optional endorsements. Validate: manual row/column count; `python3 -B
+  scripts/check_curriculum.py`; `git diff --check -- PLAN.md TODO.md`. Complete
+  when all four decisions have owners and no contradiction is deferred into
+  broad rollout; rollback: revise planning only.
+
+- [x] **CS0.7 Re-verify primary tool and provider documentation.** Depends on:
+  CS0.6. Targets: the official-reference list in `PLAN.md`, affected
+  `milestones/*/RESOURCES.md`, and `STACK.md`; learner implementation remains
+  unchanged. Expected: current primary documentation confirms the planned
+  FastAPI/Starlette background and security semantics, native SSE availability,
+  FastCRUD session/commit behavior, database pagination behavior, Stripe
+  sandbox/key/retry/idempotency/webhook/refund behavior, S3-compatible limits,
+  OAuth authorization-code + PKCE/OIDC guidance, and the selected observability/
+  admin integration. Record retrieval date and any version constraint; do not
+  rely on tutorials where an official source exists. Validate: manually open
+  every planned reference and compare it with the locked project versions.
+  Complete when stale assumptions become explicit decisions or are removed;
+  rollback: defer the affected tool/provider and keep the simpler local Core.
+
+### CS1 — Narrow contradiction repair (local implementation)
+
+- [x] **CS1.1 Apply the evidence-path decision without losing evidence.**
+  Depends on: CS0.2 and CS0.6. Targets: exact files in CS0.2 plus only affected
+  existing example paths. Expected: every command states repository/project
+  working directory and resolves to the same learner-owned evidence index; no
+  file is overwritten on resume. Validate: `rg -n 'evidence/' README.md
+  QUALITY-GATES.md PROGRESS.md templates milestones projects`; `python3 -B
+  scripts/check_curriculum.py`; `git diff --check`. Complete when link/command
+  traversal passes and existing artifacts remain; rollback: revert path/link
+  migration as one batch and restore moved artifacts from the recorded manifest.
+
+- [x] **CS1.2 Make M2 boundaries earned, not ceremonial.** Depends on: CS0.6.
+  Targets: `CURRICULUM.md`, `STACK.md`, M2 seven-file set, and
+  `projects/pos/specs/M2-PERSISTENCE-CONTRACT.md`. Expected: explicit route-to-
+  SQLAlchemy permission for a simple case; service/repository introduced only
+  for observed orchestration, invariant, duplication, or substitution; use-case
+  owns commit/rollback. Validate: `rg -n 'service|repository|commit|transaction'
+  CURRICULUM.md STACK.md milestones/m2-pos-persistence-data-modeling
+  projects/pos/specs/M2-PERSISTENCE-CONTRACT.md`; from `projects/pos`, `uv run
+  --locked ruff check .`, `uv run --locked ruff format --check .`, `uv run
+  --locked mypy .`, `uv run --locked pytest`; then root validator/diff check.
+  Complete when no criterion mandates empty layers; rollback: revert M2 batch.
+
+- [x] **CS1.3 Draw the M3 local/remote transaction boundary.** Depends on:
+  CS0.4. Targets: M3 seven-file set,
+  `projects/pos/specs/M3-CHECKOUT-CONTRACT.md`, and M6 handoff wording. Expected:
+  database rollback covers local state/intent only and explicitly cannot undo
+  provider money; remote effects route to M6 idempotency, unknown outcome,
+  lookup, and reconciliation. Validate: `rg -n 'rollback|payment|provider|money|reconcil'
+  milestones/m3-transactions-correctness milestones/m6-resilient-external-integrations
+  projects/pos/specs/M3-CHECKOUT-CONTRACT.md`; POS lint/format/type/tests and
+  isolated PostgreSQL migration/integration checks; root validator/diff check.
+  Complete when no atomicity claim crosses the provider boundary; rollback:
+  revert M3/M6 handoff hunks together.
+
+- [x] **CS1.4 Align M4 to the chosen single Core change.** Depends on: CS0.3.
+  Targets: M4 seven-file set, `projects/pos/specs/M4-CHANGE-BRIEF.md`, and exact
+  portfolio references. Expected: spec, prose, challenge, acceptance, and review
+  all use the chosen Core change; any variant is explicitly Stretch and fully
+  supported or removed. Validate: CS0.3 search; POS lint/format/type/tests; root
+  validator/diff check. Complete when there is one unambiguous Core and no
+  unsupported second variant; rollback: revert the M4 batch.
+
+- [x] **CS1.5 Restore cookie Core / JWT Stretch consistency in M5.** Depends on:
+  CS0.6. Targets: M5 seven-file set,
+  `projects/ecommerce/specs/M5-SECURITY-CONTRACT.md`,
+  `projects/ecommerce/REQUIREMENTS.md`, relevant contracts, and `STACK.md`.
+  Expected: secure first-party cookie session is Core; FastAPI Security follows
+  auth/authz concepts; PyJWT lab/comparison is conditional Stretch unless a
+  different client boundary is earned. Validate: `rg -n 'PyJWT|JWT|cookie|Core|Stretch|Security'
+  STACK.md milestones/m5-secure-multi-user-ecommerce projects/ecommerce`; from
+  `projects/ecommerce`, lint/format/type/tests plus isolated PostgreSQL checks;
+  root validator/diff check. Complete when no Core gate implies PyJWT;
+  rollback: revert M5 batch without weakening existing security tests.
+
+- [x] **CS1.6 Repair M6 scope/vocabulary before adding behavior.** Depends on:
+  CS0.4. Targets: M6 seven-file set and M6 project contract/fake/test targets.
+  Expected: deterministic local calls remain allowed and required; real calls
+  become one separately authorized sandbox experiment; interface, webhook raw-
+  body verification, timeout phases, refund, unknown, lookup, and reconciliation
+  requirements are coherent but learner implementation is not supplied. Validate:
+  CS0.4 search; ecommerce lint/format/type/tests; root validator/diff check.
+  Complete when no file both prohibits and requires the sandbox and no acceptance
+  relies on the old fake-only charge vocabulary; rollback: revert M6 contract
+  wording as one batch.
+
+- [x] **CS1.7 Remove exactly-once email implications in M7.** Depends on: CS0.6.
+  Targets: M7 seven-file set, `projects/ecommerce/specs/M7-JOB-CONTRACT.md`, and
+  worker/outbox seams/tests referenced by the lesson. Expected: at-least-once
+  delivery, durable business idempotency, bounded duplicates, and provider
+  acceptance-versus-mailbox-delivery language; provider lab remains optional.
+  Validate: `rg -n 'exactly.once|at.least.once|email|accepted|deliver|duplicate'
+  milestones/m7-durable-async-background-processing projects/ecommerce`; ecommerce
+  lint/format/type/tests and PostgreSQL checks; root validator/diff check.
+  Complete when no external-email exactly-once claim remains; rollback: revert
+  M7 batch.
+
+- [x] **CS1.8 Align M9 with the settled SSE decision.** Depends on: CS0.5.
+  Targets: M9 seven-file set, `projects/social/specs/M9-FEED-CONTRACT.md`,
+  `STACK.md`, and relevant harness/tests. Expected: one Core/experiment status,
+  a measurable need, tested reconnect/gap/slow-consumer/loss semantics if SSE is
+  retained, and WebSockets only for earned bidirectional Stretch. Validate:
+  CS0.5 search; from `projects/social`, lint/format/type/tests and isolated
+  PostgreSQL checks; root validator/diff check. Complete when policy, contract,
+  challenge, and acceptance agree; rollback: revert M9 batch.
+
+- [x] **CS1.9 Replace mechanical red signals and repair first-use/rubric drift.**
+  Depends on: CS1.1–CS1.8. Targets: changed
+  `milestones/*/{README,CONCEPTS,CHALLENGE,ACCEPTANCE}.md`, their project tests/
+  contracts, `CURRICULUM.md`, `GLOSSARY.md`, active `PLAN.md`/`TODO.md` claims,
+  and `templates/TRANSITION-REVIEW.md`; touch `USABILITY.md` only to clarify its
+  current authority. Expected: `pytest -s`/missing-selector mechanics are not
+  substantive proof; concepts first appear through concrete examples and trace
+  to practice/proof; current reviews use nine dimensions scored 0–4, ≥85/100,
+  none below 3, while dated historical scores remain labeled. Validate: `rg -n
+  'pytest.*-s|missing|4/5|five dimensions|ten dimensions|0.to.4|85/100' PLAN.md
+  TODO.md USABILITY.md templates milestones projects`; all affected project
+  checks; root validator/mutations/diff check. Complete when intended red states
+  assert behavior and current rubric language has one owner; rollback: revert
+  only the failing concept/test/rubric sub-batch.
+
+- [x] **CS1.GATE STOP/GO 1 — approve expansion after contradiction repair.**
+  Depends on: CS1.1–CS1.9. Targets: the complete CS1 diff and decision record in
+  `PLAN.md`/`TODO.md`. Expected: every listed contradiction is closed, four
+  decisions are visible, no solution or provider secret exists, and external
+  items remain unchecked. Validate: `python3 -B scripts/check_curriculum.py`;
+  `python3 -B scripts/test_validator_mutations.py`; `git diff --check`; parse
+  all `.github/**/*.yml` with `yaml.safe_load`; affected project uv lint/format/
+  type/tests; isolated PostgreSQL checks where applicable. Complete only with a
+  recorded `GO`; rollback: `STOP`, identify the smallest failing CS1 batch, and
+  revert/repair it before CS2.
+
+### CS2 — Root roadmap and earned-tool visibility (local implementation)
+
+- [x] **CS2.1 Install the user-overridden primary 11×6 table in `README.md`.**
+  Depends on: explicit user override, which supersedes CS1.GATE for this item
+  only. Targets: `README.md`, planning records, and table validators;
+  `CURRICULUM.md` remains the linked detail source and is unchanged. Expected:
+  exactly eleven ordered M0–M10 rows and the six exact headers recorded above;
+  five-product journey, concise concepts, earned tools, controller links, and
+  truthful integration classifications scan in one place. Validated by the
+  complete root/mutation/YAML/diff/manual gate named in the override item.
+  Complete with no duplicate detailed table; rollback: restore only the prior
+  root table and matching stable validator/planning rules.
+
+- [x] **CS2.2 Publish one coherent tool ladder.** Depends on: CS2.1. Targets:
+  `STACK.md`, `CURRICULUM.md`, and `milestones/*/TOOLS.md`, with exact contextual
+  links from controllers. Expected: timing/caveats for FastAPI/Uvicorn/Pydantic/
+  settings, `APIRouter`/`Depends`/OpenAPI, handwritten pagination before
+  `fastapi-pagination`, explicit CRUD before FastCRUD including async/commit
+  caveats, concepts before FastAPI Security, disposable `BackgroundTasks`
+  contrast before outbox/worker, earned Redis/SSE/WebSockets, post-auth/audit
+  SQLAdmin, and one of Sentry/Logfire for one question. Validate: targeted `rg`
+  for every tool; root validator/mutations/diff check. Complete when every tool
+  has observed need, simpler baseline, cost, and removal trigger; rollback:
+  revert tool-visibility batch without reverting concepts.
+
+- [x] **CS2.3 Publish the integration taxonomy and ladders.** Depends on: CS2.2.
+  Targets: `CURRICULUM.md`, `STACK.md`, `QUALITY-GATES.md`, M6/M7/M10 seven-file
+  sets, and their existing project contract specs. Expected: offline Core in all
+  milestones; exactly one required M6 sandbox; optional M7 email and M10 storage,
+  OAuth/OIDC, monitoring, SQLAdmin, deployment; outage/pending semantics and no
+  four-account prerequisite; payment/email/storage/OAuth/monitoring ladders are
+  complete. Validate: `rg -n 'REQUIRED|OPTIONAL|sandbox|S3|OAuth|OIDC|Sentry|Logfire|SQLAdmin|email'
+  CURRICULUM.md STACK.md QUALITY-GATES.md milestones projects/*/specs`; root
+  validator/mutations/diff check. Complete when classifications agree and CI has
+  no credential requirement; rollback: revert taxonomy batch.
+
+### CS3 — Two-block compression pilot (local implementation)
+
+- [x] **CS3.1 Pilot one representative M0 block.** Depends on: CS2.3. Targets:
+  exactly one named block in `milestones/m0-engineering-baseline/README.md` and
+  unavoidable exact-link headings in that milestone's six support files.
+  Expected: plain problem name before IDs and visible Do/Understand/Check/If it
+  fails/Stop-resume, with every original command, failure, proof, hint, evidence,
+  recovery, and gate retained. Validate: pre/post semantic diff; `python3 -B
+  scripts/check_curriculum.py`; `git diff --check`; catalog uv lint/format/type/
+  tests. Complete when a fresh-context maintenance reviewer selects, executes,
+  diagnoses, records, and resumes the block without new backtracking; rollback:
+  revert only the M0 pilot hunks.
+
+- [x] **CS3.2 Pilot one difficult M6 payment block.** Depends on: CS3.1. Targets:
+  exactly one named M6 block and unavoidable headings in the M6 seven-file set;
+  deterministic fake/project contract references only. Expected: the same five
+  cues expose fake → protocol/SDK → separately authorized sandbox, timeout/retry/
+  webhook/refund/unknown/reconciliation proof, and the DB/provider boundary
+  without supplying a learner solution. Validate: pre/post semantic diff; root
+  validator/diff check; ecommerce uv lint/format/type/tests (fake only).
+  Complete when fresh-context review can predict and diagnose the hard failure
+  and identify the external authority boundary; rollback: revert M6 pilot hunks.
+
+- [x] **CS3.GATE STOP/GO 2 — accept, revise, or roll back compression.** Depends
+  on: CS3.1–CS3.2. Targets: both pilot blocks and a dated maintenance review in
+  `USABILITY.md`. Expected: current nine-dimension 0–4 observations for both
+  blocks, ≥85/100 and no dimension below 3, no lost substance, and explicit
+  `ROLL OUT`, `REVISE`, or `ROLL BACK`. Validate: root validator/mutations/diff
+  check plus catalog/ecommerce checks; manually trace C/A/evidence/recovery.
+  Complete only on recorded `ROLL OUT`; rollback: revert both pilot batches if
+  revision cannot meet the threshold without added complexity.
+
+### CS4 — M6 deterministic contract and required sandbox evidence
+
+#### CS4 local, deterministic implementation
+
+- [x] **CS4.1 Extend the M6 fake and contract without implementing the learner's
+  application.** Depends on: CS3.GATE = ROLL OUT. Targets:
+  `projects/ecommerce/specs/M6-INTEGRATION-CONTRACT.md`,
+  `src/ecommerce_api/provider_fake.py`, `tests/test_failure_harnesses.py`, and M6
+  seven-file references; settings/env/dependencies only if required by the fixed
+  contract. Expected: success/decline; connect, read, total, before-processing,
+  after-processing timeouts; one combined SDK/application retry budget; raw-body
+  signed webhook; durable event/business idempotency; duplicates/out-of-order;
+  refund success/failure/unknown; lookup/reconciliation; DB rollback boundary.
+  Validate from ecommerce: uv lint/format/type/tests; relevant isolated
+  PostgreSQL checks; from root: validator/mutations/diff check. Complete when all
+  failure modes are deterministic, CI is secret-free, and only neutral seams/red
+  tests are supplied; rollback: revert fake/contract/test batch together.
+
+- [x] **CS4.2 Add the learner-facing M6 local ladder and sanitized evidence
+  contract.** Depends on: CS4.1. Targets: M6 seven-file set,
+  `QUALITY-GATES.md`, and existing evidence/data-lifecycle templates. Expected:
+  keys/secrets, SDK-vs-HTTP, timeout/retry ownership, raw body, refund uncertainty,
+  lookup/reconciliation, safe evidence fields, cleanup, and outage/pending rules
+  are executable without embedding credentials. Validate: secret-pattern scan;
+  root validator/mutations/diff check; ecommerce fake tests. Complete when local
+  Core can finish offline and the sandbox step cannot be mistaken for simulated
+  evidence; rollback: revert M6 instructional sub-batch.
+
+#### CS4 external, credentialed provider evidence — authority required
+
+- [ ] **CS4.EXT1 Obtain explicit authority and bounded Stripe-like sandbox
+  access.** Depends on: CS4.1–CS4.2 local green. Targets: external test account,
+  task-scoped test credential, approved operation/refund limits, and learner-owned
+  sanitized evidence destination; no repository secret file. Authority/access:
+  repository owner approval to make real sandbox calls, valid sandbox account,
+  credential custody, and any cost/rate-limit approval. Expected: named provider,
+  test/live separation, allowed actions, cleanup/revocation plan, and stop limits.
+  Validate: manual authorization record and secret-safe environment check; do not
+  run this in CI. Complete only when authority/access are explicit; rollback:
+  revoke/delete task-scoped credentials and make no call.
+
+- [ ] **CS4.EXT2 Execute exactly one required payment sandbox experiment.**
+  Depends on: CS4.EXT1. Targets: external sandbox plus sanitized project-local
+  M6 evidence only. Authority/access: the explicit approval and credential from
+  CS4.EXT1. Expected: bounded payment flow, lookup, exact raw-body signature
+  verification, one refund, reconciliation, and cleanup; evidence includes only
+  sanitized IDs/timestamps/statuses/settings/results. Validate: provider dashboard/
+  API lookup, local reconciliation command, secret/personal-data scan, and manual
+  evidence review; never expose key, instrument, customer data, or full payload.
+  Complete when provider/local facts reconcile and cleanup is observed; provider
+  outage/access failure remains unchecked as `PENDING` and does not count as real
+  evidence. Rollback: external money cannot be rolled back by the DB—use the
+  provider refund/void/cleanup path, reconcile forward, revoke credentials, and
+  preserve the sanitized incident record.
+
+### CS5 — Bounded rollout and optional endorsements
+
+#### CS5 local rollout
+
+- [x] **CS5.1 Roll the accepted grammar through remaining blocks in bounded
+  batches.** Depends on: CS3.GATE = ROLL OUT and CS4.1 local green; CS4.EXT2 may
+  remain pending only where work is independent. Targets: remaining
+  `milestones/*/*.md`, grouped M1–M2, M3–M5, M7–M9, then M10; exact support
+  targets only. Expected: causal grammar and five cues, plain names before IDs,
+  shorter support/process text, unique templates preserved, concept matrix
+  secondary, and no technical/gate/solution drift. Validate after each batch:
+  root validator/mutations/diff check plus affected project uv checks and
+  PostgreSQL checks. Complete when every batch has a fresh-context pass and M0–
+  M10/11×7/five products remain exact; rollback: revert smallest failing batch.
+
+- [x] **CS5.GATE STOP/GO 3 — decide whether any optional integration is earned.**
+  Depends on: CS5.1. Targets: a decision record in `PLAN.md`/`TODO.md` and the
+  relevant complexity-rejection/ADR/data-lifecycle template; no provider call.
+  Expected: for each proposed M7/M10 endorsement, record observed need, simpler
+  alternative, owner, data/secret boundary, operations/cost cap, removal trigger,
+  access, and explicit authority status; default is `DO NOT ADD YET`. Validate:
+  manual decision review; root validator/diff check. Complete with a separate GO/
+  NO-GO per endorsement; rollback: retain deterministic Core and reject/defer it.
+
+#### CS5 external optional endorsements — each remains non-blocking
+
+- [ ] **CS5.EXT1 Optional M7 email-provider endorsement.** Depends on: individual
+  CS5.GATE GO. Targets: one approved email test provider and sanitized M7 evidence.
+  Authority/access: explicit approval, test account/recipient, credentials, data/
+  cost limit. Expected: acceptance-versus-delivery distinction, provider ID,
+  bounded retry/deduplication observation, and cleanup. Validate manually plus
+  secret/privacy scan. Complete only as an optional endorsement; rollback: stop
+  sends, suppress/revoke access, reconcile duplicates, retain sanitized facts.
+
+- [ ] **CS5.EXT2 Optional M10 S3-compatible storage endorsement.** Depends on:
+  individual CS5.GATE GO. Targets: one authorized test bucket and sanitized M10
+  evidence. Authority/access: explicit bucket/credential/cost/retention approval.
+  Expected: tenant-safe key, auth, short presigned expiry, checksum, delete, and
+  orphan cleanup proof. Validate provider lookup plus local checksum and secret/
+  privacy scan. Complete only as optional evidence; rollback: delete authorized
+  test objects, reconcile orphans, revoke credentials.
+
+- [ ] **CS5.EXT3 Optional M10 OAuth authorization-code + PKCE/OIDC endorsement.**
+  Depends on: individual CS5.GATE GO. Targets: one authorized identity-provider
+  test client and sanitized M10 evidence. Authority/access: client registration,
+  redirect approval, test identities, credentials. Expected: code+PKCE/OIDC,
+  state/nonce and token validation, account link/unlink, error/logout assumptions;
+  never password grant. Validate provider/client logs and security evidence
+  without tokens/personal data. Complete only as optional evidence; rollback:
+  unlink test accounts, revoke client secrets/tokens, remove callback access.
+
+- [ ] **CS5.EXT4 Optional M10 Sentry-or-Logfire endorsement.** Depends on:
+  individual CS5.GATE GO. Targets: exactly one authorized backend and sanitized
+  M10 evidence. Authority/access: explicit project/DSN, data processing,
+  retention, access and cost approval. Expected: one synthetic failure answers
+  one named diagnostic question under redaction/sampling/retention limits.
+  Validate event correlation and secret/personal-data review. Complete with a
+  retain/remove decision; rollback: delete test event/project where supported,
+  revoke DSN, and remove integration if the question/cost boundary fails.
+
+- [ ] **CS5.EXT5 Optional M10 SQLAdmin endorsement.** Depends on: individual
+  CS5.GATE GO and proven tenant auth/audit Core. Targets: bounded admin surface
+  and sanitized M10 evidence. Authority/access: explicit approval if exposed on
+  any real target. Expected: tenant scoping, authorization, and append-only audit
+  on every admin action; no public/default admin. Validate negative auth/tenant
+  tests and audit trace. Complete only if it preserves the Core boundary;
+  rollback: remove/disable the admin surface and retain ordinary operator paths.
+
+- [ ] **CS5.EXT6 Optional authorized real deployment endorsement.** Depends on:
+  individual CS5.GATE GO and existing M10 external prerequisite. Targets: one
+  declared deployment target and sanitized release/recovery evidence. Authority/
+  access: owner approval, target credentials, cost/TLS/secret/backup/monitoring
+  ownership. Expected: exact digest, migration-before-readiness, unhealthy
+  rejection, rollback/roll-forward, restore, and cleanup. Validate target health,
+  digest, migration and recovery observations. Complete only as optional
+  Operable/Sellable endorsement; rollback via declared target procedure, never
+  an unreviewed destructive command.
+
+### CS6 — Validator migration, full verification, and closeout
+
+- [x] **CS6.1 Migrate remaining stable validator facts.** Depends on: stable CS1–CS5
+  local contracts. Targets: `scripts/check_curriculum.py` and
+  `scripts/test_validator_mutations.py`. Expected: durable checks cover exact
+  evidence path, Core/optional tool statuses, and stable pilot grammar markers
+  where useful; retain the already implemented root table shape/order/
+  classification rules; no prose score or
+  learner-understanding proxy. Validate: `python3 -B
+  scripts/check_curriculum.py`; `python3 -B
+  scripts/test_validator_mutations.py`; `git diff --check`. Complete when each
+  new rule has one controlled intended failure and green restoration; rollback:
+  remove the noisy rule and matching mutation together.
+
+- [x] **CS6.2 Run the full local release-candidate matrix.** Depends on: CS6.1.
+  Targets: complete candidate tree, without provider calls. Expected: 11×7,
+  concept traces, relative links/anchors, secret/unsafe fixture scan, deterministic
+  CI, YAML, all five starters, relevant migrations/PostgreSQL integration, and
+  intended red/reset behavior pass. Validate: root validator and mutation suite;
+  `git diff --check`; `yaml.safe_load` over `.github/**/*.yml`; in every affected
+  project `uv sync --locked`, Ruff check/format, mypy, pytest; isolated PostgreSQL
+  upgrade/current/integration tests for POS/ecommerce/booking/social. Complete
+  when exact results and limits are recorded and temporary resources are safely
+  cleaned; rollback: isolate/revert first failing phase, never erase user work.
+
+#### CS6 external named-human and hosted evidence
+
+- [ ] **CS6.EXT1 Observe hosted GitHub presentation and deterministic Actions.**
+  Depends on: CS6.2 and separate publication/hosted-run authority. Targets:
+  learner-owned GitHub candidate, root/controllers, anchors, and declared
+  workflows. Authority/access: explicit commit/push/publication approval and
+  GitHub access. Expected: rendered tables/routes work and Actions pass without
+  provider secrets. Validate hosted URLs/run IDs and sanitized observation.
+  Complete only with hosted evidence; rollback: fix forward in an authorized
+  change—do not rewrite tags or fabricate a run.
+
+- [ ] **CS6.EXT2 Run named human career-shifter reviews.** Depends on: CS6.2 and
+  an available independent reviewer; may proceed without optional endorsements.
+  Targets: repository→M0, M0→M1, M1→M2, M4→M5, M5→M6, M6→M7, M7→M8, M8→M9,
+  and M9→M10 transitions plus the M0/M6 pilot blocks. Authority/access: informed
+  reviewer participation and a learner-owned test repository/environment.
+  Expected: reviewer, date, Git ref, environment, next action, wrong turns, help,
+  recovery, resume, and nine 0–4 scores. Validate against `USABILITY.md` and
+  `templates/TRANSITION-REVIEW.md`; threshold ≥85/100 and none below 3.
+  Complete only after each failure is repaired and independently rerun; rollback:
+  keep HUMAN SELF-STUDY VERIFIED unset and reopen only failed transition scope.
+
+- [x] **CS6.3 Close the CS phase truthfully.** Depends on: CS6.1–CS6.2; external
+  tasks may remain explicitly pending and cannot be claimed. Targets: `PLAN.md`,
+  `TODO.md`, and `USABILITY.md`; no learner `PROGRESS.md` status changes.
+  Expected: local implementation, required M6 real-provider evidence, optional
+  endorsements, hosted evidence, and named-human evidence have separate statuses;
+  prior R/IA/CU history and checklist items remain intact. Validate unchecked-
+  item review; root validator/mutations/diff check; exact changed-file/status
+  audit. Complete when no locally required item is falsely checked and every
+  stronger claim cites its own evidence; rollback: keep CS status ACTIVE and
+  state the exact remaining local blocker.
+
+Local closeout evidence (2026-09-14): [exact matrix and limitations](PLAN.md#cs6-local-closeout--2026-09-14)
+and [bounded maintenance review](USABILITY.md#2026-09-14-cs6-local-closeout-review).
+All four CS0 decisions and three gate decisions are recorded in `PLAN.md`.
+CS4.EXT1–2, CS5.EXT1–6, and CS6.EXT1–2 remain unchecked; no credential,
+provider, message, hosted GitHub, deployment, admin, or named-human action was
+performed. The older external release-evidence items above remain unchecked for
+the same reason.
+
+## ACTIVE FOLLOW-UP — Pareto gap repair
+
+Execution order is PG1 → PG2 → PG3 → PG4. This is a narrow documentation and
+local-review pass; it does not authorize provider, hosted, deployment, or
+named-human work.
+
+- [x] **PG1 Correct the stale M9 SSE reference label.** Target:
+  `milestones/m9-performance-caching-realtime-social/CHALLENGE.md`. Expected:
+  the hint names the FastAPI SSE reference currently linked from `RESOURCES.md`.
+  Validate: `rg -n 'MDN SSE|FastAPI.*SSE' milestones/m9-performance-caching-realtime-social`;
+  rollback: restore only this wording if the destination changes again.
+
+- [x] **PG2 Freeze the compact cue-rollout decision.** Depends on: PG1. Targets:
+  the active decision text in `PLAN.md`, `TODO.md`, and only unavoidable
+  controller wording. Expected: M0 and M6 retain explicit five-cue pilot labels;
+  other controllers retain the compact legend plus ordered action, concept,
+  check, recovery, and resume facts. Do not mechanically relabel every block.
+  Validate: inspect all eleven controller READMEs and run the curriculum
+  validator; rollback: revise the decision record rather than expand boilerplate.
+
+- [x] **PG3 Clarify the M9 implementation boundary.** Depends on: PG2. Targets:
+  CS closeout wording in `PLAN.md`/`TODO.md` and M9 controller wording only if
+  needed. Expected: the SSE contract, lesson, and acceptance requirements are
+  implemented, while the SSE application and `tests/m9/test_sse.py` are
+  explicitly learner-built and absent from the neutral starter. Validate:
+  `test ! -e projects/social/tests/m9/test_sse.py`; root validator/diff check;
+  rollback: remove only wording that implies a supplied solution.
+
+PG1–PG3 local result (2026-09-14): the M9 hint now names the linked FastAPI
+reference; all eleven controllers expose the accepted explicit-pilot or compact
+cue form; and M9 states that its SSE runtime and behavioral test remain learner
+work. The curriculum validator and `git diff --check` passed, and the neutral
+starter still has no `projects/social/tests/m9/test_sse.py`.
+
+- [x] **PG4 Run one independent fresh-context local maintenance review.**
+  Depends on: PG1–PG3. Targets: M0 Block 1, M6 Block 1, one ordinary compressed
+  M5 or M9 block, the M5→M6 transition, and a dated record in `USABILITY.md`.
+  Expected: reviewer/context, action selection, diagnosis, evidence, resume,
+  wrong turns, and limitations are recorded; any score is clearly local and
+  cannot satisfy named-human evidence. Validate:
+  `python3 -B scripts/check_curriculum.py`; `python3 -B
+  scripts/test_validator_mutations.py`; `git diff --check`. Complete after any
+  observed local wording defect is repaired and rechecked; rollback: retain the
+  honest failed review and reopen only its smallest affected scope.
+
+PG4 result (2026-09-14): an independent Codex sub-agent first returned
+`REPAIR` because M6 sent a completed-M5 learner to anonymous-starter recovery.
+The project README now has a post-M5 M6 preflight, M6 links to it, and M5 Block 1
+states its supplied-red/test/recovery sequence directly. The independent rerun
+returned `PASS` across M0 Block 1, M6 Block 1, M5 Block 1, and M5→M6; all four
+scopes scored above 85/100 with no dimension below 3. Exact evidence and limits:
+[PG4 independent fresh-context review](USABILITY.md#2026-09-14-pg4-independent-fresh-context-review).
+
+All PG items are locally complete. External/provider/hosted/deployment and
+named-human checklist items above remain unchecked and unchanged.

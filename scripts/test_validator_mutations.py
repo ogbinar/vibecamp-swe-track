@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import re
 import shutil
 import subprocess
 import tempfile
@@ -32,12 +33,25 @@ MUTATIONS = {
         "Next: missing",
     ),
     "IA route row": (
-        "README.md", "| Milestone 6 of 11 | [M5]", "| Milestone 5 of 11 | [M5]",
+        "README.md", "| 6 · M5 |", "| 5 · M5 |",
     ),
     "IA route destination": (
         "README.md",
-        "[M5](milestones/m5-secure-multi-user-ecommerce/README.md)",
-        "[M5](milestones/m4-maintainability-testing-refactoring/README.md)",
+        "[Secure Multi-user Ecommerce / Secure](milestones/m5-secure-multi-user-ecommerce/README.md)",
+        "[Secure Multi-user Ecommerce / Secure](milestones/m4-maintainability-testing-refactoring/README.md)",
+    ),
+    "roadmap header": (
+        "README.md",
+        "| # | Milestone / Capability | Project | Key concepts | FastAPI / Python tools | Real integration |",
+        "| Position | Milestone / Capability | Project | Key concepts | FastAPI / Python tools | Real integration |",
+    ),
+    "roadmap shape": (
+        "README.md", "| 1 · M0 |", "| 1 · M0 | Extra |",
+    ),
+    "roadmap classification": (
+        "README.md",
+        "**Required after local Core:** exactly one Stripe-like payment sandbox",
+        "Deterministic/local Core; optional payment sandbox",
     ),
     "IA section order": (
         "milestones/m5-secure-multi-user-ecommerce/README.md",
@@ -85,8 +99,28 @@ MUTATIONS = {
     ),
     "work block observation": (
         "milestones/m3-transactions-correctness/README.md",
-        "Before: the learner test is absent or exposes the published failure.",
+        "Before: create the named test and observe its published partial-write, repeat,",
         "Initially the learner may see a failure.",
+    ),
+    "CS evidence ownership": (
+        "README.md",
+        "do not create a competing root `evidence/` tree",
+        "a root evidence tree is also acceptable",
+    ),
+    "CS integration classification": (
+        "QUALITY-GATES.md",
+        "PENDING — ACCESS/PROVIDER OUTAGE",
+        "PASSED — SIMULATED",
+    ),
+    "CS pilot cue": (
+        "milestones/m0-engineering-baseline/README.md",
+        "**Stop/resume:**",
+        "**Finish later:**",
+    ),
+    "CS provider vocabulary": (
+        "projects/ecommerce/src/ecommerce_api/provider_fake.py",
+        "def refund(",
+        "def reverse(",
     ),
     "scenario-local hints": (
         "milestones/m8-concurrency-booking/CHALLENGE.md",
@@ -139,7 +173,7 @@ MUTATIONS = {
 # Whole rows are captured from the candidate so artifact wording can evolve.
 ROUTE_ROWS = [
     line for line in (ROOT / "README.md").read_text(encoding="utf-8").splitlines()
-    if line.startswith("| Milestone ")
+    if re.match(r"^\| \d+ · M(?:10|[0-9]) \|", line)
 ]
 MUTATIONS["IA route count"] = ("README.md", ROUTE_ROWS[5] + "\n", "")
 MUTATIONS["IA route order"] = (
@@ -156,7 +190,10 @@ EXPECTED_DIAGNOSTICS = {
     "IA previous": "M0: IA footer previous",
     "IA next": "M10: IA footer next",
     "IA route row": "IA route row 6",
-    "IA route destination": "IA route row 6",
+    "IA route destination": "IA route row 6 has wrong controller link",
+    "roadmap header": "primary roadmap needs exact six headers",
+    "roadmap shape": "primary roadmap row 1 needs exactly six columns",
+    "roadmap classification": "IA route row 7 has wrong integration classification",
     "IA section order": "learner-route sections missing or out of order",
     "IA exact support": "broken Markdown anchor: CHALLENGE.md#missing-identity",
     "challenge mode": "must declare exactly one challenge mode",
@@ -168,6 +205,10 @@ EXPECTED_DIAGNOSTICS = {
     "work block": "missing executable work blocks",
     "literal command map": "missing literal command map",
     "work block observation": "command contract missing 'Before:'",
+    "CS evidence ownership": "missing stable CS contract",
+    "CS integration classification": "missing stable CS contract",
+    "CS pilot cue": "missing stable CS contract",
+    "CS provider vocabulary": "missing stable CS contract",
     "scenario-local hints": "must contain one ### Hints",
     "acceptance execution map": "missing command/result/evidence execution map",
     "M8 database barrier": "missing neutral concurrency seam",

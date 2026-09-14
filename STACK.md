@@ -17,6 +17,17 @@ Ruff owns linting and formatting; mypy owns static type consistency across modul
 
 ## Earned tools
 
+Use this learning order: make configuration and HTTP behavior visible with
+FastAPI/Uvicorn/Pydantic/settings; add `APIRouter`, `Depends`, and OpenAPI when
+route composition or contract inspection creates the need; hand-build stable
+ordering/cursors/errors before evaluating `fastapi-pagination`; write explicit
+CRUD and transaction ownership before comparing FastCRUD; establish
+authentication, authorization, sessions, and negative cases before framework
+security helpers; crash disposable `BackgroundTasks` work before building the
+M7 outbox/worker; and measure before Redis, SSE, WebSockets, SQLAdmin, Sentry, or
+Logfire. Every retained optional tool names its observed need, simpler baseline,
+operational/data cost, owner, and removal trigger.
+
 | Tool | Earliest useful point | Evidence required | Remove/avoid when |
 |---|---|---|---|
 | FastCRUD | After M2 fundamentals | Handwritten SQL/repository behavior and constraints are understood; commodity admin CRUD is repetitive; comparison preserves contract, transaction ownership, query shape, and tests | Hooks obscure domain invariants or transactional workflows; a small explicit query is clearer |
@@ -29,7 +40,8 @@ Ruff owns linting and formatting; mypy owns static type consistency across modul
 | S3-compatible object storage | M6 or later | Files must outlive/scale independently from application instances; access, retention, deletion, checksum, and failure behavior are defined | The product has no file requirement or local storage safely meets its bounded deployment; do not store blobs in PostgreSQL by reflex |
 | OpenTelemetry | M10 | Portable traces/metrics answer a named diagnostic question; propagation, sampling, redaction, retention, backend, and cost are owned | A simpler signal answers the question or no one owns the telemetry pipeline |
 | Logfire or Sentry | M10 | One managed backend answers a named error/performance question with acceptable data handling, retention, and cost | It duplicates another backend, leaks sensitive data, or produces unowned noise |
-| PyJWT | M5 | Stateless signed claims are justified for the client/trust boundary; validation, expiry, rotation, refresh/revocation, and theft behavior are tested | A first-party secure cookie session is simpler or immediate revocation/session control dominates |
+| PyJWT | M5 Stretch | Stateless signed claims are justified by a client other than the declared first-party browser; validation, expiry, rotation, refresh/revocation, and theft behavior are tested | The Core secure-cookie session is simpler or immediate revocation/session control dominates |
+| SQLAdmin | M10 optional | Tenant authorization and append-only audit are already proven; every admin action retains tenant scope, authorization, and audit evidence | It creates a public/default admin surface or bypasses ordinary operator controls |
 | `pwdlib[argon2]` | M5 | The product accepts passwords; input bounds, adaptive hash parameters, verification, upgrade, and recovery policy are tested | Authentication is delegated to an earned identity provider or the product accepts no passwords |
 
 For one meaningful candidate by M4, preserve the decision to say “not yet” in the [complexity rejection record](templates/COMPLEXITY-REJECTION.md). Unlike an ADR, it records an option not adopted and a measurable revisit trigger. Revisit the record when evaluating Taskiq/Redis in M7/M9 or operational tooling in M10; rejection is provisional evidence, not ideology.
@@ -48,7 +60,22 @@ endorsement.
 - **Compose is bounded:** Compose may run a documented single-host deployment, but it does not supply TLS, secret custody, backup/restore, monitoring, safe migration rollout, or rollback by itself. M10 must prove those controls and state the deployment boundary honestly.
 - **Durability begins with persisted intent:** an HTTP response or in-process callback is not a queue. Correctness-critical work is committed to PostgreSQL with its business state, then claimed by an idempotent worker. Taskiq is an optional transport/worker accelerator, not exactly-once semantics.
 - **PostgreSQL owns durable truth:** Redis may cache or coordinate disposable state, but inventory, booking, payment, tenant, and audit truth remains in PostgreSQL.
-- **Authentication follows the client boundary:** first-party browser products must compare a server-controlled secure `HttpOnly` cookie session with JWT. If JWT is chosen, use PyJWT with a fixed algorithm allowlist and validate issuer, audience, expiry/not-before, token type, rotation, and revocation assumptions. Password authentication uses `pwdlib[argon2]`; neither choice creates an OAuth authorization server.
+- **Authentication follows the client boundary:** M5 Core's first-party browser uses a server-controlled secure `HttpOnly` cookie session and compares it with JWT. PyJWT implementation is Stretch unless a different client earns it; then use a fixed algorithm allowlist and validate issuer, audience, expiry/not-before, token type, rotation, and revocation assumptions. Password authentication uses `pwdlib[argon2]`; neither choice creates an OAuth authorization server.
+
+## Integration classification
+
+- **Deterministic offline Core:** every M0–M10 milestone; CI requires no provider secret.
+- **Required real-provider experiment:** exactly one separately authorized M6
+  Stripe-like sandbox after local Core. Missing access/outage is recorded as
+  pending and never replaced with simulation.
+- **Optional endorsements:** M7 email; M10 S3-compatible storage, OAuth/OIDC,
+  one of Sentry/Logfire, SQLAdmin, and an authorized deployment. Each defaults
+  to do not add yet until need, owner, cost/data boundary, removal trigger,
+  access, and authority are recorded.
+
+Primary tool/provider references were rechecked on 2026-09-14. The project
+currently locks only its Core dependencies (`fastapi[standard]>=0.116.0` and
+the project lockfiles); optional packages are intentionally not installed.
 - **Observability starts small:** begin with structured redacted logs and request/correlation IDs. Add metrics and traces for named questions. OpenTelemetry is instrumentation and still needs an owned backend; choose rather than stacking OpenTelemetry, Logfire, and Sentry indiscriminately.
 
 ## Explicit exclusions

@@ -6,7 +6,7 @@
 
 ## Why
 
-A small promotion change now touches routes, database code, and calculations in
+A small receipt-field change now touches routes, database code, and calculations in
 many places. Change the existing POS safely and reduce that scatter without a rewrite.
 
 ## Starting checkpoint
@@ -20,7 +20,7 @@ separate local structure/starter checks from pending hosted and human evidence.
 [starting checks](../../projects/pos/README.md#pos-launch-kit-for-m2), then return to the saved block; first visit: [Block 1](#1-characterize-the-awkward-baseline-required).
 
 Start from `m3-transactions-correctness`. Run all POS tests and record the files
-currently touched by one awkward promotion and return requirement.
+currently touched by the optional cashier-name requirement.
 
 On resume, preserve your existing `.env` and evidence. Use the validation
 commands from the starting checks; first-install copy and destructive reset
@@ -37,7 +37,7 @@ steps are not routine resume actions. If a check fails, use Recovery first.
 ## Product brief
 
 Use the [fixed stakeholder change](../../projects/pos/specs/M4-CHANGE-BRIEF.md).
-Add configurable promotions and returns. Complete C1 before moving code: preserve
+Add the optional cashier display name from the fixed brief. Complete C1 before moving code: preserve
 current behavior, implement the awkward change, and measure scatter. In C2, add
 only the smallest boundary that reduces it. In C3, deliberately weaken a test or
 boundary and prove the suite notices. Use [CHALLENGE.md](CHALLENGE.md#m4-challenge-brief) for the
@@ -47,6 +47,12 @@ No rewrite, microservice split, generic base class, or pass-through layer is
 allowed. Record one attractive complexity you rejected.
 
 ## Work blocks
+
+Use the five visible cues in each block: **Do** is its start/work/command;
+**Understand** is the exact concept or support link; **Check** is its expected
+observation and evidence; **If it fails** is the named hint/reset/recovery; and
+**Stop/resume** is its saved last-green boundary and return anchor. The compact
+scope lines below state those facts in that order without replacing C/A IDs.
 
 ### 1. Characterize the awkward baseline `[REQUIRED]`
 
@@ -122,7 +128,7 @@ portfolio case study.
 
 ## Done when
 
-The requested variants are localized, the test layers catch their intended
+The requested change is localized, the test layers catch their intended
 failures, and all Core checks pass. Tag `m4-maintainable-pos`.
 
 ## Recovery

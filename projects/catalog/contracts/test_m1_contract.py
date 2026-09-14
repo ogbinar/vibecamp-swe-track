@@ -18,7 +18,9 @@ def anyio_backend() -> str:
 @pytest.fixture
 async def client() -> AsyncIterator[AsyncClient]:
     app: FastAPI = create_app(
-        Settings(service_name="M1 Contract Catalog", environment="test", _env_file=None)
+        Settings(  # type: ignore[call-arg]
+            service_name="M1 Contract Catalog", environment="test", _env_file=None
+        )
     )
     async with AsyncClient(transport=ASGITransport(app=app), base_url="http://test") as value:
         yield value
@@ -109,7 +111,11 @@ async def test_invalid_price_and_limit_are_rejected(client: AsyncClient) -> None
 
 
 def test_openapi_preserves_public_fields() -> None:
-    app = create_app(Settings(service_name="Contract", environment="test", _env_file=None))
+    app = create_app(
+        Settings(  # type: ignore[call-arg]
+            service_name="Contract", environment="test", _env_file=None
+        )
+    )
     schema = app.openapi()
     assert "/products" in schema["paths"]
     assert "/products/{sku}" in schema["paths"]

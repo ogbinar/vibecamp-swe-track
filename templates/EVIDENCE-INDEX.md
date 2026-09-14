@@ -1,5 +1,10 @@
 # MN evidence index
 
+Store this file at `projects/<active-product>/evidence/MN/index.md`. Commands in
+the milestone may say `evidence/MN/...` because their declared working directory
+is that project. Copy this template only on first visit; preserve the existing
+index when resuming.
+
 ## Context
 
 - Date/environment/reference commit:

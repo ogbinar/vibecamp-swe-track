@@ -14,3 +14,9 @@ expiry, duplicate delivery, and authorized replay.
 Replay requires actor, reason, bounded message IDs, preview, confirmation, and
 an audit record. Expected result after every scenario: one business effect,
 observable attempt history, and no permanently stuck lease.
+
+Email remains an optional provider endorsement. Deterministic Core records
+intent, attempt, stable business identity, provider acceptance (when simulated),
+and terminal or uncertain state. Processing is at least once with a documented
+deduplication window; provider API acceptance does not prove mailbox delivery,
+display, or reading, and no exactly-once external-delivery claim is permitted.

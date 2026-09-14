@@ -46,6 +46,12 @@ Complete C1–C3 in [CHALLENGE.md](CHALLENGE.md#m8-challenge-brief), including d
 
 ## Work blocks
 
+Use the five visible cues in each block: **Do** is its start/work/command;
+**Understand** is the exact concept or support link; **Check** is its expected
+observation and evidence; **If it fails** is the named hint/reset/recovery; and
+**Stop/resume** is its saved last-green boundary and return anchor. The compact
+scope lines below state those facts in that order without replacing C/A IDs.
+
 ### 1. Observe and rebuild sequentially `[REQUIRED]`
 
 Start from the starting checkpoint above. Work in `projects/booking/`;
@@ -91,8 +97,9 @@ retry. Record waits, attempts, allowed outcomes, and recovery in
 
 Run from `projects/booking/`; create the M8 learner tests named below.
 
-Before: the learner database test is absent or the coordinated race violates
-capacity. After: the row’s stop condition is deterministic and recorded.
+Before: create the learner database test and observe the coordinated race
+violate capacity. File-not-found is setup feedback, not concurrency evidence.
+After: the row’s stop condition is deterministic and recorded.
 
 | Block | Copyable command | Expected stop condition |
 |---|---|---|

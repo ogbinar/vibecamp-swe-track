@@ -71,16 +71,20 @@ first milestone; `M10` is the capstone. Every milestone follows this loop:
 - A **cold review** repeats part of the work from a clean checkout without
   relying on the author's memory.
 
-At the start of each milestone, create its evidence index from the repository
-root (replace `MN` with `M0`, `M1`, and so on):
+At the start of each milestone, create its evidence index in the active product
+(replace `MN` with `M0`, `M1`, and so on). From the repository root, the example
+below uses Catalog:
 
 ```bash
+cd projects/catalog
 mkdir -p "evidence/MN"
-cp templates/EVIDENCE-INDEX.md "evidence/MN/index.md"
+cp ../../templates/EVIDENCE-INDEX.md "evidence/MN/index.md"
 ```
 
-Expected: one editable index exists for commands, observations, decisions, and
-links. Write `N/A — condition not present` for a conditional gate that does not
+Expected: `projects/catalog/evidence/MN/index.md` is one editable index for
+commands, observations, decisions, and links. Later milestones use their named
+project in the same way; do not create a competing root `evidence/` tree. Write
+`N/A — condition not present` for a conditional gate that does not
 apply. The [synthetic examples](templates/EVIDENCE-EXAMPLES.md) show useful
 evidence without pretending to be learner results.
 
@@ -93,31 +97,34 @@ For branch, pull request, and authentication details, use the
 
 You need Git, a GitHub account, Python 3.12, and uv now. Docker Desktop or
 Docker Engine is first needed at M2. PostgreSQL runs through Docker; you do not
-need to install it separately. M10 explains optional real-host accounts, cost,
-Transport Layer Security (TLS), and domain prerequisites only when you reach it.
+need to install it separately. No provider account or secret is needed to start
+or to complete deterministic/local Core work. M6 introduces one required,
+separately authorized Stripe-like sandbox experiment only after its local Core;
+M7 and M10 keep the listed provider work optional.
 
 ## Roadmap
 
 M0 is the stable label for **Milestone 1 of 11**; M5 is Milestone 6 of 11.
-The table describes repository support, not your completion. Record your own
-status in [PROGRESS](PROGRESS.md#active-milestone-dashboard).
+The `#` column keeps ordinal and label together. This is the five-product course
+route, not your completion record; use [PROGRESS](PROGRESS.md#active-milestone-dashboard)
+to stop and resume.
 
-| Position | Label | Capability / product | You will produce | Gate | Repository support |
+| # | Milestone / Capability | Project | Key concepts | FastAPI / Python tools | Real integration |
 |---|---|---|---|---|---|
-| Milestone 1 of 11 | [M0](milestones/m0-engineering-baseline/README.md) | Reproducible / Catalog | Green baseline transcript; Failure diagnosis and reset record; CI-backed gate PR and annotated tag | A1–A3 plus A0 diagnostic / Level A | Starter locally verified; learner gate not started |
-| Milestone 2 of 11 | [M1](milestones/m1-production-api-foundation/README.md) | Functional / Catalog | Tested HTTP request matrix; Compatibility-change evidence | A1–A4 / A + selected B | Starter locally verified; learner gate not started |
-| Milestone 3 of 11 | [M2](milestones/m2-pos-persistence-data-modeling/README.md) | Persistent / POS | Schema and migration; Query/persistence evidence | A1–A5 / Level B | Starter locally verified; learner gate not started |
-| Milestone 4 of 11 | [M3](milestones/m3-transactions-correctness/README.md) | Correct / POS | Atomic checkout regression; Money/repeat and final-unit race evidence | A1–A4 / Level B | Starter locally verified; learner gate not started |
-| Milestone 5 of 11 | [M4](milestones/m4-maintainability-testing-refactoring/README.md) | Maintainable / POS | Cashier-name change and boundary check; Refactor evidence and portfolio draft | A1–A6 / Level B | Starter locally verified; learner gate not started |
-| Milestone 6 of 11 | [M5](milestones/m5-secure-multi-user-ecommerce/README.md) | Secure / Ecommerce | Session and role/object matrix; Order-state attack regressions and threat record | A1–A6 / B + contextual C | Starter locally verified; learner gate not started |
-| Milestone 7 of 11 | [M6](milestones/m6-resilient-external-integrations/README.md) | Resilient / Ecommerce | Provider boundary and retry/webhook tests; Reconciliation and incident record | A1–A4 / B + contextual C | Starter locally verified; learner gate not started |
-| Milestone 8 of 11 | [M7](milestones/m7-durable-async-background-processing/README.md) | Durable / Ecommerce | Persisted job/outbox flow; Crash/duplicate/quarantine/replay evidence | A1–A5 / C for async slice | Starter locally verified; learner gate not started |
-| Milestone 9 of 11 | [M8](milestones/m8-concurrency-booking/README.md) | Concurrent / Booking | Final-seat race reproduction and repair; Time/contention evidence | A1–A4 / Level B | Starter locally verified; learner gate not started |
-| Milestone 10 of 11 | [M9](milestones/m9-performance-caching-realtime-social/README.md) | Performant / Social | Feed query comparison; Redis retain/remove decision; One-way update evidence | A1–A4 / B + contextual C | Starter locally verified; learner gate not started |
-| Milestone 11 of 11 | [M10](milestones/m10-production-multitenant-saas-capstone/README.md) | Operable/sellable candidate / Multi-tenant POS SaaS | Tenant-isolation proof; Release/recovery record; Runbooks and cold-reviewed handoff | A1–A7 / Level C local Core; real-target endorsement optional | Starter locally verified; learner gate not started |
+| 1 · M0 | [Engineering Baseline / Reproducible](milestones/m0-engineering-baseline/README.md) | Catalog | Reproducible setup, configuration, typing, tests, Git/CI, diagnosis | FastAPI, Uvicorn, Pydantic, settings; uv, pytest, HTTPX, Ruff, mypy | Deterministic/local Core; no provider account |
+| 2 · M1 | [Production-minded API Foundation / Functional](milestones/m1-production-api-foundation/README.md) | Catalog | HTTP semantics, validation, errors, OpenAPI, ordering, pagination | `APIRouter`, `Depends`, OpenAPI; `fastapi-pagination` only after the handwritten contract | Deterministic/local Core; no provider account |
+| 3 · M2 | [POS Persistence & Data Modeling / Persistent](milestones/m2-pos-persistence-data-modeling/README.md) | POS | Relational modeling, constraints, indexes, migrations, transaction ownership | Pydantic boundaries, PostgreSQL, Psycopg, SQLAlchemy, Alembic; FastCRUD only after explicit CRUD | Deterministic/local Core; no provider account |
+| 4 · M3 | [Transactions & Correctness / Correct](milestones/m3-transactions-correctness/README.md) | POS | Atomic checkout, isolation, money, invariants, retries, races | `Depends`, PostgreSQL, SQLAlchemy, pytest | Deterministic/local Core; no provider account |
+| 5 · M4 | [Maintainability, Testing & Refactoring / Maintainable](milestones/m4-maintainability-testing-refactoring/README.md) | POS | Characterization tests, cohesion, coupling, refactoring, earned boundaries | `APIRouter` and `Depends` when the boundary earns them; pytest, Ruff, mypy | Deterministic/local Core; no provider account |
+| 6 · M5 | [Secure Multi-user Ecommerce / Secure](milestones/m5-secure-multi-user-ecommerce/README.md) | Ecommerce | Authentication, authorization, ownership, sessions, passwords, threats | FastAPI Security after the concepts; secure cookies and `pwdlib`; PyJWT is Stretch | Deterministic/local Core; no provider account |
+| 7 · M6 | [Resilient External Integrations / Resilient](milestones/m6-resilient-external-integrations/README.md) | Ecommerce | Timeouts, retry budgets, webhooks, idempotency, refunds, reconciliation | FastAPI webhook/dependencies; HTTPX or provider SDK after the fake; `BackgroundTasks` only for disposable work | **Required after local Core:** exactly one Stripe-like payment sandbox |
+| 8 · M7 | [Durable Async & Background Processing / Durable](milestones/m7-durable-async-background-processing/README.md) | Ecommerce | Persisted intent, outbox, workers, at-least-once delivery, replay | PostgreSQL worker; `BackgroundTasks` as contrast; Taskiq only if earned | Deterministic/local Core; optional email test provider |
+| 9 · M8 | [Concurrency Lab / Concurrent](milestones/m8-concurrency-booking/README.md) | Booking | Final-seat races, locks, database invariants, deadlocks, contention | FastAPI dependencies, PostgreSQL, SQLAlchemy, Alembic, two-connection harness | Deterministic/local Core; no provider account |
+| 10 · M9 | [Performance, Caching & Realtime / Performant](milestones/m9-performance-caching-realtime-social/README.md) | Social | N+1, query plans, pagination, cache authority, streaming gaps | SQLAlchemy; Redis after a measured miss; SSE if earned; WebSockets for earned two-way need | Deterministic/local Core; no provider account |
+| 11 · M10 | [Production Multi-tenant SaaS Capstone / Operable/sellable](milestones/m10-production-multitenant-saas-capstone/README.md) | Multi-tenant POS SaaS | Tenant isolation, audit, observability, releases, recovery, handoff | FastAPI composition, Docker/Compose; optional SQLAdmin and Sentry or Logfire after tenant auth/audit | Deterministic/local Core; optional S3-compatible storage, OAuth/OIDC, monitoring, and authorized deployment |
 
-See the [full curriculum](CURRICULUM.md) when you want the detailed roadmap or
-concept coverage. Use [PROGRESS.md](PROGRESS.md) to stop and resume.
+For depth, use the [full curriculum and concept trace](CURRICULUM.md), the
+[earned stack policy](STACK.md), and the [quality gates](QUALITY-GATES.md).
 
 ## Reference
 

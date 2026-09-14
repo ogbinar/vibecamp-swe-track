@@ -21,6 +21,7 @@ Required maturity: **Level C for the asynchronous fulfillment slice**.
 - **A5:**
   - [ ] No accepted durable obligation relies on FastAPI `BackgroundTasks`
   - [ ] documentation makes the kill boundary and at-least-once—not exactly-once—claim explicit.
+  - [ ] optional email evidence distinguishes provider acceptance from mailbox delivery and states the deduplication window and residual duplicate risk.
   - [ ] If Taskiq is retained, evidence names the broker/acknowledgement/redelivery/result/shutdown policies and repeats C1–C3 against that path.
 
 ## Execution map

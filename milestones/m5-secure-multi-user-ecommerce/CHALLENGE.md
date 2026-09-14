@@ -4,13 +4,13 @@ Run from `projects/ecommerce/` and use only synthetic identities and secrets.
 
 ## **C1 — Broken identity**
 
-**YOU BUILD** — select the Core session mechanism from the fixed browser boundary.
+**YOU BUILD** — implement the fixed browser's Core opaque cookie session after comparing it with JWT.
 
 ### Steps
 
-1. Create `tests/m5/test_identity.py`; compare cookie sessions with JWT without implementing both in-product.
+1. Create `tests/m5/test_identity.py`; compare cookie sessions with JWT, then implement only the Core cookie path.
 2. Test hashing, enumeration, fixation, CSRF policy, logout, and cookie rotation.
-3. Run README Block 1; complete the isolated PyJWT lab if cookies are selected.
+3. Run README Block 1; keep any isolated PyJWT implementation as conditional Stretch for a newly earned non-browser client.
 
 ### Hints
 

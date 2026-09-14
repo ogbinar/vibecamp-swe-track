@@ -8,8 +8,8 @@ Run from `projects/ecommerce/`. Keep provider data and credentials synthetic.
 
 ### Steps
 
-1. Create `tests/m6/test_provider.py` for latency, 429/503, malformed response, and before/after-effect timeout.
-2. Classify each outcome before adding timeout, backoff, jitter, or retry.
+1. Create `tests/m6/test_provider.py` for payment/refund, latency, 429/503, malformed response, and before/after-effect timeout.
+2. Classify each outcome and use `lookup` after uncertainty before adding timeout, backoff, jitter, or retry.
 3. Run README Block 1 and preserve unknown outcomes for reconciliation.
 
 ### Hints

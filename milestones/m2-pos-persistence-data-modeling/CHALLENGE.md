@@ -31,7 +31,7 @@ use the bounded reset in `projects/pos/README.md`, then rerun Block 1.
 
 1. Create `tests/m2/test_persistence_api.py` and `tests/m2/test_migration_query.py`.
 2. Record duplicated SQL, initial query count, and plan before changing code.
-3. Add only the repository boundary or index justified by evidence; rerun Blocks 2–3.
+3. Keep the simple route direct; add only the repository boundary or index justified by measured duplication/query evidence, then rerun Blocks 2–3.
 
 ### Hints
 

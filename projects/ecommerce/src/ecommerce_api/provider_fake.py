@@ -17,6 +17,8 @@ class ProviderMode(StrEnum):
     RATE_LIMITED = "rate-limited"
     SERVER_ERROR = "server-error"
     MALFORMED = "malformed"
+    REFUND_FAILED = "refund-failed"
+    REFUND_TIMEOUT_AFTER = "refund-timeout-after"
 
 
 class ProviderTimeout(TimeoutError):
@@ -28,12 +30,16 @@ class FakeProvider:
     mode: ProviderMode = ProviderMode.SUCCESS
     calls: int = 0
     completed_keys: set[str] | None = None
+    facts: dict[str, str] | None = None
 
     def __post_init__(self) -> None:
         if self.completed_keys is None:
             self.completed_keys = set()
+        if self.facts is None:
+            self.facts = {}
 
-    def charge(self, *, idempotency_key: str) -> str:
+    def pay(self, *, operation_id: str, idempotency_key: str) -> str:
+        """Model one immediate payment; local state remains the learner's work."""
         self.calls += 1
         if self.mode in {
             ProviderMode.TIMEOUT_BEFORE,
@@ -51,10 +57,41 @@ class FakeProvider:
         if self.mode is ProviderMode.MALFORMED:
             return "{not-json"
         assert self.completed_keys is not None
+        assert self.facts is not None
         self.completed_keys.add(idempotency_key)
+        self.facts[operation_id] = "succeeded"
         if self.mode is ProviderMode.TIMEOUT_AFTER:
             raise ProviderTimeout("timed out after provider processing")
-        return "charged"
+        return "succeeded"
+
+    def refund(self, *, payment_id: str, operation_id: str, idempotency_key: str) -> str:
+        """Model a bounded refund, including an ambiguous post-effect timeout."""
+        self.calls += 1
+        if self.mode is ProviderMode.REFUND_FAILED:
+            return "failed"
+        assert self.completed_keys is not None
+        assert self.facts is not None
+        self.completed_keys.add(idempotency_key)
+        self.facts[operation_id] = f"refunded:{payment_id}"
+        if self.mode is ProviderMode.REFUND_TIMEOUT_AFTER:
+            raise ProviderTimeout("refund timed out after provider processing")
+        return "refunded"
+
+    def lookup(self, *, operation_id: str) -> str:
+        """Return the provider fact used by learner-built reconciliation."""
+        assert self.facts is not None
+        return self.facts.get(operation_id, "unknown")
+
+
+@dataclass(frozen=True)
+class RetryBudget:
+    """Deterministic combined SDK/application ceiling, not retry implementation."""
+
+    max_attempts: int = 3
+    total_seconds: float = 5.0
+
+    def permits(self, *, attempt: int, elapsed_seconds: float) -> bool:
+        return attempt <= self.max_attempts and elapsed_seconds <= self.total_seconds
 
 
 @dataclass(frozen=True)

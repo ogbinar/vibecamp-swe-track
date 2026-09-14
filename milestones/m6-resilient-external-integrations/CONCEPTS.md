@@ -1,6 +1,6 @@
 # M6 concepts through provider failures
 
-## “The request timed out after the charge”
+## “The request timed out after the payment”
 
 **Example:** the provider completed work but its response never arrived. **Term —
 unknown outcome:** neither success nor failure is yet proven. **Rule:** preserve
@@ -32,3 +32,11 @@ event identity, and account before durable, idempotent handling.
 ID:** a safe identifier joining related work across boundaries. **Rule:** correlate
 attempts and state changes, preserve uncertainty, redact data, and review incidents
 through impact, timeline, recovery, and prevention rather than blame.
+
+## “The database rolled back but the provider did not”
+
+**Example:** the provider completed a payment or refund before the local
+transaction failed. **Term — reconciliation:** compare durable local intent with
+provider fact using the operation/idempotency key. **Rule:** a database rollback
+cannot reverse external money; block unsafe repetition, look up, and reconcile
+forward.

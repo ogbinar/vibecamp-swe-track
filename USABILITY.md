@@ -429,3 +429,99 @@ Final resume gap repair: controller and dashboard cues explicitly preserve exist
 `.env` and evidence and distinguish validation from first-install copying or
 destructive resets. Original command blocks remain unchanged. This prevents a
 resume route from overwriting learner configuration.
+
+## 2026-09-14 CS3 compression pilot maintenance review
+
+Scope: M0 Block 1 and M6 Block 1 in the uncommitted CS candidate. Reviewer:
+internal fresh-context maintenance review (not a named human learner). Environment:
+Linux, local source rendering, Python 3.12 project environments; hosted GitHub
+rendering and provider access were not used. The reviewer put implementation
+notes aside, followed only the controller/support routes, predicted the green
+M0 baseline and M6 timeout/refund facts, ran the supplied Catalog and Ecommerce
+checks, and returned to each saved block anchor.
+
+Both blocks exposed the concrete problem before terminology and made Do,
+Understand, Check, If it fails, and Stop/resume visible without removing a
+command, hint, evidence destination, C/A link, or recovery boundary. M0 reached
+four passing tests. The M6 fake suite reached 17 passed and one intentionally
+opt-in skipped contract; payment/refund unknown facts were recoverable through
+`lookup`. No credential or provider action was attempted. Wrong turns: none in
+source traversal. Help: none. Limitation: this observes maintainability and local
+execution, not independent learner comprehension.
+
+| Dimension | M0 | M6 | Observation |
+|---|---:|---:|---|
+| Audience and outcome clarity | 4 | 4 | Plain problem and bounded outcome precede IDs. |
+| Time to first successful run | 4 | 4 | Warm locked environments completed in seconds. |
+| Executable instructions | 4 | 4 | Literal working directory, command, result, and evidence remain. |
+| Language and terminology | 4 | 4 | Baseline/unknown outcome are introduced through examples. |
+| Progressive disclosure/navigation | 4 | 4 | Exact support links remain secondary to the action. |
+| Guided scaffolding | 4 | 4 | Supplied skeleton/fake; learner domain implementation remains absent. |
+| Automated feedback and recovery | 3 | 3 | Local feedback is specific; hosted Actions remain unobserved. |
+| Failure-lab reproducibility | 4 | 4 | Reset/replay is deterministic and secret-free. |
+| Pause and resume | 4 | 4 | Stop state and exact return anchor are explicit. |
+
+Weighted result: **97.5/100 for each pilot; no dimension below 3**. Decision:
+**ROLL OUT** the compact cue grammar. This is the CS3 STOP/GO 2 maintenance
+decision only; `HUMAN SELF-STUDY VERIFIED` remains unset and named-human review
+stays external.
+
+## 2026-09-14 CS6 local closeout review
+
+The accepted cue grammar is present across all eleven controllers; M0 and M6
+retain the detailed pilot labels, while the other controllers use one compact
+five-cue key over their existing action/support/observation/recovery/resume scope
+lines. Source traversal found no new backtracking, broken exact link, changed C/A
+range, or lost recovery instruction. The root validator, 37 controlled
+mutations, five locked project quality gates, four isolated PostgreSQL paths,
+the three intended red labs, and the complete M10 local rehearsal produced the
+results recorded in `PLAN.md`.
+
+This is an internal maintenance and executable-source review. It does not
+observe GitHub rendering, hosted Actions, provider behavior, or a named human
+career shifter. Therefore **HUMAN SELF-STUDY VERIFIED remains no** and the
+external review ledger remains unchecked.
+
+## 2026-09-14 PG4 independent fresh-context review
+
+Reviewer: independent Codex sub-agent with no implementation-history context
+before its initial learner-source traversal. Environment: Linux
+7.0.0-31-generic x86_64, Python 3.12.3, uv 0.9.21; dirty maintenance candidate
+based on `2c2ac09f6b44d5567e6f9db447ad1b2bd5ebdd8b`.
+
+The first review returned **REPAIR**. M6 linked its completed-M5 learner back to
+the anonymous M5 launch checkpoint, whose valid initial advice says `/login` is
+absent and accidental identity routes should be removed. That made correct M5
+work look erroneous during M5→M6 recovery. M5 Block 1 also left its compact
+support/recovery cues later than the advertised order. The repair added an
+M6-specific post-M5 preflight, scoped anonymous-shell recovery to M5 only, and
+reordered M5 Block 1 around its supplied red contract, learner test, evidence,
+recovery, and resume boundary.
+
+The same reviewer then reran M0 Block 1, M6 Block 1, M5 Block 1, and the M5→M6
+transition and returned **PASS**. No wrong turn or help request remained.
+
+| Dimension | M0 B1 | M6 B1 | M5 B1 | M5→M6 |
+|---|---:|---:|---:|---:|
+| Audience and outcome clarity | 4 | 4 | 4 | 4 |
+| Time to first successful run | 4 | 4 | 3 | 3 |
+| Executable instructions | 4 | 4 | 4 | 4 |
+| Language and terminology | 4 | 4 | 4 | 4 |
+| Progressive disclosure/navigation | 4 | 4 | 4 | 4 |
+| Guided scaffolding | 4 | 4 | 4 | 4 |
+| Automated feedback and recovery | 3 | 3 | 3 | 3 |
+| Failure-lab reproducibility | 3 | 4 | 3 | 4 |
+| Pause and resume | 4 | 4 | 4 | 4 |
+| **Weighted result** | **96.25%** | **97.5%** | **92.5%** | **93.75%** |
+
+No dimension is below 3. The curriculum validator passed with 11×7 milestone
+files and 58 traces; Catalog API tests passed 4/4; Ecommerce API plus failure
+harness passed 17/17; the exact M6 harness passed 15/15; and `git diff --check`
+passed. The supplied M5 contract produced its intended initial `F..F`: two
+missing-route failures and two passing assertions.
+
+Limits: this was a warm local source review, not a clean clone or human study.
+The post-M5 preflight cannot run in this neutral repository because the three
+M5 test files and identity behavior are intentionally learner-built. PostgreSQL,
+live servers, hosted Actions, provider behavior, and human comprehension were
+not observed. This review cannot satisfy named-human evidence.

@@ -19,7 +19,9 @@ def anyio_backend() -> str:
 
 @pytest.fixture
 async def client() -> AsyncIterator[AsyncClient]:
-    settings = Settings(service_name="Test Catalog", environment="test", _env_file=None)
+    settings = Settings(  # type: ignore[call-arg]
+        service_name="Test Catalog", environment="test", _env_file=None
+    )
     app: FastAPI = create_app(settings)
     async with AsyncClient(transport=ASGITransport(app=app), base_url="http://test") as value:
         yield value
@@ -50,9 +52,11 @@ def test_service_name_is_required(monkeypatch: pytest.MonkeyPatch) -> None:
     monkeypatch.delenv("CATALOG_SERVICE_NAME", raising=False)
 
     with pytest.raises(ValidationError):
-        Settings(_env_file=None)
+        Settings(_env_file=None)  # type: ignore[call-arg]
 
 
 def test_empty_service_name_is_rejected() -> None:
     with pytest.raises(ValidationError):
-        Settings(service_name="", _env_file=None)
+        Settings(  # type: ignore[call-arg]
+            service_name="", _env_file=None
+        )

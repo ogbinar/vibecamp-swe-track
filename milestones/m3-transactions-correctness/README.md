@@ -47,6 +47,12 @@ repository or add a queue to disguise an unclear transaction.
 
 ## Work blocks
 
+Use the five visible cues in each block: **Do** is its start/work/command;
+**Understand** is the exact concept or support link; **Check** is its expected
+observation and evidence; **If it fails** is the named hint/reset/recovery; and
+**Stop/resume** is its saved last-green boundary and return anchor. The compact
+scope lines below state those facts in that order without replacing C/A IDs.
+
 ### 1. Make one checkout atomic `[REQUIRED]`
 
 Start from the starting checkpoint above. Work in `projects/pos/`;
@@ -91,7 +97,8 @@ Record interleaving, winner count, final invariant, and retry rule in
 
 Run from `projects/pos/`; create each named learner test before expecting green.
 
-Before: the learner test is absent or exposes the published failure. After: the
+Before: create the named test and observe its published partial-write, repeat,
+money, or race assertion fail. File-not-found is not evidence. After: the
 row’s stop condition is green and final database truth is recorded.
 
 | Block | Learner target | Copyable command | Expected stop condition |

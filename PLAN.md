@@ -1,9 +1,11 @@
-# Career-shifter self-study remediation plan
+# Career-shifter self-paced curriculum revision plan
 
-Status: **REPOSITORY REMEDIATION COMPLETE — LOCAL LEARNER IA AND CLEANUP COMPLETE — EXTERNAL EVIDENCE PENDING**
-Date: 2026-09-13
+Status: **PARETO GAP REPAIR COMPLETE — CS LOCAL IMPLEMENTATION COMPLETE — EXTERNAL EVIDENCE PENDING**
+Date: 2026-09-14
 
-Current evidence: [local closeout](#local-ia-and-cleanup-closeout),
+Latest plan: [Pareto post-closeout gap repair](#pareto-post-closeout-gap-repair).
+Completed plan: [career-shifter/self-paced instructional revision](#active-plan--career-shifterself-paced-instructional-revision).
+Prior evidence: [local closeout](#local-ia-and-cleanup-closeout),
 [dispositions](#cu1-disposition-and-authority-decisions),
 [remaining external work](TODO.md#external-release-evidence--still-required).
 
@@ -276,7 +278,7 @@ Record environment, first action, wrong turns, undefined terms, person help,
 failed commands, recovery, next action, and rubric score. Repair and rerun every
 failed transition.
 
-Exit: all ten learner-experience dimensions reach at least 4/5; no transition
+Historical Phase 8 threshold (superseded): all ten learner-experience dimensions reach at least 4/5; no transition
 requires author intervention; human status names reviewer, reference, date, and
 scope.
 
@@ -423,7 +425,7 @@ Implementation is complete only when the one-repository route is unambiguous;
 all milestones have executable/resumable work blocks; Core work is traceable and
 observable; starter infrastructure matches its gates; known contradictions and
 terminology gaps are closed; M10 claims are honest; readiness statuses remain
-separate; clean validation passes; human cold tests meet 4/5 without author
+separate; clean validation passes; the historical human cold-test target was 4/5 without author
 intervention; and `TODO.md` has no unchecked required implementation item.
 
 Until then:
@@ -1132,8 +1134,9 @@ record the solo maintenance method and its limits. The stronger hosted-rendered,
 human and real-target claims remain external in TODO. Prior completed evidence
 is retained. No commit, push, issue submission, deployment or publication occurred.
 
-The active status above supersedes future-tense design language in the preserved
-planning/history sections. PLAN owns current decisions, TODO is the sole active
+The prior-phase closeout recorded in this section supersedes future-tense design
+language in the preserved IA/CU history. The new active CS plan below owns the
+next revision decisions, TODO is the sole active
 maintenance tracker, PROGRESS is untouched learner advancement. Historical
 inputs remain at their original public paths; no archived PLAN/TODO tracker exists.
 The approved KEEP/no-compaction decisions close those candidate actions without
@@ -1147,3 +1150,547 @@ learner evidence or release artifact changed. Only 38 named ignored caches were
 removed and normal checks recreated 37. Refer to the removal manifest for exact
 paths and regeneration. Source hashes were compared with the pre-edit candidate;
 HEAD alone is not an adequate recovery source for the original dirty work.
+
+## Active plan — career-shifter/self-paced instructional revision
+
+This is the canonical rationale, scope, and implementation sequence for the next
+curriculum revision. It begins after the completed R1–R7, IA0–IA5, and CU0–CU5
+work above. Those phases and their evidence remain closed; their hosted, named-
+human, and authorized real-target checklist items remain external and unchecked.
+This planning update changes no learner lesson, starter, validator, workflow, or
+learner progress record.
+
+The governing principle is:
+
+> Practical engineering without compromise. Use the smallest tool that preserves correctness, security, maintainability, and operability. Add complexity only when the product earns it.
+
+### Current state: strength and remaining friction
+
+Already working: GitHub is the only delivery surface; the root README is the
+learner front door; all eleven M0–M10 controllers have the completed IA grammar;
+each milestone has exactly seven role-specific files; five launch kits provide
+neutral, runnable starting points; Core and Stretch are distinct; challenges are
+deterministic; advancement requires evidence; and the course repeatedly asks the
+learner to build, break, debug, refactor, operate, and ship. Local structure,
+links, starters, PostgreSQL paths, controlled mutations, and the M10 rehearsal
+have bounded verification. No completed learner solutions are supplied, and CI
+is deterministic without provider secrets.
+
+The remaining friction is instructional, not structural. The root-table override
+now shows concepts, FastAPI/Python tools, integration status, and capability in
+one scan; deeper lesson and contract work remains pending. Some blocks lead with
+identifiers or repeated contract boilerplate before the concrete problem. Tool
+timing is distributed across files, so learners can mistake an ecosystem package
+for the concept it automates. Several narrow contradictions make Core scope and
+proof ambiguous, especially in M4, M6, M7, and M9. Real-provider work is either
+prohibited or weakly modeled where one bounded sandbox experiment would teach the
+boundary honestly. Historical score language also conflicts with the current
+nine-dimension, 0–4 `USABILITY.md` rubric.
+
+### Frozen course shape and five-product journey
+
+The revision keeps M0–M10 exactly: eleven milestones, exactly seven files per
+milestone, and the current maturity arc. The five-product journey remains
+Catalog (M0–M1) → POS (M2–M4 and M10 capstone) → Ecommerce (M5–M7) → Booking
+(M8) → Social (M9). The root `README.md` remains the only front door and route
+controller. By explicit user override on 2026-09-14, its primary course table—not
+`CURRICULUM.md`—owns the combined organization/reference scan. Delivery stays
+GitHub-only through local work, issues, pull requests, Actions, project-local
+evidence, and tags/releases.
+No learning-management system, website, or second track is introduced.
+
+Levels, Core/Stretch, the 58 stable top-level concept traces, the recurring
+engineering cycle, and evidence-based advancement remain. Career-shifter and
+data-specialist lenses frame the same work and gates. Implementation may supply
+contracts, controlled failures, and neutral seams, but never completed learner
+solutions or fabricated evidence.
+
+### Root course-table override — implemented 2026-09-14
+
+The earlier compact-root/eight-column-only-`CURRICULUM.md` proposal is
+superseded. The primary table in `README.md` now has exactly these six columns:
+`#`; `Milestone / Capability`; `Project`; `Key concepts`;
+`FastAPI / Python tools`; `Real integration`. It has exactly eleven M0–M10 rows
+in order; `#` pairs ordinal and label (`1 · M0` through `11 · M10`); and the
+capability text links each milestone controller. It shows the five-product
+journey, concise earned-tool qualifiers, deterministic/local Core throughout,
+the one required M6 Stripe-like sandbox after local Core, and only the approved
+optional M7/M10 integrations. It explicitly avoids any provider-account or
+secret prerequisite at course start.
+
+`CURRICULUM.md` remains the detailed maturity and concept-trace authority and
+must not receive a duplicate version of the root table. `STACK.md` owns adoption
+and removal detail; `QUALITY-GATES.md` owns evidence thresholds. Future CS work
+may refine the underlying contracts, but must update the root row in place and
+must not recreate the superseded eight-column table elsewhere.
+
+### Learner grammar and visible block contract
+
+Every revised teaching slice follows this causal grammar:
+
+**Concrete problem/example → necessary concept → smallest implementation → failure → diagnosis → proof → tool decision**
+
+The visible learner layer uses plain names before stable `C#`/`A#` references
+and exposes five short cues:
+
+- **Do:** the bounded action, working directory, files, and exact command.
+- **Understand:** the minimum concept needed for that action, introduced through
+  the concrete example rather than a survey.
+- **Check:** the expected observation and evidence destination.
+- **If it fails:** the diagnostic question, targeted hint, recovery/reset, and
+  protection of the last-green state.
+- **Stop/resume:** the safe stopping condition and exact return anchor/command.
+
+These cues compress presentation; they do not remove challenge modes, C/A
+traceability, the controller section order, evidence, recovery, or the full
+build/break/debug/refactor/operate/ship loop.
+
+### Tool ladder and timing
+
+1. Start with FastAPI, Uvicorn, Pydantic, and settings so configuration and HTTP
+   behavior stay visible.
+2. Introduce `APIRouter`, `Depends`, and generated OpenAPI when multiple routes,
+   composition, or public-contract inspection creates the need.
+3. Teach ordering, limits/cursors, error semantics, and insertion-between-pages
+   behavior by hand before evaluating `fastapi-pagination`. The adapter must
+   preserve the contract; it does not define it.
+4. Teach explicit CRUD and transaction ownership before evaluating FastCRUD.
+   Treat it as a comparison, not the default architecture. Verify generated
+   query/response behavior, do not let a helper commit independently, and do not
+   introduce async sessions merely to fit an adapter: async must earn itself
+   through measured need, with session lifetime and commit/rollback caveats made
+   explicit.
+5. Teach authentication versus authorization, credential/session lifecycle,
+   object checks, and negative cases before FastAPI Security helpers. M5 Core is
+   a first-party secure cookie session; JWT remains a bounded comparison/Stretch.
+6. Use `BackgroundTasks` first only for short, disposable, safe-to-lose/repeat
+   work. Deliberately crash it to contrast acknowledgement with durability before
+   M7's database outbox/worker. A process-local callback never satisfies a
+   durable obligation.
+7. Add Redis, native server-sent events (SSE), or WebSockets only after a named
+   workload or latency/interaction need fails the simpler design. PostgreSQL
+   remains durable truth; SSE is one-way and WebSockets require a bidirectional
+   need.
+8. Add SQLAdmin only after tenant authorization and append-only audit behavior
+   are proven, and test tenant scope and audit on every administrative action.
+9. Choose Sentry **or** Logfire—not both—to answer one named diagnostic question;
+   bound redaction, sampling, retention, ownership, and cost before retention.
+
+### Real-integration taxonomy and classification
+
+| Class | Meaning | Milestones |
+|---|---|---|
+| Deterministic offline Core | Required behavior is reproducible in local tests/fixtures, CI needs no provider secrets, and failure modes can be replayed | Every milestone, M0–M10 |
+| REQUIRED real-provider experiment | A bounded credentialed sandbox observation supplements local Core and is required for the real-provider evidence claim | Exactly M6: one Stripe-like payment sandbox, only after local Core |
+| OPTIONAL endorsement | Stronger evidence that never blocks Core or creates an account prerequisite | M7 email test provider; M10 S3-compatible storage, OAuth/OIDC, Sentry or Logfire, SQLAdmin, and authorized real deployment |
+
+The curriculum must not turn four or more provider accounts into prerequisites.
+If M6 provider access is unavailable or the sandbox is down, record the provider
+step as `PENDING — ACCESS/PROVIDER OUTAGE`, continue any independent local work,
+and preserve the last-green local state. Pending access cannot count as a real-
+provider observation or complete that evidence requirement. All real calls,
+including sandbox calls, require separate explicit authorization at implementation
+time; CI and ordinary local checks remain secret-free and offline.
+
+### M6 payment ladder: fake → protocol/SDK → sandbox
+
+1. **Deterministic fake provider.** Model success, decline, connect timeout,
+   response/read timeout, total deadline exhaustion, timeout-before-processing,
+   timeout-after-processing, duplicate delivery, out-of-order delivery, refund
+   success/failure/unknown, and lookup/reconciliation. Keep provider facts and
+   local business state separate and prove the local state machine first.
+2. **Understand the boundary.** Explain test versus live keys, least privilege,
+   environment isolation, rotation/redaction, and why keys never enter Git,
+   evidence, URLs, logs, fixtures, or CI. Compare direct HTTP with the selected
+   provider SDK: the SDK may handle serialization/signing/retries, but the
+   application still owns business state, deadlines, idempotency, and recovery.
+   Configure and observe separate connect, read, and total timeouts. Define one
+   combined SDK/application retry budget so nested retries cannot multiply
+   requests beyond the deadline.
+3. **Webhook correctness.** Verify the provider signature over the exact raw
+   request body before JSON parsing or mutation, with the provider timestamp and
+   tolerance where supported. Persist the provider event ID and business
+   idempotency key durably. Treat duplicates as normal, tolerate out-of-order
+   events through legal state transitions/current-provider lookup, and return a
+   bounded response without claiming the side effect happened exactly once.
+4. **Refunds and uncertainty.** Teach full/partial refund vocabulary if supported,
+   repeat-refund idempotency, decline/failure, timeout before and after provider
+   processing, and a local `pending/unknown` state that blocks unsafe repetition.
+   A database rollback cannot undo provider money. On an unknown outcome, do not
+   guess or blindly retry: look up by provider operation/idempotency key, compare
+   provider fact with local intent, reconcile forward, and leave an auditable
+   operator decision when automation cannot resolve it.
+5. **One authorized Stripe-like sandbox experiment.** After local Core is green,
+   use a test credential and test instrument to perform the chosen payment flow,
+   retrieve/lookup the result, receive and verify a signed webhook, exercise one
+   bounded refund, and reconcile local/provider records. Store only sanitized
+   request IDs, timestamps, status transitions, timeout/retry settings, webhook
+   verification result, refund/lookup result, and cleanup outcome. Revoke/delete
+   task-scoped credentials where supported and remove local secrets/transient
+   provider objects according to the sandbox's safe cleanup controls; never put
+   secret values, full payloads, customer data, or payment instruments in evidence.
+
+Provider interface vocabulary must be decided before implementation. Prefer a
+payment-shaped port such as `authorize`, `capture`, `refund`, and `lookup` if the
+selected reference flow teaches those distinct facts; otherwise choose a single
+documented immediate-payment operation consistently. Do not leave a fake
+`charge` method contradicting an authorize/capture learner contract.
+
+### Other bounded integration ladders
+
+- **Email (M7 optional):** deterministic Core records intent, attempts,
+  idempotency/deduplication window, provider message ID, and terminal/uncertain
+  result. A provider's API acceptance means it accepted the request, not that a
+  mailbox received, displayed, or was read. Retries and duplicate suppression
+  have explicit limits; no exactly-once delivery claim is allowed.
+- **S3-compatible storage (M10 optional):** define tenant-scoped, non-secret
+  object keys; authentication/authorization; content length/type; presigned URL
+  scope and short expiry; checksum verification; overwrite/version behavior;
+  delete/retention; partial failures; and orphan cleanup/reconciliation. Database
+  rollback does not remove an uploaded object.
+- **OAuth/OIDC (M10 optional):** use OAuth 2 authorization code with Proof Key
+  for Code Exchange (PKCE) and OpenID Connect (OIDC) identity validation. Test
+  state/nonce, redirect allowlist, issuer/audience/signature/expiry, key rotation,
+  callback errors, logout/revocation assumptions, and explicit account linking/
+  unlinking rules. Do not teach the resource-owner password grant.
+- **Monitoring (M10 optional):** choose Sentry or Logfire for one named question,
+  define field redaction, environment separation, sampling, retention, access,
+  budget/cost limit, and deletion. Inject one synthetic failure, correlate it
+  without personal/secrets leakage, record the answer, then decide retain/remove.
+
+### Primary implementation references
+
+Re-verify these official sources when implementation begins and record the
+retrieval date in the affected `RESOURCES.md` or `STACK.md`; product and library
+behavior can change. Prefer primary documentation over tutorials:
+
+- FastAPI: [BackgroundTasks](https://fastapi.tiangolo.com/tutorial/background-tasks/),
+  [security helpers](https://fastapi.tiangolo.com/reference/security/), and
+  [server-sent events](https://fastapi.tiangolo.com/tutorial/server-sent-events/).
+- Starlette: [background task execution](https://starlette.dev/background/).
+- FastCRUD: [documentation](https://benavlabs.github.io/fastcrud/) and
+  [commit control](https://benavlabs.github.io/fastcrud/advanced/crud/#skipping-database-commit).
+- fastapi-pagination: [documentation](https://uriyyo-fastapi-pagination.netlify.app/)
+  and [SQLAlchemy integration](https://uriyyo-fastapi-pagination.netlify.app/integrations/sqlalchemy/general/).
+- Stripe: [sandboxes](https://docs.stripe.com/sandboxes),
+  [API keys](https://docs.stripe.com/keys),
+  [idempotent requests](https://docs.stripe.com/api/idempotent_requests),
+  [low-level errors](https://docs.stripe.com/error-low-level),
+  [webhooks](https://docs.stripe.com/webhooks),
+  [signature verification](https://docs.stripe.com/webhooks/signature),
+  [refunds](https://docs.stripe.com/refunds), and the
+  [official Python SDK](https://github.com/stripe/stripe-python).
+- Storage: [Amazon S3 presigned URLs](https://docs.aws.amazon.com/AmazonS3/latest/userguide/using-presigned-url.html)
+  and [Cloudflare R2 S3 compatibility](https://developers.cloudflare.com/r2/api/s3/api/).
+- OAuth/OIDC: [OAuth 2.0 Security Best Current Practice](https://www.rfc-editor.org/rfc/rfc9700.html),
+  [Authlib's FastAPI client integration](https://docs.authlib.org/en/latest/oauth2/client/web/fastapi.html),
+  and [Google OpenID Connect](https://developers.google.com/identity/openid-connect/openid-connect).
+- Observability/admin: [Sentry for FastAPI](https://docs.sentry.io/platforms/python/integrations/fastapi/),
+  [Logfire for FastAPI](https://pydantic.dev/docs/logfire/integrations/web-frameworks/fastapi/),
+  and [SQLAdmin](https://smithyhq.github.io/sqladmin/).
+
+### Contradictions to repair before expansion
+
+### CS0 execution record and frozen decisions — 2026-09-14
+
+Baseline reference: `main` at the existing dirty candidate (`PLAN.md`,
+`README.md`, `TODO.md`, `scripts/check_curriculum.py`, and
+`scripts/test_validator_mutations.py` modified before CS learner edits). The
+baseline validator reported 11 milestone directories, exactly seven contract
+files in each, and 58 traced concepts; all 33 pre-existing controlled mutations
+passed, `git diff --check` passed, and no provider access was assumed. Prior
+R/IA/CU work remains closed; hosted, named-human, real-target, and credentialed
+provider evidence remains external and unchecked. These paths are user-owned and
+must not be restored from `HEAD` as a rollback mechanism.
+
+The four contradiction decisions are frozen as follows:
+
+1. **Evidence ownership:** evidence is project-local. From a milestone's stated
+   `projects/<product>/` working directory, `evidence/MN/...` resolves to
+   `projects/<product>/evidence/MN/...`. Root documents use the fully qualified
+   project path when referring to an artifact. Existing artifacts stay in place;
+   this is a link/wording migration, not a move or overwrite.
+2. **M4 Core:** the only Core stakeholder change is the supplied optional
+   `cashier_name` receipt field, including legacy rows returning `null`.
+   Promotions/returns remain background examples only where needed to explain
+   coupling; no second implementation variant is required. Any future variant
+   is Stretch and must bring its own complete contract and tests.
+3. **M6 payment vocabulary:** use one immediate-payment port with `pay`,
+   `refund`, and `lookup` operations, modeled after a confirmed Stripe-like
+   PaymentIntent rather than an unimplemented authorize/capture split. Provider
+   facts are `succeeded`, `declined`, or `unknown`; local state remains separate.
+   The deterministic fake and learner port share these names. A separately
+   authorized sandbox may map the same contract to its provider SDK.
+4. **M9 realtime:** Core SSE is earned by the fixed, measurable one-way update
+   requirement after polling misses its latency bound. Core must define and test
+   disconnect/reconnect, gaps, restart/loss, and slow-consumer behavior. SSE does
+   not become durable truth. WebSockets remain Stretch until a bidirectional
+   need is observed.
+
+The causal grammar and integration taxonomy above are also frozen. The root
+six-column table stays canonical; every milestone retains deterministic offline
+Core; only the M6 sandbox is a required real-provider experiment, and the listed
+M7/M10 integrations remain optional endorsements.
+
+Official-reference review completed 2026-09-14 against the primary links above
+and the locked project manifests (`fastapi[standard]>=0.116.0`; optional tools
+are not installed). Current FastAPI documents post-response `BackgroundTasks`,
+security helpers, and native SSE; Starlette documents response-attached task
+execution. FastCRUD documents explicit commit control; fastapi-pagination's
+SQLAlchemy adapter still operates on an application query/session rather than
+owning the course's ordering contract. Stripe documents isolated sandboxes,
+restricted/test keys, idempotent request behavior, ambiguous low-level network
+failures, raw-body webhook verification, and refunds. S3 presigned URLs remain
+bearer access bounded by credential policy and expiry. RFC 9700 supports
+authorization code plus PKCE and rejects the resource-owner password grant.
+Sentry, Logfire, and SQLAdmin remain optional because their documentation does
+not establish a course need. Where a documentation site did not render through
+the read-only fetch, the integration stays deferred rather than being inferred.
+Affected `RESOURCES.md` files carry the same retrieval date.
+
+| Conflict | Exact target files/scopes | Required repair |
+|---|---|---|
+| Root versus project-local evidence paths | `README.md`; `QUALITY-GATES.md`; `PROGRESS.md`; `templates/EVIDENCE-INDEX.md`; `milestones/*/{README,CHALLENGE,ACCEPTANCE}.md`; project `evidence/` examples | Choose one learner-owned convention and make every command unambiguous from its stated working directory; migrate links without losing existing evidence. |
+| M2 mandatory-sounding repository/service layers versus earned boundaries | `CURRICULUM.md` concept row; `STACK.md`; `milestones/m2-pos-persistence-data-modeling/{README,CONCEPTS,CHALLENGE,TOOLS,ACCEPTANCE,REVIEW,RESOURCES}.md`; `projects/pos/specs/M2-PERSISTENCE-CONTRACT.md` | Permit direct route-to-SQLAlchemy for simple work; require a service/repository only when orchestration, invariants, duplication, or substitution earns it. |
+| M3 local transaction versus remote money boundary | M3 seven-file milestone set; `projects/pos/specs/M3-CHECKOUT-CONTRACT.md`; M6 handoff wording | State that the database transaction owns local checkout/inventory/intent only; remote provider money needs idempotency, unknown-state handling, lookup, and reconciliation. |
+| M4 cashier-name spec versus returns/promotions prose and unsupported second variant | M4 seven-file milestone set; `projects/pos/specs/M4-CHANGE-BRIEF.md`; portfolio/template references | Decide and use one Core change everywhere; default proposal is the existing cashier-name change. Remove mandatory returns/promotions and any unsupported second variant or label a bounded alternative Stretch. |
+| M5 required PyJWT lab versus cookie Core/JWT Stretch | M5 seven-file milestone set; `projects/ecommerce/specs/M5-SECURITY-CONTRACT.md`; `projects/ecommerce/REQUIREMENTS.md`; `STACK.md`; relevant contract tests | Keep secure cookie session Core. Make PyJWT comparison/Stretch conditional and prevent acceptance or resources from implying it is required. |
+| M6 prohibited real calls, authorize/capture/lookup versus fake charge, missing refund, weak timeout model | M6 seven-file milestone set; `projects/ecommerce/specs/M6-INTEGRATION-CONTRACT.md`; `projects/ecommerce/src/ecommerce_api/provider_fake.py`; `projects/ecommerce/tests/test_failure_harnesses.py`; settings/env/dependency files only if the chosen sandbox earns them | Preserve deterministic fake Core, add refund and connect/read/total/unknown cases, settle interface vocabulary, then authorize exactly one separately approved sandbox experiment. |
+| M7 exactly-once external email claims | M7 seven-file milestone set; `projects/ecommerce/specs/M7-JOB-CONTRACT.md`; worker/outbox seams and tests; email endorsement material if added | Use at-least-once processing plus bounded business idempotency; distinguish provider acceptance from delivery and state duplicate limits. |
+| M9 SSE required versus earned-tool policy | M9 seven-file milestone set; `projects/social/specs/M9-FEED-CONTRACT.md`; `STACK.md`; social tests/harness | Decide whether Core is polling with an earned SSE experiment or SSE is required by a fixed latency constraint; keep WebSockets Stretch and align every file. |
+| `pytest -s` or missing-test mechanics treated as proof | `milestones/*/{README,CHALLENGE,ACCEPTANCE}.md`; project tests/contracts referenced by changed blocks | Replace output-capture flags and absent-file/selector failures with substantive behavioral assertions, intended red states, and deterministic reset-to-green proof. |
+| Concept first-use drift | `CURRICULUM.md` coverage matrix; `GLOSSARY.md`; `milestones/*/{README,CONCEPTS,CHALLENGE,ACCEPTANCE}.md` | Trace each decision-driving concept to its first concrete example, later practice, and objective proof; define it where first used. |
+| Historical `4/5`, five/ten-dimension language versus current rubric | active claims in `PLAN.md` and `TODO.md`; `USABILITY.md` only during implementation if its current authority needs clarification; `templates/TRANSITION-REVIEW.md` | Use the current nine dimensions scored 0–4, release threshold at least 85/100 and no dimension below 3; label immutable historical results rather than silently rewriting their evidence. |
+
+The four decisions that freeze contradiction repair are: one M4 Core change and
+any variant status; one M6 provider reference flow and interface vocabulary; one
+evidence-path convention; and whether M9 SSE is Core because of a fixed need or
+an earned experiment after polling. No broad curriculum rewrite begins until
+these are recorded.
+
+### Simplification and pilot boundary
+
+Compress repeated block boilerplate into the five visible cues while retaining
+unique commands, failure fixtures, expected observations, hints, evidence,
+recovery, and stop/resume state. Put plain block/scenario names before `C#`/`A#`
+IDs. Keep support wording short and action-specific. Move maintainer/process
+explanation behind learner action or exact links. Preserve unique templates and
+their obligations. Keep the concept coverage matrix as a secondary audit map,
+not the primary lesson route.
+
+Pilot the grammar on exactly one representative M0 block and one difficult M6
+payment block before broad rollout. Compare orientation, action selection,
+failure diagnosis, evidence capture, and resume accuracy. The pilot may change
+only its named blocks and unavoidable exact-link targets. It must preserve the
+controller order, commands' substantive meaning, Core gates, C/A traceability,
+and solution boundary. Roll out only after a stop/go decision based on the
+current nine-dimension rubric and no regression below 3.
+
+### Phased dependency order and gates
+
+| Phase | Depends on | Work and gate |
+|---|---|---|
+| CS0 — Baseline and decision freeze | Prior local closeout | Re-run structural baseline; inventory first-use/tool/integration/evidence conflicts; record the four decisions. Gate: one internally consistent contract and no learner-file edits yet. |
+| CS1 — Contradiction repair | CS0 decisions | Repair only the narrow conflicts above. **STOP/GO 1:** validator/mutations, YAML, affected project/PostgreSQL checks, and manual contract trace pass before expansion. |
+| CS2 — Root course table and tool visibility | Root-table override implemented; remaining work depends on CS1 GO | Preserve the validated six-column table in `README.md`; align `STACK.md`, `QUALITY-GATES.md`, glossary, and milestone tool decisions without duplicating the table in `CURRICULUM.md`. |
+| CS3 — Two-block compression pilot | CS2 stable authority | Apply the visible grammar to one M0 block and one hard M6 block; fresh-context review both. **STOP/GO 2:** roll out, revise, or revert based on observed behavior and rubric. |
+| CS4 — M6 deterministic contract and sandbox implementation | CS3 GO | Complete the fake/provider contract, refund/timeout/reconciliation tests, then keep the credentialed sandbox evidence as a separate authorized task. Local Core stays deterministic and secret-free. |
+| CS5 — Bounded rollout and optional endorsements | CS4 local green and sandbox status honestly recorded | Roll accepted grammar through remaining blocks in risk-ordered batches. **STOP/GO 3 before optional integrations:** require an observed need, owner, cost/data/safety boundary, removal trigger, access, and explicit authorization. Optional endorsements never block Core. |
+| CS6 — Validator migration and closeout | Stable CS1–CS5 contracts | Update only durable semantic checks/mutations, run the full local matrix, perform named human reviews, repair and rerun failures, and close local versus external evidence separately. |
+
+### CS gate decisions and optional-integration review — 2026-09-14
+
+- **STOP/GO 1: GO.** The narrow contradiction batch preserves 11×7, 58 traces,
+  Core/Stretch, the learner-solution boundary, and offline CI. Root validation,
+  controlled mutations, YAML parsing, affected locked project checks, and four
+  isolated PostgreSQL upgrade/current/test runs passed. No provider or human
+  evidence was inferred.
+- **STOP/GO 2: ROLL OUT.** The M0/M6 pilot scored 97.5/100 for both scopes with
+  no dimension below 3 in the dated internal maintenance review in
+  `USABILITY.md`. It is not named-human evidence.
+- **CS4 local: GO.** The neutral M6 fake now exposes immediate `pay`, `refund`,
+  `lookup`, timeout phases, post-effect uncertainty, and a combined retry budget;
+  local tests pass without credentials. The sandbox remains pending authority.
+
+STOP/GO 3 applies the [complexity-rejection](templates/COMPLEXITY-REJECTION.md)
+questions and [data-lifecycle](templates/DATA-LIFECYCLE.md) boundary without
+creating learner evidence. No observed local need or external authority exists,
+so every endorsement receives a separate **NO-GO — DO NOT ADD YET** decision:
+
+| Optional endorsement | Observed need / simpler baseline | Owner, data/cost/access boundary | Removal trigger / decision |
+|---|---|---|---|
+| M7 email provider | No mailbox/provider question observed; deterministic intent/acceptance fake is sufficient | No owner, recipient, credential, privacy or spend authority | Any provider dependency is removable; **NO-GO** |
+| M10 S3-compatible storage | No file-lifecycle requirement; PostgreSQL/local rehearsal covers Core | No bucket owner, object-data approval, credential, retention or cost cap | Remove until files must outlive instances; **NO-GO** |
+| M10 OAuth/OIDC | First-party cookie Core has no external identity requirement | No identity owner, test users/client, redirect or credential authority | Remove until an external identity boundary is observed; **NO-GO** |
+| M10 Sentry or Logfire | Existing redacted local signals answer the rehearsal question | No telemetry owner, data-processing approval, DSN, retention or budget | Remove until one named question remains unanswered; **NO-GO** |
+| M10 SQLAdmin | No administrative workflow beyond ordinary authorized paths | No surface owner or exposure authority; tenant/audit Core is learner work | Remove until repeated operator work earns it; **NO-GO** |
+| M10 real deployment | Local two-environment rehearsal is the authorized scope | No target owner, credentials, TLS/secrets/backup/monitoring or spend approval | Do not deploy until all prerequisites and authority exist; **NO-GO** |
+
+These NO-GO decisions preserve each optional checklist item as unchecked and
+non-blocking. They do not prohibit a later learner-owned experiment after a new
+observed need and explicit authority.
+
+### Exact target file map
+
+| Work | Authorized implementation targets after planning | Excluded or conditional |
+|---|---|---|
+| Course authority and route | `README.md`, `CURRICULUM.md`, `STACK.md`, `QUALITY-GATES.md`, `GLOSSARY.md` | Preserve the root six-column primary table; do not duplicate it in `CURRICULUM.md`; `PROGRESS.md` only if an evidence-path migration must preserve learner resume data |
+| Learner controllers/support | `milestones/m0-engineering-baseline/*.md` through `milestones/m10-production-multitenant-saas-capstone/*.md` | Always retain exactly the seven existing files; no new lesson file |
+| Product contracts | `projects/catalog/specs/M1-PRODUCT-BRIEF.md`; `projects/catalog/contracts/*`; `projects/pos/specs/M2-PERSISTENCE-CONTRACT.md`, `M3-CHECKOUT-CONTRACT.md`, `M4-CHANGE-BRIEF.md`, `M10-CAPSTONE-CONTRACT.md`; `projects/ecommerce/specs/M5-SECURITY-CONTRACT.md`, `M6-INTEGRATION-CONTRACT.md`, `M7-JOB-CONTRACT.md`; `projects/booking/specs/M8-BOOKING-CONTRACT.md`; `projects/social/specs/M9-FEED-CONTRACT.md` | Contract/fixture work must remain incomplete learner scaffolding |
+| Deterministic project support | affected `projects/{catalog,pos,ecommerce,booking,social}/{README.md,REQUIREMENTS.md,.env.example,pyproject.toml,uv.lock,src/**,tests/**,contracts/**}` and existing migration/Compose files only when required by the settled contract | No real credentials, live endpoints, completed domain implementation, or unrelated dependency refresh |
+| External evidence | learner-owned project-local evidence indexes/assets, named human transition records, and sanitized provider/deployment observations | Never write secrets/customer/payment data; provider calls and deployment require separate explicit authority |
+| Automation | `scripts/check_curriculum.py`, `scripts/test_validator_mutations.py`, `.github/workflows/repository-hygiene.yml`, `.github/workflows/m10-image.yml` | Change workflows only for stable, deterministic, provider-secret-free checks; hosted execution remains external |
+| Maintenance record | `PLAN.md`, `TODO.md`, `USABILITY.md`, `templates/TRANSITION-REVIEW.md`, existing unique evidence/runbook/decision templates | `PROGRESS.md` remains learner progress; preserve prior IA/CU history and external items |
+
+### Risks, safety, rollback, and verification
+
+| Risk | Control and rollback boundary |
+|---|---|
+| Compression removes learning or recovery detail | Compare each pilot against the pre-change block contract; revert only that block if any unique action, failure, proof, or resume cue disappears. |
+| Tool visibility becomes a package survey | Every tool follows an observed problem, simpler baseline, evaluation, operational cost, and removal trigger; revert the tool insertion without reverting the concept. |
+| Provider dependence blocks self-study or CI | Offline deterministic Core exists everywhere; exactly one M6 sandbox is separately authorized; outage is pending, never simulated as evidence. Remove/revoke task-scoped secrets and keep provider jobs out of CI. |
+| Retrying duplicates money or messages | Combine SDK/application retry budgets, use durable business idempotency, lookup/reconciliation, and explicitly teach that database rollback cannot reverse an external effect. |
+| Evidence leaks secrets or personal data | Use test tenants/instruments, redact headers/bodies/addresses, store only sanitized IDs/status/timing, scan diffs, and discard unsafe captures rather than editing them into plausibility. |
+| Existing work/history is overwritten | Patch in dependency-sized batches, record pre-change status, preserve checked IA/CU and external tasks, and revert only the failing batch/hunk. |
+| Validator overfits prose | Automate exact rows, classifications, paths, anchors, and stable contract facts only; keep comprehension/tool judgment for human review and remove noisy rule plus mutation together. |
+
+Baseline and every completed local phase run from the repository root:
+
+```bash
+python3 -B scripts/check_curriculum.py
+python3 -B scripts/test_validator_mutations.py
+git diff --check
+python3 - <<'PY'
+from pathlib import Path
+import yaml
+for path in sorted(Path('.github').rglob('*.y*ml')):
+    yaml.safe_load(path.read_text())
+    print(path)
+PY
+```
+
+Affected projects additionally run `uv sync --locked`, `uv run --locked ruff
+check .`, `uv run --locked ruff format --check .`, `uv run --locked mypy .`,
+and `uv run --locked pytest`, all from that project directory. Database changes
+also run Alembic upgrade/current and the project's PostgreSQL integration tests
+against an isolated temporary PostgreSQL instance. M6 local checks use only the
+fake provider. Sandbox and optional-provider observations are manual, sanitized,
+non-CI evidence after access and explicit authority. Human review names reviewer,
+date, Git reference, environment, wrong turns, help, recovery, next action, and
+all nine 0–4 rubric scores.
+
+### Definition of done
+
+The CS revision is complete only when M0–M10, eleven milestones, five products,
+seven files per milestone, README control, and GitHub-only delivery are unchanged;
+the exact root six-column course table and tool ladder are consistent, with no
+duplicate roadmap table in `CURRICULUM.md`; every revised block
+uses the causal and visible learner grammar without lost substance; all listed
+contradictions are closed; M6 has deterministic fake/refund/timeout/webhook/
+reconciliation proof plus an honestly classified authorized sandbox result or an
+explicit still-pending external item; optional endorsements stay optional; CI
+needs no provider secrets; no completed learner solution or fabricated evidence
+exists; validators, mutations, YAML, affected lint/format/type/tests, and relevant
+PostgreSQL checks pass; named human evidence is separate and truthful; and TODO
+checks only work whose observation, validation, and rollback condition are met.
+
+Real provider calls, credential creation/use, external messages, hosted
+deployment, publication, commit, push, and release remain outside this plan's
+implementation authority and require separate explicit authorization.
+
+### CS6 local closeout — 2026-09-14
+
+No locally actionable CS0–CS6 item remains. The final local candidate preserves
+exactly M0–M10, 11×7 milestone files, 58 top-level concept traces, the maturity
+and five-product arc, Core/Stretch boundaries, README control, GitHub-only
+delivery, and the learner-solution boundary.
+
+For M9 specifically, local closeout means the SSE contract, lesson, and
+acceptance requirements are present. The neutral starter intentionally omits the
+SSE application and `projects/social/tests/m9/test_sse.py`; those remain learner-
+built work and were not counted as supplied runtime evidence.
+
+Validation evidence:
+
+- curriculum validator: pass (`11` milestone directories, `7` files each,
+  `58` concepts, relative links/anchors resolved), with its human-understanding
+  limitation printed;
+- controlled mutations: all `37` intended semantic failures rejected and the
+  candidate restored green;
+- YAML: all four issue forms and both workflows parsed with `yaml.safe_load`;
+- locked project gates: Catalog `4 passed`; POS `2 passed, 1 skipped` without a
+  database; Ecommerce `17 passed, 1 skipped`; Booking `3 passed, 1 skipped`;
+  Social `4 passed, 1 skipped`; Ruff lint/format and mypy passed for all five;
+- isolated PostgreSQL upgrade/current/integration: POS `3 passed`, Ecommerce
+  `18 passed`, Booking `4 passed`, Social `5 passed`;
+- intended red behavior: Catalog compatibility produced the expected public
+  `name`→`title` mismatch and reset to four green tests; Booking's supplied lab
+  observed two winners for one seat; Social's supplied lab observed 100 profile
+  reads against the two-read budget. The latter two stay red by design because
+  their fixes are learner work;
+- M10 local rehearsal: migration preceded readiness, rollback/roll-forward
+  command mechanics passed, isolated restore became ready, and the unhealthy
+  candidate was rejected. The generated synthetic SQL/checksum, all task-created
+  containers/volumes/networks, and the local image tag were removed afterward;
+- `git diff --check`, secret/unsafe-fixture/generated-archive checks, and exact
+  changed-file/status audit passed.
+
+External limitations remain deliberately unchecked: M6 sandbox authority and
+execution; all six optional endorsements (each currently NO-GO / do not add
+yet); hosted GitHub rendering/Actions; named independent career-shifter reviews;
+the prior optional real-target endorsement; and `HUMAN SELF-STUDY VERIFIED`.
+Local maintenance review cannot satisfy any named-human item.
+
+## Pareto post-closeout gap repair
+
+This small follow-up closes the four discrepancies found when the plan and TODO
+were compared with the implementation. It does not reopen CS0–CS6, broaden the
+curriculum, add learner solutions, or authorize external work.
+
+### Decisions
+
+1. Fix the stale M9 support label so it names the FastAPI SSE reference that is
+   actually linked.
+2. Accept the implemented presentation rule: use explicit five-cue labels in
+   the M0 baseline and difficult M6 payment pilot; use one compact cue legend
+   plus the same ordered block facts elsewhere. Do not add repetitive bold
+   labels merely for visual uniformity.
+3. State that M9's SSE contract, lesson, and acceptance requirements are
+   implemented while the SSE application and `tests/m9/test_sse.py` remain
+   learner-built work.
+4. After those wording repairs, obtain one independent fresh-context local
+   maintenance review of M0 Block 1, M6 Block 1, one ordinary compressed block
+   (M5 or M9), and the M5→M6 transition. This is structural/local evidence only
+   and cannot satisfy named-human review.
+
+### Order and validation
+
+Execute PG1 → PG2 → PG3 → PG4 from the matching `TODO.md` section. Keep the
+edits narrow: M9 challenge/closeout wording, the grammar decision record, and
+one bounded review record. Then run:
+
+```bash
+python3 -B scripts/check_curriculum.py
+python3 -B scripts/test_validator_mutations.py
+git diff --check
+```
+
+The follow-up is complete when the stale label is gone, compact-versus-explicit
+cue usage is intentional rather than accidental, M9 cannot be mistaken for a
+supplied SSE solution, and the review evidence names its reviewer/context and
+limitations. Provider, hosted GitHub, deployment, and named-human items remain
+unchecked.
+
+### Pareto follow-up closeout — 2026-09-14
+
+PG1–PG4 are complete. The M9 hint names the linked FastAPI SSE reference; the
+explicit-pilot/compact-controller cue rule is frozen; M9 states that its SSE
+runtime and `tests/m9/test_sse.py` remain learner work; and an independent
+fresh-context local review is recorded in `USABILITY.md`.
+
+The first review correctly returned `REPAIR` for a contradictory M5→M6 recovery
+route. The repaired route now uses an M6-specific post-M5 preflight, preserves
+completed identity work, and distinguishes M5 regression from provider-fake
+failure. The rerun returned `PASS`: M0 Block 1 96.25%, M6 Block 1 97.5%, M5
+Block 1 92.5%, and M5→M6 93.75%, with no dimension below 3. This remains local
+structural evidence, not named-human verification.

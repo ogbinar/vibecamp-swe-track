@@ -98,6 +98,35 @@ REQUIRED_CONCEPTS = {
 LINK = re.compile(r"(?<!!)\[[^\]]+\]\(([^)]+)\)")
 ROW = re.compile(r"^\| ([^|]+?) \| ([^|]+?) \| ([^|]+?) \| ([^|]+?) \|$")
 REF = re.compile(r"M(10|[0-9]) `([AC][0-9](?:,[AC][0-9])*)`")
+ROADMAP_HEADERS = (
+    "#",
+    "Milestone / Capability",
+    "Project",
+    "Key concepts",
+    "FastAPI / Python tools",
+    "Real integration",
+)
+ROADMAP_PRODUCTS = (
+    "Catalog", "Catalog", "POS", "POS", "POS", "Ecommerce",
+    "Ecommerce", "Ecommerce", "Booking", "Social", "Multi-tenant POS SaaS",
+)
+LOCAL_INTEGRATION = "Deterministic/local Core; no provider account"
+ROADMAP_INTEGRATIONS = (
+    LOCAL_INTEGRATION,
+    LOCAL_INTEGRATION,
+    LOCAL_INTEGRATION,
+    LOCAL_INTEGRATION,
+    LOCAL_INTEGRATION,
+    LOCAL_INTEGRATION,
+    "**Required after local Core:** exactly one Stripe-like payment sandbox",
+    "Deterministic/local Core; optional email test provider",
+    LOCAL_INTEGRATION,
+    LOCAL_INTEGRATION,
+    (
+        "Deterministic/local Core; optional S3-compatible storage, OAuth/OIDC, "
+        "monitoring, and authorized deployment"
+    ),
+)
 
 
 def heading_anchors(markdown: str) -> set[str]:
@@ -125,23 +154,64 @@ def milestone_map(directories: list[Path]) -> dict[str, Path]:
     return result
 
 
+def markdown_cells(line: str) -> tuple[str, ...]:
+    """Split this repository's plain Markdown tables into trimmed cells."""
+    if not line.startswith("|") or not line.endswith("|"):
+        return ()
+    return tuple(cell.strip() for cell in line[1:-1].split("|"))
+
+
+def readme_roadmap_rows(readme: str) -> tuple[tuple[str, ...], list[tuple[str, ...]]]:
+    """Return the primary README Roadmap header and data rows."""
+    if "## Roadmap" not in readme:
+        return (), []
+    section = readme.split("## Roadmap", 1)[1].split("\n## ", 1)[0]
+    table_lines = [line for line in section.splitlines() if line.startswith("|")]
+    if len(table_lines) < 2:
+        return (), []
+    return markdown_cells(table_lines[0]), [markdown_cells(line) for line in table_lines[2:]]
+
+
 def check_navigation(root: Path, by_code: dict[str, Path]) -> list[str]:
     """Validate settled navigation facts, never learner status or comprehension."""
     errors: list[str] = []
     readme = (root / "README.md").read_text(encoding="utf-8")
-    rows = [line for line in readme.splitlines() if line.startswith("| Milestone ")]
+    headers, rows = readme_roadmap_rows(readme)
+    if headers != ROADMAP_HEADERS:
+        errors.append(
+            "README.md: primary roadmap needs exact six headers: "
+            + "; ".join(ROADMAP_HEADERS)
+        )
     if len(rows) != 11:
         errors.append("README.md: IA route map needs eleven ordered rows")
-    for number, row in enumerate(rows):
+    for number, row in enumerate(rows[:11]):
         code = f"M{number}"
         target = by_code.get(code)
-        expected = (
-            f"| Milestone {number + 1} of 11 | "
-            f"[{code}]({target.relative_to(root)}/README.md) |"
-            if target else ""
-        )
-        if not expected or not row.startswith(expected):
-            errors.append(f"README.md: IA route row {number + 1} has wrong ordinal, label, or controller")
+        if len(row) != len(ROADMAP_HEADERS):
+            errors.append(
+                f"README.md: primary roadmap row {number + 1} needs exactly six columns"
+            )
+            continue
+        if row[0] != f"{number + 1} · {code}":
+            errors.append(
+                f"README.md: IA route row {number + 1} has wrong ordinal or label"
+            )
+        capability_link = re.fullmatch(r"\[[^\]]+\]\(([^)]+)\)", row[1])
+        expected_target = f"{target.relative_to(root)}/README.md" if target else ""
+        if not capability_link or capability_link.group(1) != expected_target:
+            errors.append(
+                f"README.md: IA route row {number + 1} has wrong controller link"
+            )
+        if row[2] != ROADMAP_PRODUCTS[number]:
+            errors.append(
+                f"README.md: IA route row {number + 1} has wrong product journey"
+            )
+        if row[5] != ROADMAP_INTEGRATIONS[number]:
+            errors.append(
+                f"README.md: IA route row {number + 1} has wrong integration classification"
+            )
+    if "No provider account or secret is needed to start" not in readme:
+        errors.append("README.md: start must not imply a provider account or secret prerequisite")
     for number in range(11):
         code = f"M{number}"
         directory = by_code.get(code)
@@ -181,6 +251,55 @@ def check_navigation(root: Path, by_code: dict[str, Path]) -> list[str]:
         for role, link in routes:
             if footer.count(link) != 1:
                 errors.append(f"{code}: IA footer {role} route missing or duplicated")
+    return errors
+
+
+def check_cs_contracts(root: Path) -> list[str]:
+    """Validate settled CS facts, not prose quality or learner comprehension."""
+    errors: list[str] = []
+    required_markers = {
+        "README.md": (
+            "projects/catalog/evidence/MN/index.md",
+            "do not create a competing root `evidence/` tree",
+        ),
+        "QUALITY-GATES.md": (
+            "Evidence is owned by the active product",
+            "PENDING — ACCESS/PROVIDER OUTAGE",
+        ),
+        "STACK.md": (
+            "Deterministic offline Core",
+            "Required real-provider experiment",
+            "M5 Stretch",
+            "SQLAdmin",
+        ),
+        "milestones/m0-engineering-baseline/README.md": (
+            "**Do:**",
+            "**Understand:**",
+            "**Check:**",
+            "**If it fails:**",
+            "**Stop/resume:**",
+        ),
+        "milestones/m6-resilient-external-integrations/README.md": (
+            "`pay`/`refund`/`lookup`",
+            "sandbox remains separately authorized and pending",
+        ),
+        "projects/ecommerce/src/ecommerce_api/provider_fake.py": (
+            "def pay(",
+            "def refund(",
+            "def lookup(",
+            "class RetryBudget",
+        ),
+    }
+    for relative, markers in required_markers.items():
+        content = (root / relative).read_text(encoding="utf-8")
+        for marker in markers:
+            if marker not in content:
+                errors.append(f"{relative}: missing stable CS contract {marker!r}")
+    m4 = (root / "milestones/m4-maintainability-testing-refactoring/README.md").read_text(
+        encoding="utf-8"
+    )
+    if "Add configurable promotions and returns" in m4:
+        errors.append("M4: multiple Core stakeholder changes remain")
     return errors
 
 
@@ -336,6 +455,7 @@ def main() -> int:
                     )
 
     errors.extend(check_navigation(ROOT, by_code))
+    errors.extend(check_cs_contracts(ROOT))
 
     curriculum = (ROOT / "CURRICULUM.md").read_text(encoding="utf-8")
     rows: dict[str, tuple[str, str, str]] = {}

@@ -58,7 +58,7 @@ green, and rerun `tests/m9/test_cache_experiment.py`.
 
 1. Ask whether the client ever needs to send messages over the live connection.
 2. Inspect event identity, replay source, reconnect cursor, and buffering limits.
-3. Use the MDN SSE link in `RESOURCES.md`.
+3. Use the FastAPI SSE reference in `RESOURCES.md`.
 
 ### Reset
 

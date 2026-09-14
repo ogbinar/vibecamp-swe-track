@@ -5,6 +5,8 @@ Required maturity: **Level B plus contextual Level C reliability/diagnostics**.
 ## Core
 
 - **A1:**
+  - [ ] the immediate-payment port uses `pay`, `refund`, and `lookup` consistently; success, decline, connect/read/total/before-processing timeout, post-processing unknown, and refund success/failure/unknown are deterministic
+  - [ ] SDK and application retries share one maximum-three-attempt/five-second budget, and decline is never retried
   - [ ] C1 tests distinguish connect, read, and total timeouts.
   - [ ] Retry tests cover classification, exponential backoff with jitter, and maximum attempts/elapsed budget.
   - [ ] `Retry-After` is honored within the budget.
@@ -22,6 +24,11 @@ Required maturity: **Level B plus contextual Level C reliability/diagnostics**.
   - [ ] A [data-lifecycle review](../../templates/DATA-LIFECYCLE.md) traces provider payload/identifier copies, logs, and replay records.
   - [ ] The review covers retention, deletion, and access.
   - [ ] integration/unit/API/migration/lint/validator commands pass cleanly.
+
+Local A1–A4 finish offline. The separately authorized Stripe-like sandbox is a
+required experiment only for the real-provider evidence claim. If access is
+missing or the provider is unavailable, record `PENDING — ACCESS/PROVIDER
+OUTAGE`; do not replace it with fake evidence or block independent local work.
 
 ## Execution map
 

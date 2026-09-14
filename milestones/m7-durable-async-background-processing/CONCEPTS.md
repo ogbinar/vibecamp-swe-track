@@ -31,6 +31,11 @@ idempotent consumer:** repeated delivery converges to one business effect.
 **Rule:** use stable semantic identity and stored results; expose accepted versus
 completed states as eventual consistency.
 
+For optional email, provider acceptance means only that the provider accepted
+the request. It does not prove mailbox receipt, display, or reading. State the
+deduplication window and remaining duplicate risk; never claim exactly-once
+external delivery.
+
 ## “One poison job stopped healthy work”
 
 **Example:** the same invalid item consumes every retry slot. **Term — quarantine:**

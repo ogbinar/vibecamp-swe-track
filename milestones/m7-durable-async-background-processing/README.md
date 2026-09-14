@@ -60,6 +60,12 @@ your database-backed worker must add a separate assertion for one semantic effec
 
 ## Work blocks
 
+Use the five visible cues in each block: **Do** is its start/work/command;
+**Understand** is the exact concept or support link; **Check** is its expected
+observation and evidence; **If it fails** is the named hint/reset/recovery; and
+**Stop/resume** is its saved last-green boundary and return anchor. The compact
+scope lines below state those facts in that order without replacing C/A IDs.
+
 ### 1. Preserve accepted intent `[REQUIRED]`
 
 Start from the starting checkpoint above. Work in `projects/ecommerce/`;
@@ -126,7 +132,8 @@ condition is green with durable state and attempt history recorded.
 | 2 | `uv run --locked pytest tests/m7/test_worker.py -q -k 'one_worker or competing_workers or lease_expiry or after_effect'` | Attempt history remains visible, leases recover, and one semantic effect occurs. |
 | 3 | `uv run --locked pytest tests/m7/test_worker.py -q -k poison && uv run --locked python scripts/replay_jobs.py --actor learner --reason 'recover synthetic poison job' --message-id synthetic-1` | Poison work is isolated and repeated preview/replay is bounded and auditable. |
 
-An absent target is the create-it signal. Recover by stopping workers, expiring
+Create an absent target before recording a red result; file-not-found is setup
+feedback, not durability evidence. Recover by stopping workers, expiring
 only the synthetic lease through the injected clock, and rerunning one selector.
 Record the next selector before pausing.
 

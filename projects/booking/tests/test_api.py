@@ -15,7 +15,7 @@ def anyio_backend() -> str:
 @pytest.fixture
 async def client() -> AsyncIterator[AsyncClient]:
     app = create_app(
-        Settings(
+        Settings(  # type: ignore[call-arg]
             service_name="Booking Test", database_url="postgresql+psycopg://unused", _env_file=None
         )
     )

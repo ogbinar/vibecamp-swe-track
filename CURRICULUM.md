@@ -111,3 +111,10 @@ Use the M0 diagnostic to locate gaps, selected milestone `REVIEW.md` prompts to 
 ## Dependency and decision rules
 
 Complete Core gates in order. Stretch work never substitutes for Core. An ADR is warranted only for a costly-to-reverse decision, a new service, a public-contract change, or a material security/operations trade-off. A dependency must name the observed problem, alternatives, operational cost, and removal trigger.
+
+The detailed adoption/removal sequence lives in [STACK.md](STACK.md#earned-tools).
+Every milestone has deterministic offline Core. Exactly one separately
+authorized Stripe-like sandbox experiment follows M6 local Core; M7 email and
+M10 storage, OAuth/OIDC, monitoring, SQLAdmin, and real deployment are optional
+endorsements and never account prerequisites. This classification does not add
+a second roadmap table.

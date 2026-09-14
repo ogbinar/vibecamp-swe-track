@@ -14,9 +14,13 @@ interleaving and assert final database truth.
 
 ## “Every write was valid, but the sale was invalid”
 
-**Example:** payment and receipt commit while inventory rolls back. **Term — ACID:**
+**Example:** the local payment-intent record and receipt commit while inventory rolls back. **Term — ACID:**
 atomicity, consistency, isolation, and durability. **Rule:** test these as observed
 behavior around the smallest complete business operation.
+
+This transaction protects only local database facts. A later remote payment
+cannot participate in the same rollback; M6 adds idempotency, unknown state,
+lookup, and reconciliation for that boundary.
 
 ## “The API rejected it, but direct SQL accepted it”
 

@@ -14,7 +14,7 @@ only the service or repository boundary that localizes the demonstrated change.
 
 ## “Related behavior lives in unrelated places”
 
-**Example:** one promotion change touches routes, calculations, and SQL fragments.
+**Example:** the cashier display name touches routes, serialization, and SQL fragments.
 **Term — cohesion:** keeping behavior that changes together close together.
 **Rule:** add a boundary only when it measurably reduces change scatter or isolates
 a real external/data seam.

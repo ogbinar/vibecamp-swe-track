@@ -16,7 +16,9 @@ Run Redis cache-aside as a required experiment. Fixtures cover stale private and
 deleted posts, missed invalidation, wrong-user key, outage, stampede, and expiry.
 PostgreSQL stays authoritative; removing Redis after measurement is valid.
 
-Core live updates are one-way server-sent events (SSE). Publish post-created
+Polling the fixed 200 ms local p95 target for new-post visibility would either
+miss the bound or continuously query, so Core earns one-way server-sent events
+(SSE). Publish post-created
 identifiers, reconnect with a last-event identifier, and document replay window,
 gap response, restart behavior, malformed event handling, and slow-consumer
 limit. Compare WebSockets; implementation is Stretch.

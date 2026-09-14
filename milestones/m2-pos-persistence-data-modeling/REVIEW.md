@@ -12,5 +12,6 @@ Answer one question at a time in `evidence/M2/index.md`:
 8. Is the backfill safe to restart? Show the observation.
 9. What measurement—not `async def` syntax—would earn `AsyncSession`?
 10. Does the reset command refuse a non-course database?
+11. Which observed pressure earns each service or repository, and which simple path stays direct?
 
 Trace one representative field with the [data-lifecycle template](../../templates/DATA-LIFECYCLE.md). Lens prompt (same A1–A5 gate): a career-shifter connects a prior-domain recordkeeping rule to a database invariant; a data specialist explains how strong SQL work still depends on API/session ownership and operational recovery.
