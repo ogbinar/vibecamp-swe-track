@@ -24,6 +24,12 @@ calls where at most two are allowed. The fixed dataset has 100 posts: 70 from
 one high-fan-out author and 30 spread across nine authors. Rerunning creates
 clean deterministic data.
 
+Start the application with
+`uv run --locked fastapi dev src/social_api/main.py --port 8004`. Open `/` for
+the Air feed or request `/app/feed/events` to observe one non-durable server-
+sent event. Query repair, caching authority, reconnect/gap policy, and the
+learner-built feed remain absent.
+
 This fixture teaches measurement shape; PostgreSQL remains the required source
 of truth for the milestone. The learner must reproduce the issue with real
 SQLAlchemy queries and `EXPLAIN`, then decide indexes, pagination, cache, and

@@ -16,7 +16,7 @@ Run from `projects/pos/`. Each scenario owns its test, hints, evidence, and rese
 
 1. Query every affected table before and after the failure.
 2. Inspect the use-case transaction owner and every flush or commit.
-3. Use the SQLAlchemy transaction link in `RESOURCES.md`.
+3. Use the SQLAlchemy transaction link in `REFERENCE.md`.
 
 ### Reset
 
@@ -36,7 +36,7 @@ Disable the kill hook and run `uv run --locked pytest tests/m3/test_atomic_check
 
 1. Write the interleaving and final invariant before selecting a lock.
 2. Inspect constraints, isolation, lock target, and retry boundary.
-3. Use the PostgreSQL isolation link in `RESOURCES.md`.
+3. Use the PostgreSQL isolation link in `REFERENCE.md`.
 
 ### Reset
 
@@ -58,7 +58,7 @@ not replace the barrier with sleeps. The focused rerun is
 
 1. Print named intermediate decimal amounts.
 2. Inspect calculation order, receipt snapshots, and allowed transitions.
-3. Use the Python decimal and state-machine links in `RESOURCES.md`.
+3. Use the Python decimal and state-machine links in `REFERENCE.md`.
 
 ### Reset
 

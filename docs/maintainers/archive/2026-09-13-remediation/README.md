@@ -143,6 +143,6 @@ Expected booking/social failures remain intentional. `git diff --check` passes.
 
 Raw timing/command outputs remain host-local at
 `/tmp/vibecamp-ia-cu-nbmj5obs/`; durable results and limitations are recorded in
-[USABILITY](../../../../USABILITY.md#local-verification-and-cleanup-result).
+[USABILITY history](../2026-09-15-business-first/USABILITY-history.md#local-verification-and-cleanup-result).
 No dependency advisory refresh, hosted rendering/Actions, named human test, new
 M10 image rehearsal, or real-target evidence is claimed by this pass.

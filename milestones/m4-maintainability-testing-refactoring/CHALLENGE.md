@@ -16,7 +16,7 @@ Run from `projects/pos/`. Preserve behavior before restructuring code.
 
 1. List observable behavior before judging structure.
 2. Inspect each route, model, query, and serializer touched by cashier name.
-3. Use the pytest characterization link in `RESOURCES.md`.
+3. Use the pytest characterization link in `REFERENCE.md`.
 
 ### Reset
 
@@ -37,7 +37,7 @@ Stash only the current learner edit, then run
 
 1. Ask which behavior changes together instead of applying a layer template.
 2. Inspect transaction ownership and repeated data access.
-3. Use the dependency-injection link in `RESOURCES.md`; reject pass-through layers.
+3. Use the dependency-injection link in `REFERENCE.md`; reject pass-through layers.
 
 ### Reset
 
@@ -58,7 +58,7 @@ Remove the proposed boundary while keeping characterization tests, then rerun
 
 1. Name the real boundary the test never crossed.
 2. Inspect serialization, mappings, dependency direction, and fixture realism.
-3. Use the testing-boundaries link in `RESOURCES.md`.
+3. Use the testing-boundaries link in `REFERENCE.md`.
 
 ### Reset
 

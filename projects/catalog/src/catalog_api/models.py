@@ -19,3 +19,11 @@ class ProductResponse(BaseModel):
     sku: str = Field(min_length=1)
     name: str = Field(min_length=1)
     price: Decimal = Field(gt=0, decimal_places=2)
+
+
+class ProductDraft(BaseModel):
+    """Validated browser input that deliberately does not persist M1 behavior."""
+
+    sku: str = Field(min_length=1, max_length=40)
+    name: str = Field(min_length=1, max_length=100)
+    price: Decimal = Field(gt=0, decimal_places=2)

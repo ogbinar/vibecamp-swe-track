@@ -19,7 +19,7 @@ Every milestone is complete only when:
 5. Failure drills record environment, command/setup, expected result, actual result, interpretation, recovery, and date.
 6. Actions pass, the milestone-gate PR self-review is complete, and
    `PROGRESS.md` links the issue, PR, evidence index, and tag.
-7. The learner answers `REVIEW.md` in their own words and can reproduce,
+7. The learner answers the `ACCEPTANCE.md` Review prompts in their own words and can reproduce,
    explain, modify, and debug the result.
 
 ## Conditional gates
@@ -55,7 +55,7 @@ template again.
 
 ## Cold-review protocol
 
-Use either a peer who did not author the change or a **solo fresh-context review**: start from the candidate commit in a clean clone/worktree after putting implementation notes aside; use only course/project docs; predict results before commands; reproduce one representative Core behavior and one documented failure; then answer one `REVIEW.md` question. Record mode, reviewer, date, reference commit, commands, gaps found, fixes, and `PASS`/`NEEDS WORK` in the evidence index.
+Use either a peer who did not author the change or a **solo fresh-context review**: start from the candidate commit in a clean clone/worktree after putting implementation notes aside; use only course/project docs; predict results before commands; reproduce one representative Core behavior and one documented failure; then answer one acceptance `Review` question. Record mode, reviewer, date, reference commit, commands, gaps found, fixes, and `PASS`/`NEEDS WORK` in the evidence index.
 
 For an uncommitted curriculum-maintenance audit, an isolated copy may be used and must be labeled maintenance validation, never learner gate evidence. AI can suggest review questions but cannot be the sole independent reviewer for a learner claim. A cold review samples reproducibility and explanation; it does not replace automated or milestone-specific evidence.
 

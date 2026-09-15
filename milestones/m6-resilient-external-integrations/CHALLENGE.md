@@ -16,7 +16,7 @@ Run from `projects/ecommerce/`. Keep provider data and credentials synthetic.
 
 1. Ask whether failure is definite or the outcome is unknown.
 2. Inspect timeout phase, operation identity, retry budget, and provider fact.
-3. Use the HTTPX timeout link in `RESOURCES.md`.
+3. Use the HTTPX timeout link in `REFERENCE.md`.
 
 ### Reset
 
@@ -37,7 +37,7 @@ in-memory and returns to its deterministic initial state.
 
 1. Compare the exact signed bytes, timestamp, event ID, and account.
 2. Inspect verification order, durable event identity, and transition policy.
-3. Use the webhook-security link in `RESOURCES.md`.
+3. Use the webhook-security link in `REFERENCE.md`.
 
 ### Reset
 
@@ -58,7 +58,7 @@ Reload the synthetic fixture set and run
 
 1. Start with provider fact, prior local state, and semantic operation ID.
 2. Inspect idempotency record, correlation fields, and transition ownership.
-3. Use the idempotency reference in `RESOURCES.md`.
+3. Use the idempotency reference in `REFERENCE.md`.
 
 ### Reset
 

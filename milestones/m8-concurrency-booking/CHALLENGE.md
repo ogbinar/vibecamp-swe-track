@@ -16,7 +16,7 @@ Run from `projects/booking/`. Use barriers, not sleeps, for correctness proof.
 
 1. Write both reads and writes in their observed order.
 2. Inspect the supplied barrier and `run_on_two_connections_at_barrier` seam.
-3. Use the PostgreSQL concurrency link in `RESOURCES.md`.
+3. Use the PostgreSQL concurrency link in `REFERENCE.md`.
 
 ### Reset
 
@@ -37,7 +37,7 @@ reset and rerun `tests/test_postgres.py`.
 
 1. Query the final invariant rather than trusting response order.
 2. Inspect constraint shape, write predicate, lock target, isolation, and retry boundary.
-3. Use the PostgreSQL locking link in `RESOURCES.md`.
+3. Use the PostgreSQL locking link in `REFERENCE.md`.
 
 ### Reset
 
@@ -58,7 +58,7 @@ Run the bounded reset, migrate to head, and rerun
 
 1. State the exact boundary instant and allowed winners.
 2. Inspect database time, lock acquisition order, wait, and retryable error code.
-3. Use the deadlock link in `RESOURCES.md`.
+3. Use the deadlock link in `REFERENCE.md`.
 
 ### Reset
 

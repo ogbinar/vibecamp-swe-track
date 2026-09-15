@@ -17,7 +17,7 @@ run from the repository root.
 
 1. Start with the user-impact question and one correlation ID.
 2. Inspect request context, database span, error classification, and alert threshold.
-3. Use the OpenTelemetry link in `RESOURCES.md`.
+3. Use the OpenTelemetry link in `REFERENCE.md`.
 
 ### Reset
 
@@ -37,7 +37,7 @@ Disable the synthetic failure and run `uv run --locked pytest tests/m10/test_obs
 
 1. Ask where tenant context originates and where it is lost.
 2. Inspect every query/write/export/cache key and support elevation boundary.
-3. Use the tenant-security link in `RESOURCES.md`.
+3. Use the tenant-security link in `REFERENCE.md`.
 
 ### Reset
 
@@ -58,7 +58,7 @@ Restore only synthetic North/South fixtures and run
 
 1. Distinguish image creation, migration, readiness, promotion, and rollback.
 2. Inspect Compose dependency conditions, `/ready`, image ID, and migration revision.
-3. Use the Docker, Alembic, and Actions links in `RESOURCES.md`.
+3. Use the Docker, Alembic, and Actions links in `REFERENCE.md`.
 
 ### Reset
 
@@ -79,7 +79,7 @@ volumes. Rerun `sh projects/pos/scripts/rehearse_m10.sh`; never delete an unexpl
 
 1. A backup file is not recovery evidence; begin with restore and integrity checks.
 2. Inspect checksum, schema revision, tenant totals, audit continuity, and elapsed time.
-3. Use the PostgreSQL backup/restore link in `RESOURCES.md` and follow the runbook.
+3. Use the PostgreSQL backup/restore link in `REFERENCE.md` and follow the runbook.
 
 ### Reset
 

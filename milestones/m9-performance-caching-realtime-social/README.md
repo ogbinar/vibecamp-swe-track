@@ -1,42 +1,18 @@
-# M9 — Social Performance, Caching, and Realtime
+# M9 — Keep the feed fast as it grows
 
 [Course home](../../README.md) / M9
 
 **Milestone 10 of 11 · M9**
 
-## Why
+## Business problem
 
 The feed is correct for two posts but performs one profile lookup per post. Make
 it fast for representative data without changing what users observe.
 
-## Starting checkpoint
+## Product objective
 
-- **At a glance:** Performant · Social.
-- **You will leave with:** Feed query comparison; Redis retain/remove decision; One-way update evidence.
-- **Gate:** [A1–A4 / B + contextual C](ACCEPTANCE.md#core).
-- **Repository support:** supplied starter locally verified; your learner gate needs your own evidence. [Dated scope and limits](../../USABILITY.md#readiness-status-vocabulary)
-separate local structure/starter checks from pending hosted and human evidence.
-- **Resume:** open [PROGRESS](../../PROGRESS.md#active-milestone-dashboard), run the
-[starting checks](../../projects/social/README.md#social-launch-kit-for-m9), then return to the saved block; first visit: [Block 1](#1-measure-and-repair-the-database-feed-required).
-
-From `projects/social/`, run its documented command block. Expected: the functional test
-passes and the opt-in query-budget challenge reports 100 profile reads.
-
-On resume, preserve your existing `.env` and evidence. Use the validation
-commands from the starting checks; first-install copy and destructive reset
-steps are not routine resume actions. If a check fails, use Recovery first.
-
-## Terms used here
-
-- **N+1 query:** one collection query followed by another query per result.
-- **Query plan:** PostgreSQL's chosen operations for executing SQL.
-- **Percentile:** a latency boundary met by a stated share of requests.
-- **Cache-aside:** application-managed lookup and population of a cache.
-- **Invalidation:** removing or replacing cached data after truth changes.
-- **SSE:** server-sent events, a one-way HTTP update stream.
-- **WebSocket:** a persistent two-way message connection.
-
-## Product brief
+- **Product can:** readers get a bounded feed and one-way updates without making cache or SSE durable truth.
+- **You will prove:** equal-workload query, cache-authority, SSE reconnect/gap/loss, and API evidence.
 
 Use the [feed contract](../../projects/social/specs/M9-FEED-CONTRACT.md).
 Reproduce the call-count shape with SQLAlchemy/PostgreSQL, deterministic data,
@@ -49,21 +25,28 @@ events (SSE), and WebSockets from the fixed one-way update. Core implements SSE;
 WebSocket implementation is Stretch. Complete C1–C3 in
 [CHALLENGE.md](CHALLENGE.md#m9-challenge-brief).
 
-## Work blocks
+## Start here
 
-Use the five visible cues in each block: **Do** is its start/work/command;
-**Understand** is the exact concept or support link; **Check** is its expected
-observation and evidence; **If it fails** is the named hint/reset/recovery; and
-**Stop/resume** is its saved last-green boundary and return anchor. The compact
-scope lines below state those facts in that order without replacing C/A IDs.
+- **Gate:** [A1–A4 / B + contextual C](ACCEPTANCE.md#core).
+- **Resume:** open [PROGRESS](../../PROGRESS.md#active-milestone-dashboard), run the
+[starting checks](../../projects/social/README.md#social-launch-kit-for-m9), then return to the saved block; first visit: [Block 1](#1-measure-and-repair-the-database-feed-required).
+
+From `projects/social/`, run its documented command block. Expected: the functional test
+passes and the opt-in query-budget challenge reports 100 profile reads.
+
+On resume, preserve your existing `.env` and evidence. Use the validation
+commands from the starting checks; first-install copy and destructive reset
+steps are not routine resume actions. If a check fails, use Recovery first.
+
+## Build
 
 ### 1. Measure and repair the database feed `[REQUIRED]`
 
 Start from the starting checkpoint above. Work in `projects/social/`;
 focus on `tests/m9/test_database_feed.py` and the output named below. Record `evidence/M9/database.md`.
-Stop when this block’s [command-map row](#literal-command-map) passes and its evidence is saved.
+Stop when this block's listed command passes and its evidence is saved.
 Resume at [Block 1](#1-measure-and-repair-the-database-feed-required) using that saved result; continue to Block 2.
-When needed: [C1 scenario and hints](CHALLENGE.md#c1--slow-feed-incident) and [concept explanation](CONCEPTS.md#one-page-caused-101-queries). [Tool boundaries](TOOLS.md#tools-earned-here) apply to this product.
+When needed: [C1 scenario and hints](CHALLENGE.md#c1--slow-feed-incident) and [concept explanation](REFERENCE.md#one-page-caused-101-queries). [Tool boundaries](REFERENCE.md#tools-earned-here) apply to this product.
 
 Run the in-memory query-budget observation, then read the
 [feed contract](../../projects/social/specs/M9-FEED-CONTRACT.md). Build the same
@@ -75,9 +58,9 @@ indexes, and cursor behavior. Record equal-harness evidence in
 
 Start from Block 1 green with its result recorded. Work in `projects/social/`;
 focus on `tests/m9/test_cache_experiment.py` and the output named below. Record `evidence/M9/cache.md`.
-Stop when this block’s [command-map row](#literal-command-map) passes and its evidence is saved.
+Stop when this block's listed command passes and its evidence is saved.
 Resume at [Block 2](#2-experiment-with-redis-required-experiment) using that saved result; continue to Block 3.
-When needed: [C2 scenario and hints](CHALLENGE.md#c2--cache-correctness) and [concept explanation](CONCEPTS.md#redis-was-faster-but-made-private-data-stale).
+When needed: [C2 scenario and hints](CHALLENGE.md#c2--cache-correctness) and [concept explanation](REFERENCE.md#redis-was-faster-but-made-private-data-stale).
 
 On a branch, implement narrow cache-aside and exercise staleness, invalidation,
 wrong-user keys, outage, stampede, and expiry. Compare the same workload and
@@ -88,9 +71,9 @@ retention is optional, and both choices need evidence.
 
 Start from Block 2 green with its result recorded. Work in `projects/social/`;
 focus on `tests/m9/test_sse.py` and the output named below. Record `evidence/M9/realtime.md`.
-Stop when this block’s [command-map row](#literal-command-map) passes and its evidence is saved.
-Resume at [Block 3](#3-deliver-one-way-updates-required) using that saved result; continue to [Evidence](#evidence).
-When needed: [C3 scenario and hints](CHALLENGE.md#c3--realtime-mismatch) and [concept explanation](CONCEPTS.md#the-realtime-transport-could-not-replay-a-gap).
+Stop when this block's listed command passes and its evidence is saved.
+Resume at [Block 3](#3-deliver-one-way-updates-required) using that saved result; continue to [Prove it](#prove-it).
+When needed: [C3 scenario and hints](CHALLENGE.md#c3--realtime-mismatch) and [concept explanation](REFERENCE.md#the-realtime-transport-could-not-replay-a-gap).
 
 Compare polling, SSE, and WebSockets, then implement Core SSE. Exercise
 reconnect, last-event ID, gaps, restart, malformed events, and slow consumers.
@@ -101,49 +84,43 @@ The neutral starter intentionally does not supply the SSE application or
 `tests/m9/test_sse.py`: the contract, lesson, and acceptance requirements are
 provided, while that implementation and its behavioral tests are learner work.
 
-### Literal command map
-
-Run from `projects/social/`; create the M9 learner tests named below.
-
-Before: the supplied budget fails or an experiment has no decision. After: the
-row’s correctness and measurement stop condition is recorded.
-
-| Block | Copyable command | Expected stop condition |
-|---|---|---|
-| 1 | `SOCIAL_TEST_DATABASE_URL=postgresql+psycopg://vibecamp:vibecamp@127.0.0.1:5435/vibecamp_social uv run --locked pytest tests/m9/test_database_feed.py -q` | Correct cursor pages use at most the published query budget on the fixed workload. |
-| 2 | `SOCIAL_TEST_DATABASE_URL=postgresql+psycopg://vibecamp:vibecamp@127.0.0.1:5435/vibecamp_social uv run --locked pytest tests/m9/test_cache_experiment.py -q` | Staleness, outage, key scope, invalidation, and retain/remove decision are recorded. |
-| 3 | `uv run --locked pytest tests/m9/test_sse.py -q` | Reconnect, gap, restart, malformed-event, and slow-consumer behavior match the replay policy. |
-
-Create an absent target before recording a red result; file-not-found is setup
-feedback, not performance/realtime evidence. Recover by disabling the experimental
-cache/SSE path, proving PostgreSQL remains authoritative, and recording the next
-action before pausing.
-
-Pause: record the workload, active experiment, baseline, and next command.
-
-## Failures and hints
+### Diagnose deliberate failures
 
 Activate or construct only the current C scenario. Record the symptom and one
 hypothesis before inspecting the implementation. Use the matching scenario link
 in your active block, then its three hint levels in order. Reset to the last
 green checkpoint before starting another scenario.
 
-## Evidence
+## Understand
 
-Answer [review prompts](REVIEW.md#review) after the Core proof.
+- **N+1 query:** one collection query followed by another query per result.
+- **Query plan:** PostgreSQL's chosen operations for executing SQL.
+- **Percentile:** a latency boundary met by a stated share of requests.
+- **Cache-aside:** application-managed lookup and population of a cache.
+- **Invalidation:** removing or replacing cached data after truth changes.
+- **SSE:** server-sent events, a one-way HTTP update stream.
+- **WebSocket:** a persistent two-way message connection.
+
+## Use a tool if earned
+
+Use the current project dependencies first. Open [Use now](REFERENCE.md#use-now) for the active pattern, [Evaluate after evidence](REFERENCE.md#evaluate-after-evidence) only after the simpler baseline misses its target, and [Do not add yet](REFERENCE.md#do-not-add-yet) before adding another runtime or service.
+
+## Prove it
+
+Answer [review prompts](ACCEPTANCE.md#review) after the Core proof.
 
 Prove [A1–A4](ACCEPTANCE.md#core) with query counts/plans, a repeatable workload,
 percentiles, semantic regression tests, a cache decision, and reconnect policy.
 
-## Done when
+## Done / next
 
 The declared user target passes on the reference dataset without correctness
 loss and every retained cache/realtime component has a failure policy. Tag
 `m9-performance-social`.
 
-## Recovery
+### Recovery
 
-Use [targeted references](RESOURCES.md#resources-for-m9) only for the question left by the active hint ladder.
+Use [targeted references](REFERENCE.md#resources-for-m9) only for the question left by the active hint ladder.
 
 If timing is noisy, gate on query count and plan shape while recording timing
 separately. Reset the deterministic dataset before comparing results.
@@ -152,8 +129,6 @@ After the local hints and recovery, optional [learner help](../../.github/ISSUE_
 asks for the block, failing command, expected/actual result, last green reference,
 and redacted evidence. In your repository, choose Issues → New issue → Learner help.
 The same Core gate applies; no extra technical content is withheld.
-
-## Next
 
 Continue to [M10](../m10-production-multitenant-saas-capstone/README.md).
 

@@ -1,10 +1,10 @@
-# M1 — Production-minded API Foundation
+# M1 — Make the catalog predictable for clients
 
 [Course home](../../README.md) / M1
 
 **Milestone 2 of 11 · M1**
 
-## Why this matters
+## Business problem
 
 The M0 catalog can answer two requests, but it cannot yet behave predictably for
 a real client. In M1 you turn unclear product requests into an explicit HTTP
@@ -16,17 +16,20 @@ codes, headers, and response bodies. **Idempotent** means repeating the same
 request has the same intended effect as sending it once. Review either term in
 the [glossary](../../GLOSSARY.md) when it first becomes relevant.
 
-## Starting checkpoint
+## Product objective
 
-- **At a glance:** Functional · Catalog.
-- **You will leave with:** Tested HTTP request matrix; Compatibility-change evidence.
+- **Product can:** validate a browser product draft and expose a predictable JSON contract for clients.
+- **You will prove:** the request matrix, invalid-form/API behavior, and compatibility-change evidence.
+
+## Start here
+
 - **Gate:** [A1–A4 / A + selected B](ACCEPTANCE.md#core).
 - **Repository support:** supplied starter locally verified; your learner gate needs your own evidence. [Dated scope and limits](../../USABILITY.md#readiness-status-vocabulary)
 separate local structure/starter checks from pending hosted and human evidence.
 - **Resume:** open [PROGRESS](../../PROGRESS.md#active-milestone-dashboard), run the
 [starting checks](../../projects/catalog/README.md#run-the-green-baseline), then return to the saved block; first visit: [Block 1](#1-describe-client-behavior-before-routes-required).
 
-Start from your reviewed `m0-engineering-baseline` tag. Confirm the four tests
+Start from your reviewed `m0-engineering-baseline` tag. Confirm the eight tests
 still pass before changing code. Evolve `projects/catalog/`; do not create a
 second catalog or copy a finished solution.
 
@@ -39,27 +42,7 @@ On resume, preserve your existing `.env` and evidence. Use the validation
 commands from the starting checks; first-install copy and destructive reset
 steps are not routine resume actions. If a check fails, use Recovery first.
 
-## Terms used here
-
-- **HTTP contract:** the public agreement formed by methods, paths, status
-  codes, headers, and response bodies.
-- **Idempotent:** repeating a request has the same intended effect as once.
-- **Pagination:** returning a bounded, ordered part of a collection.
-- **OpenAPI:** a machine-readable description of the HTTP interface.
-- **Product invariant:** a rule such as “price is positive” that must remain
-  true regardless of which endpoint changes state.
-
-## Product brief
-
-Use the [fixed catalog client contract](../../projects/catalog/specs/M1-PRODUCT-BRIEF.md#required-behavior). It owns requests, errors, repeat behavior, and pagination; internal design remains yours.
-
-## Work blocks
-
-Use the five visible cues in each block: **Do** is its start/work/command;
-**Understand** is the exact concept or support link; **Check** is its expected
-observation and evidence; **If it fails** is the named hint/reset/recovery; and
-**Stop/resume** is its saved last-green boundary and return anchor. The compact
-scope lines below state those facts in that order without replacing C/A IDs.
+## Build
 
 ### 1. Describe client behavior before routes `[REQUIRED]`
 
@@ -67,12 +50,12 @@ Start from the starting checkpoint above. Work in `projects/catalog/`;
 focus on `evidence/M1/` and the output named below. Record `evidence/M1/index.md`.
 Stop when the request matrix is recorded.
 Resume at [Block 1](#1-describe-client-behavior-before-routes-required) using that saved result; continue to Block 2.
-When needed: [client response explanation](CONCEPTS.md#the-client-cannot-predict-the-response). [Tool boundaries](TOOLS.md#tools-earned-here) apply to this product.
+When needed: [client response explanation](REFERENCE.md#the-client-cannot-predict-the-response). [Tool boundaries](REFERENCE.md#tools-earned-here) apply to this product.
 
 Read the [supplied product brief](../../projects/catalog/specs/M1-PRODUCT-BRIEF.md)
-and [CONCEPTS.md](CONCEPTS.md#m1-concepts-through-client-problems). Copy its request matrix into your evidence and
+and [REFERENCE.md](REFERENCE.md#m1-concepts-through-client-problems). Copy its request matrix into your evidence and
 record any remaining ambiguity in the milestone issue. The brief fixes public
-behavior while leaving internal design to you.
+behavior while leaving internal design to you. Then run `test -s evidence/M1/request-matrix.md`.
 
 Expected: another person can predict the method, path, status, headers, and JSON
 shape without reading your Python. If two examples conflict, resolve the
@@ -84,9 +67,9 @@ Start from Block 1 green with its result recorded. Work in `projects/catalog/`;
 focus on `evidence/M1/` and the output named below. Record `evidence/M1/index.md`.
 Stop when the public contract passes.
 Resume at [Block 2](#2-build-the-smallest-contract-required) using that saved result; continue to Block 3.
-When needed: [C1 scenario and hints](CHALLENGE.md#c1--the-client-contract-is-missing) and [concept explanation](CONCEPTS.md#a-repeat-request-created-another-effect).
+When needed: [C1 scenario and hints](CHALLENGE.md#c1--the-client-contract-is-missing) and [concept explanation](REFERENCE.md#a-repeat-request-created-another-effect).
 
-Use the [tool boundaries](TOOLS.md#tools-earned-here). Keep state in memory so HTTP behavior is
+Use the [tool boundaries](REFERENCE.md#tools-earned-here). Keep state in memory so HTTP behavior is
 the only new problem. Use separate Pydantic models when create, update, and read
 operations accept different fields. Use `Decimal` for money.
 
@@ -109,7 +92,7 @@ Start from Block 2 green with its result recorded. Work in `projects/catalog/`;
 focus on `tests/test_api.py` and the output named below. Record `evidence/M1/index.md`.
 Stop when C1–C2 regressions pass after reset.
 Resume at [Block 3](#3-diagnose-contract-failures-required) using that saved result; continue to Block 4.
-When needed: [C2 scenario and hints](CHALLENGE.md#c2--invalid-input-must-not-corrupt-valid-state) and [concept explanation](CONCEPTS.md#generated-documentation-hid-a-breaking-change).
+When needed: [C2 scenario and hints](CHALLENGE.md#c2--invalid-input-must-not-corrupt-valid-state) and [concept explanation](REFERENCE.md#generated-documentation-hid-a-breaking-change).
 
 Complete C1 and C2 in [CHALLENGE.md](CHALLENGE.md#m1-challenges-and-hints). Test rules in isolation only
 when that makes the failure clearer; use HTTPX API tests for routing,
@@ -118,7 +101,8 @@ check, which detects a renamed or removed public field. Extend it only when you
 add a new required public field.
 
 Expected: each deliberate defect fails a specific test before repair and the
-full M0/M1 suite returns to green afterward.
+full M0/M1 suite returns to green afterward. Run
+`PYTHONPATH=src uv run --locked pytest contracts/test_m1_contract.py tests/test_api.py -q`.
 
 ### 4. Handle a changed requirement `[REQUIRED]`
 
@@ -126,61 +110,60 @@ Start from Block 3 green with its result recorded. Work in `projects/catalog/`;
 focus on `scripts/challenge.py` and the output named below. Record `evidence/M1/index.md`.
 Stop when C3 compatibility and changed-requirement evidence is recorded.
 Resume at [Block 4](#4-handle-a-changed-requirement-required) using that saved result; continue to Block 5.
-When needed: [C3 scenario and hints](CHALLENGE.md#c3--a-public-field-changes-unexpectedly) and [concept explanation](CONCEPTS.md#generated-documentation-hid-a-breaking-change).
+When needed: [C3 scenario and hints](CHALLENGE.md#c3--a-public-field-changes-unexpectedly) and [concept explanation](REFERENCE.md#generated-documentation-hid-a-breaking-change).
 
 Complete C3 using the [requirement change record](../../templates/REQUIREMENTS.md#requirement-change-record). First preserve current behavior in
 a test. Then add archival reason without silently breaking existing clients.
 Record who decides an ambiguity, the smallest accepted scope, and rejected work.
 
 After all contract tests pass, use the compatibility fault in C3. Record a
-hypothesis before inspecting the changed test.
+hypothesis before inspecting the changed test. Use the exact activation and reset
+commands in [C3](CHALLENGE.md#c3--a-public-field-changes-unexpectedly).
 
 ### 5. Review and ship `[REQUIRED]`
 
 Start from Block 4 green with its result recorded. Work in `projects/catalog/`;
 focus on `evidence/M1/` and the output named below. Record `evidence/M1/index.md`.
 Stop when the Core gate and honest operation record pass.
-Resume at [Block 5](#5-review-and-ship-required) using that saved result; continue to [Evidence](#evidence).
-When needed: [operation gate](ACCEPTANCE.md#a4--honest-operation) and [review prompts](REVIEW.md#review).
+Resume at [Block 5](#5-review-and-ship-required) using that saved result; continue to [Prove it](#prove-it).
+When needed: [operation gate](ACCEPTANCE.md#a4--honest-operation) and [review prompts](ACCEPTANCE.md#review).
 
 Serve the app using the documented no-reload command and inspect sanitized
-request logs. Answer [REVIEW.md](REVIEW.md#review), then prove [A1–A4](ACCEPTANCE.md#core)
+request logs. Answer [review prompts](ACCEPTANCE.md#review), then prove [A1–A4](ACCEPTANCE.md#core)
 in `evidence/M1/index.md`. Use the same issue → branch → pull request → Actions
-→ evidence workflow learned in M0. Tag the reviewed result `m1-api-foundation`.
+→ evidence workflow learned in M0. Run `uv run --locked ruff check .`, `uv run --locked ruff format --check .`,
+`uv run --locked mypy`, and `uv run --locked pytest`. Tag the reviewed result
+`m1-api-foundation` only after the learner-owned gate passes.
 
-### Command map for required blocks
+## Understand
 
-Run from `projects/catalog/`. Create a missing target before expecting green;
-the first `pytest` error is the explicit signal that the named learner test does
-not exist yet.
+- **HTTP contract:** the public agreement formed by methods, paths, status
+  codes, headers, and response bodies.
+- **Idempotent:** repeating a request has the same intended effect as once.
+- **Pagination:** returning a bounded, ordered part of a collection.
+- **OpenAPI:** a machine-readable description of the HTTP interface.
+- **Product invariant:** a rule such as “price is positive” that must remain
+  true regardless of which endpoint changes state.
 
-Before: supplied M1 behavior is missing or a named fault is active. After: the
-row’s stop condition is green and its result is recorded.
+Use the [fixed catalog client contract](../../projects/catalog/specs/M1-PRODUCT-BRIEF.md#required-behavior). It owns requests, errors, repeat behavior, and pagination; internal design remains yours.
 
-| Block | Create or use | Copyable command | Expected stop condition |
-|---|---|---|---|
-| 1 | `evidence/M1/request-matrix.md` | `test -s evidence/M1/request-matrix.md` | The matrix exists and another reader can predict each response. |
-| 2 | supplied contract | `PYTHONPATH=src uv run --locked pytest contracts/test_m1_contract.py -q` | All public-contract examples pass. |
-| 3 | C1–C2 regressions | `PYTHONPATH=src uv run --locked pytest contracts/test_m1_contract.py tests/test_api.py -q` | The deliberate defect was observed, reset, and both suites are green. |
-| 4 | C3 compatibility guard | `python3 scripts/challenge.py activate compatibility && ! PYTHONPATH=src uv run --locked pytest contracts/test_m1_contract.py -q; result=$?; python3 scripts/challenge.py reset; exit $result` | The activated drift fails and reset returns the project to its prior state. |
-| 5 | all M0/M1 checks | `uv run --locked ruff check . && uv run --locked ruff format --check . && uv run --locked mypy && uv run --locked pytest` | All local gates pass before review and tagging. |
+## Use a tool if earned
 
-Recovery: run `python3 scripts/challenge.py reset`, then rerun the last green row.
-Pause only after writing the row’s result and next action in `evidence/M1/index.md`.
+Use Air forms for browser validation and FastAPI/Pydantic for the retained JSON
+contract. Implement ordering and cursors explicitly before evaluating a
+pagination package; see [tool timing](REFERENCE.md#evaluate-after-evidence).
 
-## Failures and hints
+## Prove it
 
 Use the current scenario’s observation, boundary, and reference hints in order;
 return to green before starting another fault. [C1 missing contract](CHALLENGE.md#c1--the-client-contract-is-missing), [C2 invalid input](CHALLENGE.md#c2--invalid-input-must-not-corrupt-valid-state), and [C3 compatibility](CHALLENGE.md#c3--a-public-field-changes-unexpectedly).
 
-## Evidence
-
-Answer [review prompts](REVIEW.md#review) after the Core proof.
+Answer [review prompts](ACCEPTANCE.md#review) after the Core proof.
 
 Record commands, predictions, observed failures, recovery, and limitations in
-`projects/catalog/evidence/M1/index.md`. Answer [review prompts](REVIEW.md#review) and prove the [Core gate](ACCEPTANCE.md#core).
+`projects/catalog/evidence/M1/index.md`. Answer [review prompts](ACCEPTANCE.md#review) and prove the [Core gate](ACCEPTANCE.md#core).
 
-## Done when
+## Done / next
 
 - Consumer examples and the implemented HTTP behavior agree.
 - Validation, retry behavior, pagination, and errors have focused tests.
@@ -188,9 +171,9 @@ Record commands, predictions, observed failures, recovery, and limitations in
 - The limitation statement makes no persistence, security, or operations claim.
 - A cold reviewer can execute one success, one error, and one retry from the docs.
 
-## Recovery
+### Recovery
 
-Use [targeted references](RESOURCES.md#resources-for-m1) only for the question left by the active hint ladder.
+Use [targeted references](REFERENCE.md#resources-for-m1) only for the question left by the active hint ladder.
 
 Use the [catalog troubleshooting guide](../../projects/catalog/README.md#if-setup-fails).
 Run the single failing test with `-vv`, compare expected and actual HTTP data,
@@ -201,8 +184,6 @@ After the local hints and recovery, optional [learner help](../../.github/ISSUE_
 asks for the block, failing command, expected/actual result, last green reference,
 and redacted evidence. In your repository, choose Issues → New issue → Learner help.
 The same Core gate applies; no extra technical content is withheld.
-
-## Next
 
 Continue to [M2 — POS Persistence / Data Modeling](../m2-pos-persistence-data-modeling/README.md).
 

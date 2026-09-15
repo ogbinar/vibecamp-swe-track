@@ -16,7 +16,7 @@ Run from `projects/ecommerce/`. Preserve job attempts and use injected time.
 
 1. Compare acknowledged response, committed business row, and durable intent.
 2. Inspect the business transaction and commit/publish gap.
-3. Use the transactional-outbox link in `RESOURCES.md`.
+3. Use the transactional-outbox link in `REFERENCE.md`.
 
 ### Reset
 
@@ -37,7 +37,7 @@ Disable the kill hook and run
 
 1. Separate durable intent, claim, external effect, and acknowledgement.
 2. Inspect lease expiry, attempt history, idempotency key, and stored result.
-3. Use the at-least-once link in `RESOURCES.md`; do not claim exactly once.
+3. Use the at-least-once link in `REFERENCE.md`; do not claim exactly once.
 
 ### Reset
 
@@ -58,7 +58,7 @@ with `uv run --locked pytest tests/m7/test_worker.py -q -k lease_expiry`.
 
 1. Ask whether one bad item blocks unrelated ready work.
 2. Inspect retry count, next-attempt time, terminal state, actor, and audit entry.
-3. Use the worker-operations link in `RESOURCES.md`.
+3. Use the worker-operations link in `REFERENCE.md`.
 
 ### Reset
 

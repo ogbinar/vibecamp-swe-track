@@ -3,7 +3,8 @@
 > **“Practical engineering without compromise. Use the smallest tool that preserves correctness, security, maintainability, and operability. Add complexity only when the product earns it.”**
 
 This is a self-paced course for learning how to build, test, break, repair,
-deploy, and operate software. FastAPI is the vehicle; software engineering is
+deploy, and operate useful software. Air makes the product visible in the
+browser; FastAPI preserves the backend/API contract. Software engineering is
 the subject.
 
 You can begin if you know basic Python syntax, can use a terminal, and have seen
@@ -43,7 +44,7 @@ uv run --locked pytest
 ```
 
 Expected result: `git remote -v` shows your repository as `origin`, then pytest
-reports **four passing tests**. You now have a working
+reports **eight passing tests**. You now have a working
 application and repeatable Python environment. If a command fails, use the
 [starter troubleshooting guide](projects/catalog/README.md#if-setup-fails).
 
@@ -95,7 +96,7 @@ evidence → annotated milestone tag.
 For branch, pull request, and authentication details, use the
 [learner-owned workflow](CONTRIBUTING.md#milestone-change-loop).
 
-You need Git, a GitHub account, Python 3.12, and uv now. Docker Desktop or
+You need Git, a GitHub account, Python 3.13, and uv now. Docker Desktop or
 Docker Engine is first needed at M2. PostgreSQL runs through Docker; you do not
 need to install it separately. No provider account or secret is needed to start
 or to complete deterministic/local Core work. M6 introduces one required,
@@ -104,24 +105,23 @@ M7 and M10 keep the listed provider work optional.
 
 ## Roadmap
 
-M0 is the stable label for **Milestone 1 of 11**; M5 is Milestone 6 of 11.
-The `#` column keeps ordinal and label together. This is the five-product course
-route, not your completion record; use [PROGRESS](PROGRESS.md#active-milestone-dashboard)
-to stop and resume.
+The milestone label stays stable (`M0` through `M10`). The business problem tells
+what is hurting now; the product capability tells what becomes useful next.
+Learner completion belongs in [PROGRESS](PROGRESS.md), not this map.
 
-| # | Milestone / Capability | Project | Key concepts | FastAPI / Python tools | Real integration |
-|---|---|---|---|---|---|
-| 1 · M0 | [Engineering Baseline / Reproducible](milestones/m0-engineering-baseline/README.md) | Catalog | Reproducible setup, configuration, typing, tests, Git/CI, diagnosis | FastAPI, Uvicorn, Pydantic, settings; uv, pytest, HTTPX, Ruff, mypy | Deterministic/local Core; no provider account |
-| 2 · M1 | [Production-minded API Foundation / Functional](milestones/m1-production-api-foundation/README.md) | Catalog | HTTP semantics, validation, errors, OpenAPI, ordering, pagination | `APIRouter`, `Depends`, OpenAPI; `fastapi-pagination` only after the handwritten contract | Deterministic/local Core; no provider account |
-| 3 · M2 | [POS Persistence & Data Modeling / Persistent](milestones/m2-pos-persistence-data-modeling/README.md) | POS | Relational modeling, constraints, indexes, migrations, transaction ownership | Pydantic boundaries, PostgreSQL, Psycopg, SQLAlchemy, Alembic; FastCRUD only after explicit CRUD | Deterministic/local Core; no provider account |
-| 4 · M3 | [Transactions & Correctness / Correct](milestones/m3-transactions-correctness/README.md) | POS | Atomic checkout, isolation, money, invariants, retries, races | `Depends`, PostgreSQL, SQLAlchemy, pytest | Deterministic/local Core; no provider account |
-| 5 · M4 | [Maintainability, Testing & Refactoring / Maintainable](milestones/m4-maintainability-testing-refactoring/README.md) | POS | Characterization tests, cohesion, coupling, refactoring, earned boundaries | `APIRouter` and `Depends` when the boundary earns them; pytest, Ruff, mypy | Deterministic/local Core; no provider account |
-| 6 · M5 | [Secure Multi-user Ecommerce / Secure](milestones/m5-secure-multi-user-ecommerce/README.md) | Ecommerce | Authentication, authorization, ownership, sessions, passwords, threats | FastAPI Security after the concepts; secure cookies and `pwdlib`; PyJWT is Stretch | Deterministic/local Core; no provider account |
-| 7 · M6 | [Resilient External Integrations / Resilient](milestones/m6-resilient-external-integrations/README.md) | Ecommerce | Timeouts, retry budgets, webhooks, idempotency, refunds, reconciliation | FastAPI webhook/dependencies; HTTPX or provider SDK after the fake; `BackgroundTasks` only for disposable work | **Required after local Core:** exactly one Stripe-like payment sandbox |
-| 8 · M7 | [Durable Async & Background Processing / Durable](milestones/m7-durable-async-background-processing/README.md) | Ecommerce | Persisted intent, outbox, workers, at-least-once delivery, replay | PostgreSQL worker; `BackgroundTasks` as contrast; Taskiq only if earned | Deterministic/local Core; optional email test provider |
-| 9 · M8 | [Concurrency Lab / Concurrent](milestones/m8-concurrency-booking/README.md) | Booking | Final-seat races, locks, database invariants, deadlocks, contention | FastAPI dependencies, PostgreSQL, SQLAlchemy, Alembic, two-connection harness | Deterministic/local Core; no provider account |
-| 10 · M9 | [Performance, Caching & Realtime / Performant](milestones/m9-performance-caching-realtime-social/README.md) | Social | N+1, query plans, pagination, cache authority, streaming gaps | SQLAlchemy; Redis after a measured miss; SSE if earned; WebSockets for earned two-way need | Deterministic/local Core; no provider account |
-| 11 · M10 | [Production Multi-tenant SaaS Capstone / Operable/sellable](milestones/m10-production-multitenant-saas-capstone/README.md) | Multi-tenant POS SaaS | Tenant isolation, audit, observability, releases, recovery, handoff | FastAPI composition, Docker/Compose; optional SQLAdmin and Sentry or Logfire after tenant auth/audit | Deterministic/local Core; optional S3-compatible storage, OAuth/OIDC, monitoring, and authorized deployment |
+| Milestone | Business problem | Product capability | Start here |
+|---|---|---|---|
+| M0 | A catalog works only on its author's machine. | Make the catalog easy to run. | [Start M0](milestones/m0-engineering-baseline/README.md) |
+| M1 | Storefront and staff clients cannot predict catalog responses. | Make the catalog predictable for clients. | [Start M1](milestones/m1-production-api-foundation/README.md) |
+| M2 | Stock and carts disappear when the POS restarts. | Make stock survive a restart. | [Start M2](milestones/m2-pos-persistence-data-modeling/README.md) |
+| M3 | A failed checkout can leave inventory, money, and receipts disagreeing. | Make checkout safe. | [Start M3](milestones/m3-transactions-correctness/README.md) |
+| M4 | A small receipt request touches too many POS files. | Change the POS without breaking it. | [Start M4](milestones/m4-maintainability-testing-refactoring/README.md) |
+| M5 | Customers can see or change accounts and orders they do not own. | Protect customer accounts and orders. | [Start M5](milestones/m5-secure-multi-user-ecommerce/README.md) |
+| M6 | A payment timeout does not reveal whether money moved. | Handle uncertain payments. | [Start M6](milestones/m6-resilient-external-integrations/README.md) |
+| M7 | Accepted fulfillment work disappears when a process crashes. | Finish accepted work after a crash. | [Start M7](milestones/m7-durable-async-background-processing/README.md) |
+| M8 | Two buyers can both confirm the same final seat. | Stop the last seat being sold twice. | [Start M8](milestones/m8-concurrency-booking/README.md) |
+| M9 | A correct feed becomes slow and misses timely updates as it grows. | Keep the feed fast as it grows. | [Start M9](milestones/m9-performance-caching-realtime-social/README.md) |
+| M10 | One POS must safely serve several businesses and survive change. | Support multiple businesses safely. | [Start M10](milestones/m10-production-multitenant-saas-capstone/README.md) |
 
 For depth, use the [full curriculum and concept trace](CURRICULUM.md), the
 [earned stack policy](STACK.md), and the [quality gates](QUALITY-GATES.md).
@@ -134,12 +134,13 @@ For depth, use the [full curriculum and concept trace](CURRICULUM.md), the
 - [Challenge system](challenges/README.md)
 - [Evidence template](templates/EVIDENCE-INDEX.md)
 
-Each milestone keeps seven predictable reference files. Its `README.md` is the
-learner route; `CONCEPTS.md`, `CHALLENGE.md`, `TOOLS.md`, `ACCEPTANCE.md`,
-`REVIEW.md`, and `RESOURCES.md` support the relevant step. You do not read all
-seven before starting.
+Each milestone keeps four predictable files. `README.md` is the learner route,
+`CHALLENGE.md` owns deliberate failures and recovery, `ACCEPTANCE.md` owns Core,
+Stretch, evidence, and review, and `REFERENCE.md` holds just-in-time concepts,
+tool decisions, and sources. Start with the README; open support only when its
+block points there.
 
-Use one modular FastAPI application and one PostgreSQL database when persistence
+Use one modular Air/FastAPI application and one PostgreSQL database when persistence
 begins. The [stack policy](STACK.md#explicit-exclusions) owns advanced-tool
 exclusions and the evidence required for exceptions.
 

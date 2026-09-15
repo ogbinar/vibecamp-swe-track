@@ -98,7 +98,7 @@ cannot be preserved.
 
 1. Compare the changed OpenAPI property set with the documented client response.
 2. Inspect the response model and compatibility assertion, not every route.
-3. Use the OpenAPI specification link in `RESOURCES.md`; do not weaken the guard.
+3. Use the OpenAPI specification link in `REFERENCE.md`; do not weaken the guard.
 
 ### Reset
 

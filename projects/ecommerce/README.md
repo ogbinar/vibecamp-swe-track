@@ -20,7 +20,8 @@ ECOMMERCE_TEST_DATABASE_URL=postgresql+psycopg://vibecamp:vibecamp@127.0.0.1:543
 ```
 
 Expected: the baseline migration is current and all tests pass; `/health` works,
-`/ready` proves PostgreSQL answers, and `/login` is intentionally absent.
+`/ready` proves PostgreSQL answers, `/` links the Air login/order/payment
+checkpoints, and the FastAPI `/login` API is intentionally absent.
 Start with `uv run --locked fastapi dev src/ecommerce_api/main.py --port 8002`.
 Stop with `Ctrl+C`.
 

@@ -6,14 +6,14 @@
 ## Claim and environment
 
 Claim: the supplied catalog responds through HTTP and rejects absent required
-configuration. Example environment: Linux, Python 3.12, uv 0.9.21.
+configuration. Example environment: Linux, Python 3.13, uv 0.9.21.
 
 ## Green behavior
 
 Command: `uv run --locked pytest`
 
-Expected: exit code 0 and four passing tests. Example actual result: exit code
-0; `4 passed`. Interpretation: the checked API and configuration examples pass;
+Expected: exit code 0 and eight passing tests. Example actual result: exit code
+0; `8 passed`. Interpretation: the checked HTML, API, form, and configuration examples pass;
 this does not prove production readiness or behavior that has no test.
 
 ## Failure, diagnosis, and regression proof

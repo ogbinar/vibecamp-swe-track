@@ -16,7 +16,7 @@ Run from `projects/pos/`. Preserve the last green command before each scenario.
 
 1. Ask which invalid row can enter without using the API.
 2. Inspect identities, cardinality, foreign keys, checks, and `Base.metadata`.
-3. Use the PostgreSQL constraint and SQLAlchemy mapping links in `RESOURCES.md`.
+3. Use the PostgreSQL constraint and SQLAlchemy mapping links in `REFERENCE.md`.
 
 ### Reset
 
@@ -37,7 +37,7 @@ use the bounded reset in `projects/pos/README.md`, then rerun Block 1.
 
 1. Count statements before guessing that an index or repository will help.
 2. Inspect query ownership, session lifetime, relationship loading, and the plan.
-3. Use the SQLAlchemy session and PostgreSQL `EXPLAIN` links in `RESOURCES.md`.
+3. Use the SQLAlchemy session and PostgreSQL `EXPLAIN` links in `REFERENCE.md`.
 
 ### Reset
 
@@ -58,7 +58,7 @@ Remove only the current experiment, then run
 
 1. Compare the Alembic revision and rows already changed.
 2. Inspect transaction boundaries, batches, compatibility, and uniqueness assumptions.
-3. Use the Alembic links in `RESOURCES.md`; do not delete the volume to hide failure.
+3. Use the Alembic links in `REFERENCE.md`; do not delete the volume to hide failure.
 
 ### Reset
 

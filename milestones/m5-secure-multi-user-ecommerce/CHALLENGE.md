@@ -16,7 +16,7 @@ Run from `projects/ecommerce/` and use only synthetic identities and secrets.
 
 1. Separate “who is this?” from “may they do this?”
 2. Inspect password verification, session rotation, cookie attributes, and configuration.
-3. Use the FastAPI security and OWASP links in `RESOURCES.md`.
+3. Use the FastAPI security and OWASP links in `REFERENCE.md`.
 
 ### Reset
 
@@ -37,7 +37,7 @@ Disable the test-only mutation, rotate only the synthetic secret, and run
 
 1. Ask which trusted server fact should determine role.
 2. Inspect authentication context, role-policy input, and default denial.
-3. Use the OWASP authorization link in `RESOURCES.md`.
+3. Use the OWASP authorization link in `REFERENCE.md`.
 
 ### Reset
 
@@ -58,7 +58,7 @@ Disable the role mutation and run
 
 1. Ask which exact object and user scope every query needs.
 2. Inspect predicates, nested identifiers, filters, and disclosure differences.
-3. Use the object-authorization link in `RESOURCES.md`.
+3. Use the object-authorization link in `REFERENCE.md`.
 
 ### Reset
 
@@ -79,7 +79,7 @@ Restore Alice/Bob fixtures with the bounded reset and run
 
 1. Compare current state, command, actor, and expected unchanged rows.
 2. Inspect state policy and database transaction together.
-3. Use the state-machine link in `RESOURCES.md`.
+3. Use the state-machine link in `REFERENCE.md`.
 
 ### Reset
 

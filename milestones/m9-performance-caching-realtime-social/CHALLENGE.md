@@ -16,7 +16,7 @@ Run from `projects/social/`. Use the same workload before and after each change.
 
 1. Count statements and verify page correctness before optimizing.
 2. Inspect relationship loading, cardinality estimate, total order, and index columns.
-3. Use the SQLAlchemy/PostgreSQL links in `RESOURCES.md`.
+3. Use the SQLAlchemy/PostgreSQL links in `REFERENCE.md`.
 
 ### Reset
 
@@ -37,7 +37,7 @@ Run the social bounded reset and deterministic seed, then run
 
 1. Name PostgreSQL as authority and the exact value being cached.
 2. Inspect key scope, invalidation event, time-to-live, outage, and concurrency.
-3. Use the Redis cache-aside link in `RESOURCES.md`.
+3. Use the Redis cache-aside link in `REFERENCE.md`.
 
 ### Reset
 
@@ -58,7 +58,7 @@ green, and rerun `tests/m9/test_cache_experiment.py`.
 
 1. Ask whether the client ever needs to send messages over the live connection.
 2. Inspect event identity, replay source, reconnect cursor, and buffering limits.
-3. Use the FastAPI SSE reference in `RESOURCES.md`.
+3. Use the FastAPI SSE reference in `REFERENCE.md`.
 
 ### Reset
 

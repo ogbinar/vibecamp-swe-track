@@ -21,6 +21,11 @@ the challenge fails deterministically with
 two confirmations and negative remaining inventory. Record the interleaving
 before inspecting `reserve_at_barrier`.
 
+Start the application with
+`uv run --locked fastapi dev src/booking_api/main.py --port 8003`. Open `/` or
+`/app/bookings` to see the Air final-seat checkpoint. It displays the neutral
+starting state; the learner-owned database coordination remains absent.
+
 Rerunning is the reset: each test creates new in-memory inventory. Use exactly
 two workers for the deterministic exercise. A larger stress run is evidence
 only after the two-worker failure is understood. The learner must move the

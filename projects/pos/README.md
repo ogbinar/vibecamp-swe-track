@@ -1,7 +1,7 @@
 # POS launch kit for M2
 
-This checkpoint proves FastAPI can start and PostgreSQL can be reached. It does
-not contain the POS schema or business solution.
+This checkpoint proves the Air/FastAPI application can start and PostgreSQL can
+be reached. It does not contain the POS schema or business solution.
 
 Read [the bounded requirements brief](REQUIREMENTS.md) after this checkpoint is
 green. It fixes behavior and invalid cases while leaving the schema to you.
@@ -18,9 +18,11 @@ uv run --locked mypy
 POS_TEST_DATABASE_URL=postgresql+psycopg://vibecamp:vibecamp@127.0.0.1:5432/vibecamp_pos uv run --locked pytest
 ```
 
-Expected: health and PostgreSQL smoke tests pass. Start the API with
-`uv run --locked fastapi dev src/pos_api/main.py --port 8001`; `/health` proves
-the process is alive and `/ready` proves the database answers.
+Expected: health and PostgreSQL smoke tests pass. Start the application with
+`uv run --locked fastapi dev src/pos_api/main.py --port 8001`; `/` and
+`/app/stock` show the Air checkpoint, `/health` proves the process is alive, and
+`/ready` proves the database answers. The page states that durable stock is
+still learner work.
 
 Use `docker compose stop` to pause without deleting data. `docker compose down`
 removes containers but keeps the named volume. Only when you intend to erase

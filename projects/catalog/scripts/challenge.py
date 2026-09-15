@@ -27,7 +27,7 @@ SCENARIOS = {
         'service_name: str = "Catalog from hidden default"',
     ),
     "automation": Change(
-        "pyproject.toml", 'requires-python = "==3.12.*"', 'requires-python = "==3.13.*"'
+        "pyproject.toml", 'requires-python = "==3.13.*"', 'requires-python = "==3.12.*"'
     ),
     "compatibility": Change(
         "src/catalog_api/models.py",

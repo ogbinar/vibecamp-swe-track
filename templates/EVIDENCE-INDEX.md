@@ -34,7 +34,7 @@ Preserve the minimal failing test/harness, sanitized before-output, diagnosis, a
 
 ## Review and release
 
-- Learner answers to `REVIEW.md`:
+- Learner answers to the milestone acceptance `Review` section:
 - Cold-review mode (`peer` or `solo fresh-context`), reviewer/date/reference commit:
 - Cold-review clean-checkout command, core path, failure reproduced, confusion/defects found, resolution, verdict:
 - Security/data/migration/rollback review:

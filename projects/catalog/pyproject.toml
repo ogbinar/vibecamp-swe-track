@@ -2,8 +2,9 @@
 name = "vibecamp-catalog"
 version = "0.1.0"
 description = "Runnable starter for VibeCamp M0"
-requires-python = "==3.12.*"
+requires-python = "==3.13.*"
 dependencies = [
+    "air==0.48.1",
     "fastapi[standard]>=0.116.0",
     "pydantic-settings>=2.10.0",
 ]
@@ -23,13 +24,13 @@ testpaths = ["tests"]
 
 [tool.ruff]
 line-length = 100
-target-version = "py312"
+target-version = "py313"
 
 [tool.ruff.lint]
 select = ["E", "F", "I", "B", "UP", "RUF"]
 
 [tool.mypy]
-python_version = "3.12"
+python_version = "3.13"
 strict = true
 mypy_path = "src"
 packages = ["catalog_api"]

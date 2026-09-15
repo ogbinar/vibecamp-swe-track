@@ -14,10 +14,12 @@ REQUIRED_ROOT = {
     "GLOSSARY.md", "PROGRESS.md", "CONTRIBUTING.md",
     "PLAN.md", "TODO.md", "projects", "challenges", "templates", ".github/workflows",
 }
-REQUIRED_FILES = {
+OLD_MILESTONE_FILES = {
     "README.md", "CONCEPTS.md", "CHALLENGE.md", "TOOLS.md",
     "ACCEPTANCE.md", "REVIEW.md", "RESOURCES.md",
 }
+NEW_MILESTONE_FILES = {"README.md", "CHALLENGE.md", "ACCEPTANCE.md", "REFERENCE.md"}
+MILESTONE_FILES = OLD_MILESTONE_FILES | NEW_MILESTONE_FILES
 REQUIRED_TEMPLATES = {
     "ADR.md", "COMPLEXITY-REJECTION.md", "DATA-LIFECYCLE.md",
     "ENTRY-DIAGNOSTIC.md", "EVIDENCE-INDEX.md", "INCIDENT-POSTMORTEM.md",
@@ -26,19 +28,21 @@ REQUIRED_TEMPLATES = {
     "RUNBOOK-RELEASE-REJECTION.md", "RUNBOOK-RESTORE.md", "RUNBOOK-INCIDENT.md",
 }
 PROJECT_REQUIREMENTS = {
-    "catalog": {"README.md", "pyproject.toml", "uv.lock", "contracts/test_m1_contract.py"},
+    "catalog": {"README.md", "pyproject.toml", "uv.lock", "contracts/test_m1_contract.py", "src/catalog_api/main.py", "src/catalog_api/web.py"},
     "pos": {
         "README.md", "pyproject.toml", "uv.lock", "compose.yml", "alembic.ini",
         "migrations/versions/0001_baseline.py", "tests/test_postgres.py", "REQUIREMENTS.md",
         "compose.production.yml", "compose.unhealthy.yml", "scripts/rehearse_m10.sh",
+        "src/pos_api/main.py", "src/pos_api/web.py",
     },
     "ecommerce": {
         "README.md", "pyproject.toml", "uv.lock", "compose.yml", "alembic.ini",
         "migrations/versions/0001_baseline.py", "fixtures/SECURITY-SCENARIOS.md",
         "tests/test_failure_harnesses.py", "tests/test_postgres.py", "REQUIREMENTS.md",
+        "src/ecommerce_api/main.py", "src/ecommerce_api/web.py",
     },
-    "booking": {"README.md", "pyproject.toml", "uv.lock", "compose.yml", "alembic.ini", "migrations/versions/0001_baseline.py", "challenges/test_double_booking.py", "tests/test_postgres.py"},
-    "social": {"README.md", "pyproject.toml", "uv.lock", "compose.yml", "alembic.ini", "migrations/versions/0001_baseline.py", "challenges/test_query_budget.py", "tests/test_postgres.py"},
+    "booking": {"README.md", "pyproject.toml", "uv.lock", "compose.yml", "alembic.ini", "migrations/versions/0001_baseline.py", "challenges/test_double_booking.py", "tests/test_postgres.py", "src/booking_api/main.py", "src/booking_api/web.py"},
+    "social": {"README.md", "pyproject.toml", "uv.lock", "compose.yml", "alembic.ini", "migrations/versions/0001_baseline.py", "challenges/test_query_budget.py", "tests/test_postgres.py", "src/social_api/main.py", "src/social_api/web.py"},
 }
 TEMPLATE_HEADINGS = {
     "ENTRY-DIAGNOSTIC.md": {"## Protocol", "## Signals and routing", "## Routing result"},
@@ -68,7 +72,9 @@ REQUIRED_CATALOG_FILES = {
     "src/catalog_api/app.py",
     "src/catalog_api/main.py",
     "src/catalog_api/models.py",
+    "src/catalog_api/service.py",
     "src/catalog_api/settings.py",
+    "src/catalog_api/web.py",
     "tests/test_api.py",
     "evidence/M0/EXAMPLE.md",
 }
@@ -99,34 +105,96 @@ LINK = re.compile(r"(?<!!)\[[^\]]+\]\(([^)]+)\)")
 ROW = re.compile(r"^\| ([^|]+?) \| ([^|]+?) \| ([^|]+?) \| ([^|]+?) \|$")
 REF = re.compile(r"M(10|[0-9]) `([AC][0-9](?:,[AC][0-9])*)`")
 ROADMAP_HEADERS = (
-    "#",
-    "Milestone / Capability",
-    "Project",
-    "Key concepts",
-    "FastAPI / Python tools",
-    "Real integration",
+    "Milestone",
+    "Business problem",
+    "Product capability",
+    "Start here",
 )
-ROADMAP_PRODUCTS = (
-    "Catalog", "Catalog", "POS", "POS", "POS", "Ecommerce",
-    "Ecommerce", "Ecommerce", "Booking", "Social", "Multi-tenant POS SaaS",
+ROADMAP_BUSINESS_MARKERS = (
+    "author's machine",
+    "cannot predict catalog responses",
+    "disappear when the POS restarts",
+    "inventory, money, and receipts disagreeing",
+    "touches too many POS files",
+    "orders they do not own",
+    "does not reveal whether money moved",
+    "disappears when a process crashes",
+    "same final seat",
+    "becomes slow",
+    "serve several businesses",
 )
-LOCAL_INTEGRATION = "Deterministic/local Core; no provider account"
-ROADMAP_INTEGRATIONS = (
-    LOCAL_INTEGRATION,
-    LOCAL_INTEGRATION,
-    LOCAL_INTEGRATION,
-    LOCAL_INTEGRATION,
-    LOCAL_INTEGRATION,
-    LOCAL_INTEGRATION,
-    "**Required after local Core:** exactly one Stripe-like payment sandbox",
-    "Deterministic/local Core; optional email test provider",
-    LOCAL_INTEGRATION,
-    LOCAL_INTEGRATION,
-    (
-        "Deterministic/local Core; optional S3-compatible storage, OAuth/OIDC, "
-        "monitoring, and authorized deployment"
-    ),
+
+PROJECTS = ("catalog", "pos", "ecommerce", "booking", "social")
+OUTCOME_TITLES = {
+    "M0": "Make the catalog easy to run",
+    "M1": "Make the catalog predictable for clients",
+    "M2": "Make stock survive a restart",
+    "M3": "Make checkout safe",
+    "M4": "Change the POS without breaking it",
+    "M5": "Protect customer accounts and orders",
+    "M6": "Handle uncertain payments",
+    "M7": "Finish accepted work after a crash",
+    "M8": "Stop the last seat being sold twice",
+    "M9": "Keep the feed fast as it grows",
+    "M10": "Support multiple businesses safely",
+}
+NEW_ROUTE_HEADINGS = (
+    "Business problem",
+    "Product objective",
+    "Start here",
+    "Build",
+    "Understand",
+    "Use a tool if earned",
+    "Prove it",
+    "Done / next",
 )
+
+
+def classify_milestone_contract(entries: set[str]) -> tuple[str, str | None]:
+    """Classify one milestone during the seven-to-four-file migration."""
+    contract_entries = entries & MILESTONE_FILES
+    extras = entries - MILESTONE_FILES
+    if extras:
+        return "invalid", f"unexpected files={sorted(extras)}"
+    if contract_entries == OLD_MILESTONE_FILES:
+        return "old", None
+    if contract_entries == NEW_MILESTONE_FILES:
+        return "new", None
+    missing_old = sorted(OLD_MILESTONE_FILES - contract_entries)
+    missing_new = sorted(NEW_MILESTONE_FILES - contract_entries)
+    return (
+        "hybrid",
+        "undocumented hybrid contract; finish the old or new file set before validation "
+        f"(missing-old={missing_old}, missing-new={missing_new})",
+    )
+
+
+def classify_runtime(pyproject: str, python_version: str) -> tuple[str, str | None]:
+    """Classify one starter's coordinated Python/Air migration state."""
+    requires_312 = 'requires-python = "==3.12.*"' in pyproject
+    requires_313 = 'requires-python = "==3.13.*"' in pyproject
+    mypy_312 = 'python_version = "3.12"' in pyproject
+    mypy_313 = 'python_version = "3.13"' in pyproject
+    ruff_312 = 'target-version = "py312"' in pyproject
+    ruff_313 = 'target-version = "py313"' in pyproject
+    exact_air = re.search(r'^[ \t]*"air==0\.48\.1",?[ \t]*$', pyproject, re.MULTILINE)
+    any_air = re.search(r'^[ \t]*"air[^"\n]*"', pyproject, re.MULTILINE)
+    if requires_312 and mypy_312 and ruff_312 and python_version.strip() == "3.12" and not any_air:
+        return "pre-Air", None
+    if (
+        requires_313
+        and mypy_313
+        and ruff_313
+        and python_version.strip() == "3.13"
+        and exact_air
+        and "fastapi[standard]" in pyproject.lower()
+    ):
+        return "Air", None
+    return (
+        "hybrid",
+        "runtime migration must be wholly Python 3.12 without Air or wholly Python 3.13 "
+        "with exact air==0.48.1 and explicit fastapi[standard]",
+    )
 
 
 def heading_anchors(markdown: str) -> set[str]:
@@ -179,7 +247,7 @@ def check_navigation(root: Path, by_code: dict[str, Path]) -> list[str]:
     headers, rows = readme_roadmap_rows(readme)
     if headers != ROADMAP_HEADERS:
         errors.append(
-            "README.md: primary roadmap needs exact six headers: "
+            "README.md: primary roadmap needs exact four business-first headers: "
             + "; ".join(ROADMAP_HEADERS)
         )
     if len(rows) != 11:
@@ -189,26 +257,26 @@ def check_navigation(root: Path, by_code: dict[str, Path]) -> list[str]:
         target = by_code.get(code)
         if len(row) != len(ROADMAP_HEADERS):
             errors.append(
-                f"README.md: primary roadmap row {number + 1} needs exactly six columns"
+                f"README.md: primary roadmap row {number + 1} needs exactly four columns"
             )
             continue
-        if row[0] != f"{number + 1} · {code}":
+        if row[0] != code:
             errors.append(
                 f"README.md: IA route row {number + 1} has wrong ordinal or label"
             )
-        capability_link = re.fullmatch(r"\[[^\]]+\]\(([^)]+)\)", row[1])
+        capability_link = re.fullmatch(r"\[[^\]]+\]\(([^)]+)\)", row[3])
         expected_target = f"{target.relative_to(root)}/README.md" if target else ""
         if not capability_link or capability_link.group(1) != expected_target:
             errors.append(
                 f"README.md: IA route row {number + 1} has wrong controller link"
             )
-        if row[2] != ROADMAP_PRODUCTS[number]:
+        if ROADMAP_BUSINESS_MARKERS[number] not in row[1]:
             errors.append(
-                f"README.md: IA route row {number + 1} has wrong product journey"
+                f"README.md: business route row {number + 1} has wrong problem"
             )
-        if row[5] != ROADMAP_INTEGRATIONS[number]:
+        if OUTCOME_TITLES[code].lower().replace("the ", "") not in row[2].lower().replace("the ", ""):
             errors.append(
-                f"README.md: IA route row {number + 1} has wrong integration classification"
+                f"README.md: business route row {number + 1} has wrong product capability"
             )
     if "No provider account or secret is needed to start" not in readme:
         errors.append("README.md: start must not imply a provider account or secret prerequisite")
@@ -225,7 +293,8 @@ def check_navigation(root: Path, by_code: dict[str, Path]) -> list[str]:
         breadcrumb = f"[Course home](../../README.md) / {code}"
         if breadcrumb not in text.split("\n## ", 1)[0]:
             errors.append(f"{code}: IA breadcrumb missing")
-        footer = text.rsplit("\n## Next", 1)[-1]
+        footer_heading = "\n## Done / next" if (directory / "REFERENCE.md").exists() else "\n## Next"
+        footer = text.rsplit(footer_heading, 1)[-1]
         previous = "[Previous: Course start](../../README.md#start-now)"
         if number:
             neighbor = by_code.get(f"M{number - 1}")
@@ -272,6 +341,14 @@ def check_cs_contracts(root: Path) -> list[str]:
             "M5 Stretch",
             "SQLAdmin",
         ),
+        "CURRICULUM.md": (
+            "Add an optional cashier display name while untangling the POS",
+        ),
+        "PLAN.md": ("decision is **ROLL OUT**", "exactly `air==0.48.1`"),
+        "TODO.md": (
+            "External evidence — unchanged and unchecked",
+            "HUMAN SELF-STUDY VERIFIED",
+        ),
         "milestones/m0-engineering-baseline/README.md": (
             "**Do:**",
             "**Understand:**",
@@ -295,16 +372,21 @@ def check_cs_contracts(root: Path) -> list[str]:
         for marker in markers:
             if marker not in content:
                 errors.append(f"{relative}: missing stable CS contract {marker!r}")
-    m4 = (root / "milestones/m4-maintainability-testing-refactoring/README.md").read_text(
-        encoding="utf-8"
+    m4_paths = (
+        "CURRICULUM.md",
+        "milestones/m4-maintainability-testing-refactoring/README.md",
     )
-    if "Add configurable promotions and returns" in m4:
-        errors.append("M4: multiple Core stakeholder changes remain")
+    for relative in m4_paths:
+        m4 = (root / relative).read_text(encoding="utf-8")
+        if "Add configurable promotions and returns" in m4:
+            errors.append(f"{relative}: M4 multiple Core stakeholder changes remain")
     return errors
 
 
 def main() -> int:
     errors: list[str] = []
+    contract_states: dict[str, str] = {}
+    runtime_states: dict[str, str] = {}
     for name in REQUIRED_ROOT:
         if not (ROOT / name).exists():
             errors.append(f"missing required root path: {name}")
@@ -330,37 +412,70 @@ def main() -> int:
 
     for directory in directories:
         entries = {path.name for path in directory.iterdir()}
-        if entries != REQUIRED_FILES:
+        state, contract_error = classify_milestone_contract(entries)
+        contract_states[directory.name] = state
+        if contract_error:
+            errors.append(f"{directory.relative_to(ROOT)}: {contract_error}")
+        elif state != "new":
             errors.append(
-                f"{directory.relative_to(ROOT)}: expected exactly seven contract files; "
-                f"missing={sorted(REQUIRED_FILES - entries)}, extra={sorted(entries - REQUIRED_FILES)}"
+                f"{directory.relative_to(ROOT)}: stable contract requires exactly "
+                "README.md, CHALLENGE.md, ACCEPTANCE.md, and REFERENCE.md"
             )
         acceptance = directory / "ACCEPTANCE.md"
         if acceptance.exists():
             acceptance_text = acceptance.read_text(encoding="utf-8")
             for heading in ("## Core", "## Stretch"):
-                if acceptance_text.count(heading) != 1:
+                if acceptance_text.splitlines().count(heading) != 1:
                     errors.append(f"{acceptance.relative_to(ROOT)}: expected exactly one {heading}")
             if "Required maturity:" not in acceptance_text:
                 errors.append(f"{acceptance.relative_to(ROOT)}: missing required maturity declaration")
         readme_path = directory / "README.md"
         if readme_path.exists():
             milestone_readme = readme_path.read_text(encoding="utf-8")
-            for marker in ("Starting", "Terms used here", "Failures", "Done", "Recovery", "Next"):
-                if marker not in milestone_readme:
-                    errors.append(f"{readme_path.relative_to(ROOT)}: missing learner-route marker {marker!r}")
-            route_patterns = (
-                r"^## Why", r"^## Starting", r"^## Terms used here",
-                r"^## Product brief", r"^## Work blocks", r"^## Failures", r"^## Evidence",
-                r"^## Done", r"^## Recovery", r"^## Next",
-            )
-            route_positions = []
-            for pattern in route_patterns:
-                match = re.search(pattern, milestone_readme, flags=re.MULTILINE | re.IGNORECASE)
-                route_positions.append(match.start() if match else -1)
-            if any(position < 0 for position in route_positions) or route_positions != sorted(route_positions):
-                errors.append(f"{readme_path.relative_to(ROOT)}: learner-route sections missing or out of order")
-        if directory.name not in {"m0-engineering-baseline"}:
+            if state == "old":
+                for marker in ("Starting", "Terms used here", "Failures", "Done", "Recovery", "Next"):
+                    if marker not in milestone_readme:
+                        errors.append(f"{readme_path.relative_to(ROOT)}: missing learner-route marker {marker!r}")
+                route_patterns = (
+                    r"^## Why", r"^## Starting", r"^## Terms used here",
+                    r"^## Product brief", r"^## Work blocks", r"^## Failures", r"^## Evidence",
+                    r"^## Done", r"^## Recovery", r"^## Next",
+                )
+                route_positions = []
+                for pattern in route_patterns:
+                    match = re.search(pattern, milestone_readme, flags=re.MULTILINE | re.IGNORECASE)
+                    route_positions.append(match.start() if match else -1)
+                if any(position < 0 for position in route_positions) or route_positions != sorted(route_positions):
+                    errors.append(f"{readme_path.relative_to(ROOT)}: learner-route sections missing or out of order")
+            elif state == "new":
+                positions = [
+                    milestone_readme.find(f"\n## {heading}\n") for heading in NEW_ROUTE_HEADINGS
+                ]
+                if any(position < 0 for position in positions) or positions != sorted(positions):
+                    errors.append(
+                        f"{readme_path.relative_to(ROOT)}: business-first sections missing or out of order"
+                    )
+                code_match = re.match(r"m(10|[0-9])-", directory.name)
+                code = f"M{code_match.group(1)}" if code_match else ""
+                if not milestone_readme.startswith(f"# {code} — {OUTCOME_TITLES.get(code, '')}"):
+                    errors.append(f"{readme_path.relative_to(ROOT)}: outcome-first title is missing")
+                for marker in ("**Product can:**", "**You will prove:**"):
+                    if milestone_readme.count(marker) != 1:
+                        errors.append(
+                            f"{readme_path.relative_to(ROOT)}: expected exactly one {marker} summary"
+                        )
+                for stale in (
+                    "## Terms used here",
+                    "five visible cues",
+                    "Each block keeps the action",
+                    "### Literal command map",
+                    "### Command map for required blocks",
+                ):
+                    if stale in milestone_readme:
+                        errors.append(
+                            f"{readme_path.relative_to(ROOT)}: superseded learner-route content remains {stale!r}"
+                        )
+        if state == "old" and directory.name not in {"m0-engineering-baseline"}:
             resources = (directory / "RESOURCES.md").read_text(encoding="utf-8")
             url_count = len(re.findall(r"https?://", resources))
             if not 2 <= url_count <= 5:
@@ -403,14 +518,14 @@ def main() -> int:
                 f"does not match acceptance maximum A{max(acceptance_ids)}"
             )
 
-        if directory.name not in {"m0-engineering-baseline", "m1-production-api-foundation"}:
+        if state == "old" and directory.name not in {"m0-engineering-baseline", "m1-production-api-foundation"}:
             if "## Work blocks" not in milestone_readme:
                 errors.append(f"{readme_path.relative_to(ROOT)}: missing executable work blocks")
             for marker in ("[REQUIRED", "evidence/", "Stop"):
                 if marker.lower() not in milestone_readme.lower():
                     errors.append(f"{readme_path.relative_to(ROOT)}: work blocks missing {marker!r}")
 
-        if directory.name != "m0-engineering-baseline":
+        if state == "old" and directory.name != "m0-engineering-baseline":
             command_marker = (
                 "### Command map for required blocks"
                 if directory.name == "m1-production-api-foundation"
@@ -453,6 +568,26 @@ def main() -> int:
                     errors.append(
                         f"{acceptance.relative_to(ROOT)}: execution map missing {marker!r}"
                     )
+
+        if state == "new":
+            reference_text = (directory / "REFERENCE.md").read_text(encoding="utf-8")
+            reference_sections = (
+                "## Use now", "## Evaluate after evidence", "## Do not add yet", "## Sources"
+            )
+            positions = [reference_text.find(f"\n{marker}\n") for marker in reference_sections]
+            for marker in reference_sections:
+                if reference_text.splitlines().count(marker) != 1:
+                    errors.append(
+                        f"{(directory / 'REFERENCE.md').relative_to(ROOT)}: missing merged reference section {marker!r}"
+                    )
+            if all(position >= 0 for position in positions) and positions != sorted(positions):
+                errors.append(
+                    f"{(directory / 'REFERENCE.md').relative_to(ROOT)}: reference sections are out of order"
+                )
+            if acceptance_text.splitlines().count("## Review") != 1:
+                errors.append(
+                    f"{acceptance.relative_to(ROOT)}: four-file contract must merge review prompts under ## Review"
+                )
 
     errors.extend(check_navigation(ROOT, by_code))
     errors.extend(check_cs_contracts(ROOT))
@@ -530,6 +665,64 @@ def main() -> int:
         )
         if missing_project:
             errors.append(f"projects/{project}: missing launch-kit files: {missing_project}")
+
+    for project in PROJECTS:
+        project_root = ROOT / "projects" / project
+        runtime_state, runtime_error = classify_runtime(
+            (project_root / "pyproject.toml").read_text(encoding="utf-8"),
+            (project_root / ".python-version").read_text(encoding="utf-8"),
+        )
+        runtime_states[project] = runtime_state
+        if runtime_error:
+            errors.append(f"projects/{project}: {runtime_error}")
+        elif runtime_state != "Air":
+            errors.append(
+                f"projects/{project}: stable runtime requires Python 3.13 and exact air==0.48.1"
+            )
+        lockfile = (project_root / "uv.lock").read_text(encoding="utf-8")
+        if 'name = "air"\nversion = "0.48.1"' not in lockfile:
+            errors.append(f"projects/{project}/uv.lock: exact air 0.48.1 is not locked")
+
+        package = f"{project}_api"
+        main_source = (project_root / "src" / package / "main.py").read_text(encoding="utf-8")
+        web_source = (project_root / "src" / package / "web.py").read_text(encoding="utf-8")
+        combined_source = main_source + "\n" + web_source
+        for marker in ("create_app(", "air.Air(fastapi_app=api)", "air.AirRouter(include_in_schema=False)"):
+            if marker not in combined_source:
+                errors.append(f"projects/{project}: Air/FastAPI composition missing {marker!r}")
+        if "include_router(" not in combined_source or "include_in_schema=False" not in combined_source:
+            errors.append(f"projects/{project}: human routes are not explicitly excluded from OpenAPI")
+        if re.search(r"^(?:from|import) (?:httpx|requests|urllib)", web_source, re.MULTILINE):
+            errors.append(f"projects/{project}: web layer must not call its own API over HTTP")
+
+    htmx_projects = {
+        project for project in PROJECTS
+        if "hx_" in (ROOT / "projects" / project / "src" / f"{project}_api" / "web.py").read_text(encoding="utf-8")
+    }
+    if htmx_projects != {"ecommerce", "social"}:
+        errors.append(f"earned HTMX must appear only in ecommerce and social; found {sorted(htmx_projects)}")
+    sse_projects = {
+        project for project in PROJECTS
+        if "SSEResponse" in (ROOT / "projects" / project / "src" / f"{project}_api" / "web.py").read_text(encoding="utf-8")
+    }
+    if sse_projects != {"social"}:
+        errors.append(f"earned SSE must appear only in social; found {sorted(sse_projects)}")
+    catalog_web = (ROOT / "projects/catalog/src/catalog_api/web.py").read_text(encoding="utf-8")
+    if "AirForm[ProductDraft]" not in catalog_web or "ProductDraftForm.from_request(request)" not in catalog_web:
+        errors.append("projects/catalog: explicit Pydantic-backed AirForm.from_request validation is missing")
+
+    for forbidden in ("package.json",):
+        if any(path.name == forbidden and ".venv" not in path.parts for path in ROOT.rglob(forbidden)):
+            errors.append(f"second frontend runtime marker exists: {forbidden}")
+    project_javascript = [
+        path for path in (ROOT / "projects").rglob("*.js") if ".venv" not in path.parts
+    ]
+    if project_javascript:
+        errors.append(f"custom project JavaScript exists: {[str(path.relative_to(ROOT)) for path in project_javascript]}")
+    for forbidden in ("AirDB", "air.Jinja", "AirDragon"):
+        for path in (ROOT / "projects").glob("*/src/**/*.py"):
+            if forbidden in path.read_text(encoding="utf-8"):
+                errors.append(f"{path.relative_to(ROOT)}: excluded presentation tool {forbidden}")
 
     database_dependencies = ("alembic", "fastapi[standard]", "psycopg", "pydantic-settings", "sqlalchemy")
     for project in ("pos", "ecommerce", "booking", "social"):
@@ -657,19 +850,45 @@ def main() -> int:
         if marker not in rehearsal:
             errors.append(f"projects/pos/scripts/rehearse_m10.sh: missing bounded drill {marker!r}")
 
+    dockerfile = (ROOT / "projects/pos/Dockerfile").read_text(encoding="utf-8")
+    if not re.search(r"^FROM python:3\.13-slim@sha256:[0-9a-f]{64}$", dockerfile, re.MULTILINE):
+        errors.append("projects/pos/Dockerfile: Python 3.13 base image must be digest-pinned")
+
+    provenance = (
+        ROOT / "docs/maintainers/archive/2026-09-15-business-first/README.md"
+    ).read_text(encoding="utf-8")
+    provenance_rows = re.findall(
+        r"^\| M(?:10|[0-9]) \| `(?:CONCEPTS|TOOLS|RESOURCES|REVIEW)\.md` \| `[0-9a-f]{64}` \| `(?:REFERENCE\.md|ACCEPTANCE\.md#review)` \|$",
+        provenance,
+        re.MULTILINE,
+    )
+    if len(provenance_rows) != 44:
+        errors.append(f"BF provenance manifest needs 44 exact source rows; found {len(provenance_rows)}")
+
     usability = (ROOT / "USABILITY.md").read_text(encoding="utf-8")
     if re.search(r"\bself-service ready\b", usability, flags=re.IGNORECASE):
         errors.append("USABILITY.md: unsupported unqualified self-service-ready claim")
+
+    todo_external = (ROOT / "TODO.md").read_text(encoding="utf-8").split(
+        "## External evidence — unchanged and unchecked", 1
+    )
+    if len(todo_external) != 2 or re.search(r"^- \[x\]", todo_external[-1], re.MULTILINE):
+        errors.append("TODO.md: external evidence must remain visible and unchecked")
 
     if (ROOT / "apps").exists():
         errors.append("stale legacy application directory exists")
     if errors:
         print("\n".join(f"ERROR: {error}" for error in errors))
         return 1
+    old_count = sum(state == "old" for state in contract_states.values())
+    new_count = sum(state == "new" for state in contract_states.values())
+    pre_air = [name for name, state in runtime_states.items() if state == "pre-Air"]
+    air = [name for name, state in runtime_states.items() if state == "Air"]
     print(
-        f"OK: 11 milestone directories; 7 contract files each; "
+        f"OK: 11 milestone directories; 4 contract files each; "
         f"{len(REQUIRED_CONCEPTS)} concepts traced to challenge and acceptance evidence; links resolve."
     )
+    print(f"RUNTIME: Air/Python-3.13={air}.")
     print("LIMIT: structural and semantic lint cannot prove learner understanding or human self-study readiness.")
     return 0
 

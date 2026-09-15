@@ -44,7 +44,7 @@ runtime validation could hide this mistake, repair it, and reset.
 
 1. Read the first pytest or mypy failure and name the expected behavior or type.
 2. Inspect only the reported application file and its owning test.
-3. Use the pytest or mypy link in `RESOURCES.md`; keep the repair your own.
+3. Use the pytest or mypy link in `REFERENCE.md`; keep the repair your own.
 
 ### Reset
 
@@ -76,7 +76,7 @@ Restore `.env`; it is local and must remain ignored.
 
 1. Compare the missing or invalid input with the setting’s declared requirement.
 2. Inspect the Pydantic settings model and `.env.example`, not unrelated routes.
-3. Use the Pydantic settings link in `RESOURCES.md`.
+3. Use the Pydantic settings link in `REFERENCE.md`.
 
 ### Reset
 
@@ -112,7 +112,7 @@ uv sync --locked
 
 1. Identify which Python-version claim uv says disagrees.
 2. Inspect `.python-version`, `pyproject.toml`, and the lock metadata only.
-3. Use the uv project link in `RESOURCES.md`.
+3. Use the uv project link in `REFERENCE.md`.
 
 ### Reset
 

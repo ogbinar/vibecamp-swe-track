@@ -17,7 +17,7 @@ uv run --locked mypy
 uv run --locked pytest
 ```
 
-Every check should exit with code `0`; pytest should report four passing tests.
+Every check should exit with code `0`; pytest should report eight passing tests.
 
 Start the development server:
 
@@ -30,9 +30,11 @@ In another terminal:
 ```bash
 curl -i http://127.0.0.1:8000/health
 curl -i http://127.0.0.1:8000/products/sample
+curl -i http://127.0.0.1:8000/
 ```
 
-Expect HTTP `200`, JSON content, and catalog/product fields. Stop the server
+Expect HTTP `200`; the first two responses are JSON and `/` is an Air-rendered
+HTML catalog containing the same sample product. Stop the server
 with `Ctrl+C`. The production-shaped, no-reload command used later in M0 is:
 
 ```bash
@@ -83,7 +85,7 @@ Expected: the OpenAPI field check fails, then returns to green after reset.
 
 - `uv: command not found`: install uv using its official instructions, then
   reopen the terminal.
-- Python mismatch: run `uv python install 3.12`, then repeat `uv sync --locked`.
+- Python mismatch: run `uv python install 3.13`, then repeat `uv sync --locked`.
 - Lock mismatch: do not update the lockfile during setup; run `git status` and
   reset an active `automation` challenge.
 - Missing `CATALOG_SERVICE_NAME`: copy `.env.example` to `.env` from this folder.

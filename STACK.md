@@ -2,40 +2,74 @@
 
 ## Minimal default
 
-- One supported Python version, pinned in `.python-version`, `pyproject.toml`, and the uv lockfile
-- `fastapi[standard]` (FastAPI, its CLI, and Uvicorn), Pydantic, and `pydantic-settings`
+- Python 3.13, pinned in `.python-version`, `pyproject.toml`, the type checker,
+  container image, CI, and the uv lockfile
+- Air `0.48.1` pinned exactly as the primary HTML/UI framework during its alpha
+  period; `fastapi[standard]` keeps FastAPI, its CLI, and Uvicorn explicit as
+  backend/API and ASGI runtime dependencies
+- Pydantic and `pydantic-settings` for shared API, form, and configuration boundaries
 - PostgreSQL, Psycopg 3, explicit SQL, SQLAlchemy 2, and Alembic
 - pytest, HTTPX, Ruff, and mypy
 - uv, Git, GitHub, and GitHub Actions
 - Docker for the immutable runtime artifact; Docker Compose for local, test/CI, and deliberately bounded single-host environments
 
-Use synchronous SQLAlchemy sessions with Psycopg first. FastAPI's asynchronous transport does not itself prove that async database access is needed. Adopt `AsyncSession` only after a representative workload shows blocked capacity or latency that cannot be corrected more simply; record the comparison, added failure/debugging cost, pool behavior, and removal/revisit trigger.
+Use synchronous SQLAlchemy sessions with Psycopg first. Air/FastAPI's asynchronous
+transport does not itself prove that async database access is needed. Adopt
+`AsyncSession` only after a representative workload shows blocked capacity or
+latency that cannot be corrected more simply; record the comparison, added
+failure/debugging cost, pool behavior, and removal/revisit trigger.
 
-Start with one modular monolith and one PostgreSQL database per project. Prefer FastAPI dependency functions and an explicit composition root over a DI framework. Route-to-SQLAlchemy is acceptable for a genuinely simple use case. Add a service when orchestration or business invariants need ownership; add a repository when query/data-access duplication or substitution creates a real seam. Do not require every endpoint to traverse ceremonial layers. The use-case/service boundary owns the transaction; repositories expose persistence operations and do not independently commit.
+Start with one modular monolith, one ASGI process, and one PostgreSQL database per
+project. The composition root creates the existing FastAPI backend, wraps it
+with `air.Air(fastapi_app=api)`, and includes an `AirRouter` for pages. Air owns
+human-facing HTML routes under `/` and `/app/...`; FastAPI keeps existing JSON,
+OpenAPI, `/health`, and `/ready` behavior. Page and API handlers call the same
+use case or service directly—never each other over HTTP. Prefer explicit
+dependencies over a DI framework. Route-to-SQLAlchemy is acceptable for a
+genuinely simple use case. Add a service when orchestration or business
+invariants need ownership, including when page/API duplication exposes that
+need; add a repository when query/data-access duplication or substitution
+creates a real seam. Do not require every endpoint to traverse ceremonial
+layers. The use-case/service boundary owns the
+transaction; repositories expose persistence operations and do not independently
+commit.
+
+Use Air Tags for pages and fragments. Keep the page router out of OpenAPI and
+retain FastAPI response models for JSON routes. Use ordinary POST/redirect/render
+forms before HTMX. When partial updates are earned, use explicit Air `hx_*`
+attributes and focused fragment routes; the non-HTMX product behavior and
+backend invariant must remain testable. Use `AirForm.from_request()` explicitly
+for Pydantic-backed form validation while Air's dependency-injected form path is
+not a stable course contract.
 
 Ruff owns linting and formatting; mypy owns static type consistency across module boundaries. PostgreSQL-backed integration tests—not SQLite substitutes—prove constraints, migrations, locks, transaction behavior, and database-specific queries.
 
 ## Earned tools
 
-Use this learning order: make configuration and HTTP behavior visible with
-FastAPI/Uvicorn/Pydantic/settings; add `APIRouter`, `Depends`, and OpenAPI when
-route composition or contract inspection creates the need; hand-build stable
+Use this learning order: make the M0 product visible with an Air page while
+FastAPI/Uvicorn/Pydantic/settings expose its backend and HTTP behavior; add an
+ordinary Air form in M1; add `APIRouter`, `Depends`, and OpenAPI when route
+composition or contract inspection creates the need; hand-build stable
 ordering/cursors/errors before evaluating `fastapi-pagination`; write explicit
 CRUD and transaction ownership before comparing FastCRUD; establish
 authentication, authorization, sessions, and negative cases before framework
-security helpers; crash disposable `BackgroundTasks` work before building the
-M7 outbox/worker; and measure before Redis, SSE, WebSockets, SQLAdmin, Sentry, or
-Logfire. Every retained optional tool names its observed need, simpler baseline,
+security helpers; earn HTMX in M6 from a payment-status partial-update need;
+crash disposable `BackgroundTasks` work before building the M7 outbox/worker;
+and measure before Redis, SSE, WebSockets, SQLAdmin, Sentry, or Logfire. Every
+retained optional tool names its observed need, simpler baseline,
 operational/data cost, owner, and removal trigger.
 
 | Tool | Earliest useful point | Evidence required | Remove/avoid when |
 |---|---|---|---|
+| [Air Tags and `AirRouter`](https://docs.airwebframework.org/learn/quickstart/) | M0 | One human-facing catalog page makes the product behavior visible while existing FastAPI JSON/OpenAPI and health contracts remain green | The page duplicates business logic, pollutes OpenAPI, or creates a separate frontend/runtime |
+| [Air forms / `AirForm.from_request()`](https://docs.airwebframework.org/learn/cookbook/forms/) | M1 | A browser user needs validated input; Pydantic-backed errors preserve entered values and the same use case serves page and API handlers | Form handling bypasses the API/domain contract or dependency-injected form behavior is used before it is stable |
+| HTMX through Air `hx_*` attributes | M6 | A measured partial-update need such as uncertain payment status is awkward with full-page refresh; normal form behavior and backend tests already pass | Ordinary navigation is sufficient, fragments become a second business-logic path, or custom JavaScript grows without an earned need |
 | FastCRUD | After M2 fundamentals | Handwritten SQL/repository behavior and constraints are understood; commodity admin CRUD is repetitive; comparison preserves contract, transaction ownership, query shape, and tests | Hooks obscure domain invariants or transactional workflows; a small explicit query is clearer |
 | `fastapi-pagination` | After M1 contract | Ordering, cursor/limit, insertion-between-pages, and error semantics exist first and adapter tests preserve them | Library dictates the public contract or hides unstable ordering/query cost |
 | Redis using the maintained Python client | M9 | A declared target is missed; cache-aside tests cover value, staleness, invalidation, stampede, outage, TTL, and user/tenant key scope | PostgreSQL meets target, Redis becomes correctness authority, or outage/stale-data cost exceeds benefit |
 | Taskiq with an explicitly selected production broker/result policy | After M7 database-backed semantics | Broker acknowledgement/failure behavior is documented; atomic intent, at-least-once delivery, idempotency, replay, backpressure, and observability remain provable | The database queue meets need or broker operations add more failure modes than measured value |
 | FastAPI `BackgroundTasks` | M6 at earliest | Work is short, noncritical, same-process, and explicitly safe to lose or repeat | The accepted obligation must survive crash/redeploy, needs retry/audit, or performs correctness-critical effects |
-| SSE | M9 | Polling misses a stated one-way latency requirement; reconnect, gaps, slow consumers, and loss semantics are tested | Polling meets need or durable replay is falsely implied |
+| Air `SSEResponse` with the HTMX SSE extension | M9 | Polling misses a stated one-way latency requirement; reconnect, gaps, slow consumers, and loss semantics are tested | Polling meets need or durable replay is falsely implied |
 | WebSockets | M9 Stretch | A bidirectional low-latency requirement that SSE cannot meet; connection/auth/backpressure behavior is tested | Traffic is one-way or connection/protocol state cost is unjustified |
 | S3-compatible object storage | M6 or later | Files must outlive/scale independently from application instances; access, retention, deletion, checksum, and failure behavior are defined | The product has no file requirement or local storage safely meets its bounded deployment; do not store blobs in PostgreSQL by reflex |
 | OpenTelemetry | M10 | Portable traces/metrics answer a named diagnostic question; propagation, sampling, redaction, retention, backend, and cost are owned | A simpler signal answers the question or no one owns the telemetry pipeline |
@@ -73,11 +107,20 @@ endorsement.
   to do not add yet until need, owner, cost/data boundary, removal trigger,
   access, and authority are recorded.
 
-Primary tool/provider references were rechecked on 2026-09-14. The project
-currently locks only its Core dependencies (`fastapi[standard]>=0.116.0` and
-the project lockfiles); optional packages are intentionally not installed.
+Primary tool/provider references were rechecked on 2026-09-15. Air `0.48.1` is
+the reviewed migration target, is still alpha, and requires Python 3.13 or
+newer. Every checked-in starter now pins that exact Air release and Python 3.13;
+UI registration stays isolated behind each project's `web.py` so an upgrade is
+deliberate and reversible. Optional packages remain intentionally uninstalled.
 - **Observability starts small:** begin with structured redacted logs and request/correlation IDs. Add metrics and traces for named questions. OpenTelemetry is instrumentation and still needs an owned backend; choose rather than stacking OpenTelemetry, Logfire, and Sentry indiscriminately.
 
 ## Explicit exclusions
 
-Kubernetes, Kafka, microservices, service mesh, CQRS, event sourcing, Elasticsearch, complex dependency-injection frameworks, and multiple databases are outside the course. An exception needs an explicit product constraint and a real ADR covering simpler alternatives, failure modes, operations, rollback, and removal.
+Kubernetes, Kafka, microservices, service mesh, CQRS, event sourcing,
+Elasticsearch, complex dependency-injection frameworks, multiple databases,
+React or another SPA framework, a Node build toolchain, and a separate frontend
+service are outside the course. AirDB, Jinja, AirDragon/Tailwind, or custom
+JavaScript requires an observed product need that Air Tags, ordinary forms, and
+small HTMX fragments cannot meet. An exception needs an explicit product
+constraint and a real ADR covering simpler alternatives, failure modes,
+operations, rollback, and removal.

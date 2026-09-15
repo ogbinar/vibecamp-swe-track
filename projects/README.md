@@ -4,6 +4,11 @@ The repository supplies the smallest starting state needed for honest practice;
 the learner builds the product behavior. It does not contain completed milestone
 solutions.
 
+Each launch kit now exposes a thin Air page over its retained FastAPI backend so
+the starting product problem is visible. Those pages share local Python seams;
+they do not call the backend over HTTP or supply the learner-owned milestone
+solution.
+
 - [`catalog/`](catalog/) — runnable M0 baseline plus the opt-in M1 contract.
 - [`pos/`](pos/) — PostgreSQL/Alembic M2 launch kit; business tables and rules
   remain learner work. It evolves through M4 and returns in M10.
