@@ -3,9 +3,10 @@
 This is a green anonymous shell, not an authentication solution. Read the M5
 threat brief and isolated scenarios before adding users or credentials.
 The product boundary is in [REQUIREMENTS.md](REQUIREMENTS.md); callable attack
-descriptions remain disabled in `fixtures/SECURITY-SCENARIOS.md`. The Core client
-is a first-party browser, so M5 uses an opaque server-side session referenced by
-a secure cookie. JSON Web Token (JWT) implementation is Stretch.
+descriptions remain disabled in
+[SECURITY-SCENARIOS.md](fixtures/SECURITY-SCENARIOS.md). The Core client is a
+first-party browser, so M5 uses an opaque server-side session referenced by a
+secure cookie. JSON Web Token (JWT) implementation is Stretch.
 
 ```bash
 cp .env.example .env
@@ -20,8 +21,8 @@ ECOMMERCE_TEST_DATABASE_URL=postgresql+psycopg://vibecamp:vibecamp@127.0.0.1:543
 ```
 
 Expected: the baseline migration is current and all tests pass; `/health` works,
-`/ready` proves PostgreSQL answers, `/` links the Air login/order/payment
-checkpoints, and the FastAPI `/login` API is intentionally absent.
+`/ready` proves PostgreSQL answers, `/` is a neutral Air shell, and identity,
+order, payment-status, job, and FastAPI `/login` routes are intentionally absent.
 Start with `uv run --locked fastapi dev src/ecommerce_api/main.py --port 8002`.
 Stop with `Ctrl+C`.
 
@@ -53,14 +54,15 @@ block and its saved evidence; do not remove completed identity routes or reset
 the database merely to recreate the anonymous starter. If only the supplied
 failure harness is red, leave M5 intact and diagnose the fake/fixture boundary.
 
-M6 also supplies `FakeProvider`, with success, decline, timeout-before, and
-timeout-after modes. M7 supplies `outbox_lab.py` with deterministic process-death
+M6 supplies `FakeProvider`, with success, decline, timeout-before, and
+timeout-after modes. You build the payment-status fragment after the measured
+need appears. M7 supplies `outbox_lab.py` with deterministic process-death
 windows. These reproduce uncertainty; they do not implement retries, durable
 work, idempotent consumers, or reconciliation for you.
 
 If configuration fails, copy `.env.example` from this directory. When starting
-M5 only, if an identity route exists before you build it, inspect the diff and
-remove accidental shared business code. Never apply that anonymous-shell repair
+M5 only, if an identity or order route exists before you build it, inspect the
+diff and remove accidental shared business code. Never apply that anonymous-shell repair
 after completing M5 or while working in M6. Security scenarios live in
 `fixtures/` and are documentation, never enabled vulnerable endpoints. The
 doubles keep state only in memory, so rerun pytest for a clean case.

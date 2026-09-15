@@ -16,20 +16,31 @@ def anyio_backend() -> str:
 
 
 @pytest.fixture
-async def client() -> AsyncIterator[AsyncClient]:
-    app: FastAPI = create_app(
+def app() -> FastAPI:
+    return create_app(
         Settings(  # type: ignore[call-arg]
             service_name="Security Contract",
             database_url="postgresql+psycopg://unused",
             _env_file=None,
         )
     )
+
+
+@pytest.fixture
+async def client(app: FastAPI) -> AsyncIterator[AsyncClient]:
     async with AsyncClient(transport=ASGITransport(app=app), base_url="http://test") as value:
         yield value
 
 
+def assert_route_exists(app: FastAPI, path: str, method: str) -> None:
+    assert any(route.path == path and method in (route.methods or set()) for route in app.routes), (
+        f"Implement {method} {path} before testing its security behavior"
+    )
+
+
 @pytest.mark.anyio
-async def test_registration_never_accepts_a_client_role(client: AsyncClient) -> None:
+async def test_registration_never_accepts_a_client_role(app: FastAPI, client: AsyncClient) -> None:
+    assert_route_exists(app, "/registrations", "POST")
     response = await client.post(
         "/registrations",
         json={"email": "alice@example.test", "password": "synthetic passphrase", "role": "admin"},
@@ -39,7 +50,8 @@ async def test_registration_never_accepts_a_client_role(client: AsyncClient) -> 
 
 
 @pytest.mark.anyio
-async def test_login_failure_does_not_enumerate_identity(client: AsyncClient) -> None:
+async def test_login_failure_does_not_enumerate_identity(app: FastAPI, client: AsyncClient) -> None:
+    assert_route_exists(app, "/sessions", "POST")
     unknown = await client.post(
         "/sessions", json={"email": "unknown@example.test", "password": "wrong"}
     )
@@ -50,13 +62,20 @@ async def test_login_failure_does_not_enumerate_identity(client: AsyncClient) ->
 
 
 @pytest.mark.anyio
-async def test_customer_cannot_read_another_customers_order(client: AsyncClient) -> None:
+async def test_customer_cannot_read_another_customers_order(
+    app: FastAPI, client: AsyncClient
+) -> None:
+    assert_route_exists(app, "/orders/{order_id}", "GET")
     response = await client.get("/orders/order-owned-by-bob", headers={"X-Test-Actor": "alice"})
     assert response.status_code in {403, 404}
 
 
 @pytest.mark.anyio
-async def test_forbidden_transition_does_not_change_order(client: AsyncClient) -> None:
+async def test_forbidden_transition_does_not_change_order(
+    app: FastAPI, client: AsyncClient
+) -> None:
+    assert_route_exists(app, "/orders/{order_id}/transition", "POST")
+    assert_route_exists(app, "/orders/{order_id}", "GET")
     denied = await client.post(
         "/orders/fulfilled-order/transition",
         json={"command": "pay"},

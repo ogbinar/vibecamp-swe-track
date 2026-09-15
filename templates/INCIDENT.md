@@ -1,4 +1,16 @@
-# Incident/postmortem: concise title
+# Incident response and postmortem: concise title
+
+## Response runbook
+
+- Trigger and user impact:
+- Incident lead:
+- Communication owner:
+- Stop condition or escalation point:
+
+Contain without destroying evidence. Follow one correlation or tenant ID and
+record the timeline and decisions. Recover through the named tested command or
+runbook, verify user-visible behavior and data integrity, preserve sanitized
+evidence, and open owned follow-ups before beginning the analysis below.
 
 - Date/status/severity/commander:
 - Synthetic or real environment:

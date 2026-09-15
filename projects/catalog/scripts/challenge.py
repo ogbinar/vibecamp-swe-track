@@ -20,7 +20,9 @@ class Change:
 
 SCENARIOS = {
     "health": Change("src/catalog_api/app.py", 'status="ok"', 'status="warning"'),
-    "type": Change("src/catalog_api/app.py", 'price=Decimal("19.99")', 'price="19.99"'),
+    "type": Change(
+        "src/catalog_api/service.py", 'price=Decimal("19.99")', 'price="19.99"'
+    ),
     "config": Change(
         "src/catalog_api/settings.py",
         "service_name: str = Field(default=..., min_length=1)",

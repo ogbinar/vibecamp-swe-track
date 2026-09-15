@@ -96,36 +96,3 @@ async def test_air_routes_stay_out_of_openapi(composed_client: AsyncClient) -> N
     assert "/health" in schema["paths"]
     assert "/products/sample" in schema["paths"]
     assert "/" not in schema["paths"]
-    assert "/app/products/draft" not in schema["paths"]
-
-
-@pytest.mark.anyio
-async def test_invalid_air_form_preserves_safe_values(composed_client: AsyncClient) -> None:
-    form_page = await composed_client.get("/app/products/draft")
-    token = form_page.text.split('name="csrf_token" value="', 1)[1].split('"', 1)[0]
-    response = await composed_client.post(
-        "/app/products/draft",
-        data={"csrf_token": token, "sku": "SAFE-1", "name": "Keyboard", "price": "-1"},
-    )
-
-    assert response.status_code == 200
-    assert response.headers["content-type"].startswith("text/html")
-    assert 'value="SAFE-1"' in response.text
-    assert 'value="-1"' in response.text
-    assert "greater than the minimum" in response.text
-
-
-@pytest.mark.anyio
-async def test_valid_air_form_does_not_persist_a_learner_solution(
-    composed_client: AsyncClient,
-) -> None:
-    form_page = await composed_client.get("/app/products/draft")
-    token = form_page.text.split('name="csrf_token" value="', 1)[1].split('"', 1)[0]
-    response = await composed_client.post(
-        "/app/products/draft",
-        data={"csrf_token": token, "sku": "SAFE-1", "name": "Keyboard", "price": "19.99"},
-    )
-
-    assert response.status_code == 200
-    assert "Draft SAFE-1 is valid. Nothing was saved." in response.text
-    assert (await composed_client.get("/products/SAFE-1")).status_code == 404

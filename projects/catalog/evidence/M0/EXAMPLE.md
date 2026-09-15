@@ -12,8 +12,8 @@ configuration. Example environment: Linux, Python 3.13, uv 0.9.21.
 
 Command: `uv run --locked pytest`
 
-Expected: exit code 0 and eight passing tests. Example actual result: exit code
-0; `8 passed`. Interpretation: the checked HTML, API, form, and configuration examples pass;
+Expected: exit code 0 and six passing tests. Example actual result: exit code
+0; `6 passed`. Interpretation: the checked HTML, API, and configuration examples pass;
 this does not prove production readiness or behavior that has no test.
 
 ## Failure, diagnosis, and regression proof

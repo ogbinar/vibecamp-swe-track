@@ -17,7 +17,7 @@ uv run --locked mypy
 uv run --locked pytest
 ```
 
-Every check should exit with code `0`; pytest should report eight passing tests.
+Every check should exit with code `0`; pytest should report six passing tests.
 
 Start the development server:
 

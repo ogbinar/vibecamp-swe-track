@@ -26,9 +26,9 @@ clean deterministic data.
 
 Start the application with
 `uv run --locked fastapi dev src/social_api/main.py --port 8004`. Open `/` for
-the Air feed or request `/app/feed/events` to observe one non-durable server-
-sent event. Query repair, caching authority, reconnect/gap policy, and the
-learner-built feed remain absent.
+the small Air observation feed. The HTMX fragment and server-sent events (SSE)
+transport are intentionally absent alongside query repair, caching authority,
+reconnect/gap policy, and the learner-built database feed.
 
 This fixture teaches measurement shape; PostgreSQL remains the required source
 of truth for the milestone. The learner must reproduce the issue with real

@@ -10,21 +10,22 @@ layer; neither framework is the objective.
 
 ## Non-negotiable pedagogy
 
-- Preserve exactly M0–M10 and the maturity arc documented in `CURRICULUM.md`.
+- Preserve exactly M0–M10 and the maturity arc documented in `docs/reference/curriculum-map.md`.
 - Use the recurring cycle: Understand problem → Design smallest correct solution → Build → Test → Break deliberately → Debug → Refactor → Operate → Ship.
 - Teach problem-first through evolving software, seeded faults, diagnosis, and objective evidence—not tool-topic surveys.
-- Keep every milestone directory at exactly `README.md`, `CHALLENGE.md`,
-  `ACCEPTANCE.md`, and `REFERENCE.md`. Do not restore the superseded seven-file
-  layout or create a hybrid milestone.
+- Keep every milestone directory at exactly one learner controller:
+  `README.md`. Do not restore retired support files or create a hybrid
+  milestone. Challenge scenarios, acceptance gates, recovery, and references
+  stay inside that controller.
 - Keep Core and Stretch separate. The Level A/B/C gates are cumulative and contextual, never three versions of every feature.
 - Prefer one Air/FastAPI modular monolith, one PostgreSQL database, and
-  `STACK.md`. Air owns pages/forms/components; FastAPI owns JSON/OpenAPI and
+  `docs/reference/stack.md`. Air owns pages/forms/components; FastAPI owns JSON/OpenAPI and
   operational endpoints; both reuse the same models, use cases, services, and
   database logic. Optional tools need observed need, evidence, operational cost,
   and removal criteria. FastCRUD follows fundamentals.
 - Keep progress and assessment in GitHub issues, PRs, Actions, project-local evidence, `PROGRESS.md`, and annotated tags/releases. ADRs record only consequential architecture decisions.
 - Preserve the diagnostic, complexity-rejection, portfolio, and data-lifecycle templates as focused evidence contracts. Career-shifter and data-specialist lenses use identical Core gates and must never become separate tracks.
-- Treat `USABILITY.md` as the learner-experience gate. Write learner material in plain language before terminology; define terms at first use; expand acronyms; use consistent vocabulary; show examples before abstractions; and structure instructions as action, reason, expected observation, and recovery.
+- Treat `docs/maintainers/usability.md` as the learner-experience gate. Write learner material in plain language before terminology; define terms at first use; expand acronyms; use consistent vocabulary; show examples before abstractions; and structure instructions as action, reason, expected observation, and recovery.
 - Keep `README.md` as the only learner front door. Put one next action before
   reference or maintainer material, and validate the Air/FastAPI presentation
   pattern on Catalog M0–M1 before broad rollout.
@@ -51,8 +52,8 @@ layer; neither framework is the objective.
 
 ## Change discipline
 
-Read `README.md`, `CURRICULUM.md`, `STACK.md`, `QUALITY-GATES.md`, `USABILITY.md`, `PLAN.md`, and `TODO.md` before curriculum changes. Treat `PLAN.md` as the canonical revision rationale, scope, dependencies, and sequence; treat `TODO.md` as the single active curriculum-maintenance tracker. When implementation work is performed, update its checklist in the same change. Do not use `PROGRESS.md` for maintenance work: it is the learner course transcript.
+Read `README.md`, `docs/reference/curriculum-map.md`, `docs/reference/stack.md`, `docs/reference/quality.md`, `docs/maintainers/usability.md`, `PLAN.md`, and `TODO.md` before curriculum changes. Treat `PLAN.md` as the canonical revision rationale, scope, dependencies, and sequence; treat `TODO.md` as the single active curriculum-maintenance tracker. When implementation work is performed, update its checklist in the same change. Do not use `PROGRESS.md` for maintenance work: it is the learner course transcript.
 
-Keep canonical content consolidated, links relative, milestone concept/challenge/acceptance IDs traceable, and run `python3 scripts/check_curriculum.py`. Preserve the dated BF provenance and rollback manifest when changing consolidated milestone content. Preserve unchecked future work when making planning-only changes.
+Keep canonical content consolidated, links relative, milestone concept/challenge/acceptance IDs traceable, and run `python3 scripts/check_curriculum.py`. Keep the active cleanup decision and rollback evidence in `docs/maintainers/subtraction-cleanup.md`; Git history owns retired-source provenance. Preserve unchecked future work when making planning-only changes.
 
 Do not add Kubernetes, Kafka, microservices, service mesh, CQRS, event sourcing, Elasticsearch, complex DI, or multiple databases without an explicit product constraint and ADR. Preserve user work. Never publish, push, create remotes, open external issues, commit, or alter tags without explicit authorization. Avoid secrets and personal/customer data.

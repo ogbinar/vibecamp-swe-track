@@ -1,0 +1,17 @@
+{
+  "schema_version": 1,
+  "concept_trace": "../reference/curriculum-map.md#concept-coverage-matrix",
+  "milestones": [
+    {"id":"M0","directory":"m0-engineering-baseline","outcome":"Make the catalog easy to run","maturity":"reproducible","project":"catalog","challenges":["C1","C2","C3"],"core":["A0","A1","A2","A3"],"conditional":["configuration","release"]},
+    {"id":"M1","directory":"m1-production-api-foundation","outcome":"Make the catalog predictable for clients","maturity":"functional","project":"catalog","challenges":["C1","C2","C3"],"core":["A1","A2","A3","A4"],"conditional":["public-api","openapi"]},
+    {"id":"M2","directory":"m2-pos-persistence-data-modeling","outcome":"Make stock survive a restart","maturity":"persistent","project":"pos","challenges":["C1","C2","C3"],"core":["A1","A2","A3","A4","A5"],"conditional":["database","migration"]},
+    {"id":"M3","directory":"m3-transactions-correctness","outcome":"Make checkout safe","maturity":"correct","project":"pos","challenges":["C1","C2","C3"],"core":["A1","A2","A3","A4"],"conditional":["database","concurrency"]},
+    {"id":"M4","directory":"m4-maintainability-testing-refactoring","outcome":"Change the POS without breaking it","maturity":"maintainable","project":"pos","challenges":["C1","C2","C3"],"core":["A1","A2","A3","A4","A5","A6"],"conditional":["portfolio"]},
+    {"id":"M5","directory":"m5-secure-multi-user-ecommerce","outcome":"Protect customer accounts and orders","maturity":"secure","project":"ecommerce","challenges":["C1","C2","C3","C4"],"core":["A1","A2","A3","A4","A5","A6"],"conditional":["identity","private-data"]},
+    {"id":"M6","directory":"m6-resilient-external-integrations","outcome":"Handle uncertain payments","maturity":"resilient","project":"ecommerce","challenges":["C1","C2","C3"],"core":["A1","A2","A3","A4"],"conditional":["external-system","separately-authorized-sandbox"]},
+    {"id":"M7","directory":"m7-durable-async-background-processing","outcome":"Finish accepted work after a crash","maturity":"durable","project":"ecommerce","challenges":["C1","C2","C3"],"core":["A1","A2","A3","A4","A5"],"conditional":["durable-background-work"]},
+    {"id":"M8","directory":"m8-concurrency-booking","outcome":"Stop the last seat being sold twice","maturity":"concurrent","project":"booking","challenges":["C1","C2","C3"],"core":["A1","A2","A3","A4"],"conditional":["database","concurrency"]},
+    {"id":"M9","directory":"m9-performance-caching-realtime-social","outcome":"Keep the feed fast as it grows","maturity":"performant","project":"social","challenges":["C1","C2","C3"],"core":["A1","A2","A3","A4"],"conditional":["performance","cache","realtime"]},
+    {"id":"M10","directory":"m10-production-multitenant-saas-capstone","outcome":"Support multiple businesses safely","maturity":"operable/sellable","project":"pos","challenges":["C1","C2","C3","C4"],"core":["A1","A2","A3","A4","A5","A6","A7"],"conditional":["tenant","audit","deployment","restore"]}
+  ]
+}

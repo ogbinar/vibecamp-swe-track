@@ -6,7 +6,7 @@
 - **Level B — Engineered:** Level A plus validation, appropriate unit/integration/API tests, coherent boundaries, data integrity, and explicit failure handling.
 - **Level C — Production:** Levels A and B plus context-appropriate security, observability, deployment, migrations, operational behavior, documentation, recovery thinking, and disciplined release.
 
-These are cumulative, contextual gates—not three versions of every feature. For example, M1 proves selected Level B qualities at the API boundary but cannot claim Level C while state is volatile and operational controls do not exist. Each milestone `ACCEPTANCE.md` declares what applies now.
+These are cumulative, contextual gates—not three versions of every feature. For example, M1 proves selected Level B qualities at the API boundary but cannot claim Level C while state is volatile and operational controls do not exist. Each milestone README's **Acceptance gate** declares what applies now.
 
 ## Universal definition of done
 
@@ -19,7 +19,7 @@ Every milestone is complete only when:
 5. Failure drills record environment, command/setup, expected result, actual result, interpretation, recovery, and date.
 6. Actions pass, the milestone-gate PR self-review is complete, and
    `PROGRESS.md` links the issue, PR, evidence index, and tag.
-7. The learner answers the `ACCEPTANCE.md` Review prompts in their own words and can reproduce,
+7. The learner answers the milestone README's **Review** prompts in their own words and can reproduce,
    explain, modify, and debug the result.
 
 ## Conditional gates
@@ -63,7 +63,7 @@ For an uncommitted curriculum-maintenance audit, an isolated copy may be used an
 
 Remove defects from callable production paths, but retain the smallest safe failing test/harness, sanitized before-output, diagnosis, and regression test. A disabled vulnerable fixture is allowed only when isolated, unmistakably non-production, and safe by default. Do not retain secrets, exploitable routes, database dumps, or oversized raw logs.
 
-Use a [complexity rejection record](templates/COMPLEXITY-REJECTION.md) for a meaningful tool/abstraction considered and rejected or removed; use an [ADR](templates/ADR.md) for consequential architecture actually adopted. At M4, draft the [portfolio case study](templates/PORTFOLIO-CASE-STUDY.md) from evidence; at M10, cold-review its final form. These are course checkpoints, not extra versions of every milestone feature.
+Use a [complexity rejection record](../../templates/COMPLEXITY-REJECTION.md) for a meaningful tool/abstraction considered and rejected or removed; use an [ADR](../../templates/ADR.md) for consequential architecture actually adopted. At M4, draft the [portfolio case study](../../templates/PORTFOLIO-CASE-STUDY.md) from evidence; at M10, cold-review its final form. These are course checkpoints, not extra versions of every milestone feature.
 
 ## Advancement workflow
 

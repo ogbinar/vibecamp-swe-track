@@ -24,25 +24,6 @@ def create_web_router() -> air.AirRouter:
     def stock_page() -> air.Main:
         return air.Main(air.H1("Stock"), air.P(stock_summary(), id_="stock-status"))
 
-    @router.get("/app/checkout")
-    def checkout_page() -> air.Main:
-        return air.Main(
-            air.H1("Checkout checkpoint"),
-            air.P(
-                "Atomic inventory, payment, and receipt behavior remains your M3 implementation."
-            ),
-            air.P("The optional cashier display name remains the single fixed M4 change."),
-        )
-
-    @router.get("/app/operator")
-    def operator_page() -> air.Main:
-        return air.Main(
-            air.H1("Tenant-aware operator checkpoint"),
-            air.P(
-                "Tenant selection, isolation, audit, readiness, and recovery remain your M10 work."
-            ),
-        )
-
     return router
 
 

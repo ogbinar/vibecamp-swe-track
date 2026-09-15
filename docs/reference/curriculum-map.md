@@ -10,21 +10,21 @@ learner-built milestone behavior and evidence remain intentionally absent.
 
 | Milestone | Capability | Product change | Required level | Work profile |
 |---|---|---|---|---|
-| [M0 — Engineering Baseline](milestones/m0-engineering-baseline/README.md) | Reproducible | Show the catalog through an Air page while preserving a deterministic FastAPI backend | A | Mostly build |
-| [M1 — Production-minded API Foundation](milestones/m1-production-api-foundation/README.md) | Functional | Add a validated catalog form and honest FastAPI public contracts over the same use case | A, selected B | Build plus boundary failures |
-| [M2 — POS Persistence & Data Modeling](milestones/m2-pos-persistence-data-modeling/README.md) | Persistent | Make stock and carts visible through Air and survive restart in PostgreSQL | B | Build plus migration repair |
-| [M3 — Transactions & Correctness](milestones/m3-transactions-correctness/README.md) | Correct | Make the Air checkout flow, inventory, payments, and receipts atomic | B | Change and race/failure diagnosis |
-| [M4 — Maintainability, Testing & Refactoring](milestones/m4-maintainability-testing-refactoring/README.md) | Maintainable | Add an optional cashier display name while untangling the POS | B | Mostly change/refactor |
-| [M5 — Secure Multi-user Ecommerce](milestones/m5-secure-multi-user-ecommerce/README.md) | Secure | Add Air login/order pages backed by accounts, roles, ownership, and safe order state | B + contextual C | Mostly security repair |
-| [M6 — Resilient External Integrations](milestones/m6-resilient-external-integrations/README.md) | Resilient | Show uncertain payment status with an earned HTMX fragment while hardening provider boundaries | B + contextual C | Mostly failure diagnosis |
-| [M7 — Durable Async & Background Processing](milestones/m7-durable-async-background-processing/README.md) | Durable | Show accepted job state while making fulfillment jobs/outbox recoverable | C for async slice | Mostly crash/replay work |
-| [M8 — Concurrency Lab using Booking](milestones/m8-concurrency-booking/README.md) | Concurrent | Add a thin Air booking flow, then break/fix final-seat races in the backend | B | Small build, mostly races |
-| [M9 — Performance, Caching & Realtime using Social](milestones/m9-performance-caching-realtime-social/README.md) | Performant | Build an Air/HTMX feed, then diagnose load and earn one-way SSE updates | B + contextual C | Small build, mostly optimization/operation |
-| [M10 — Production Multi-tenant SaaS Capstone](milestones/m10-production-multitenant-saas-capstone/README.md) | Operable/sellable | Evolve the Air/FastAPI POS into a tenant-safe production candidate | C | Change, operate, recover, release |
+| [M0 — Engineering Baseline](../../milestones/m0-engineering-baseline/README.md) | Reproducible | Show the catalog through an Air page while preserving a deterministic FastAPI backend | A | Mostly build |
+| [M1 — Production-minded API Foundation](../../milestones/m1-production-api-foundation/README.md) | Functional | Add a validated catalog form and honest FastAPI public contracts over the same use case | A, selected B | Build plus boundary failures |
+| [M2 — POS Persistence & Data Modeling](../../milestones/m2-pos-persistence-data-modeling/README.md) | Persistent | Make stock and carts visible through Air and survive restart in PostgreSQL | B | Build plus migration repair |
+| [M3 — Transactions & Correctness](../../milestones/m3-transactions-correctness/README.md) | Correct | Make the Air checkout flow, inventory, payments, and receipts atomic | B | Change and race/failure diagnosis |
+| [M4 — Maintainability, Testing & Refactoring](../../milestones/m4-maintainability-testing-refactoring/README.md) | Maintainable | Add an optional cashier display name while untangling the POS | B | Mostly change/refactor |
+| [M5 — Secure Multi-user Ecommerce](../../milestones/m5-secure-multi-user-ecommerce/README.md) | Secure | Add Air login/order pages backed by accounts, roles, ownership, and safe order state | B + contextual C | Mostly security repair |
+| [M6 — Resilient External Integrations](../../milestones/m6-resilient-external-integrations/README.md) | Resilient | Show uncertain payment status with an earned HTMX fragment while hardening provider boundaries | B + contextual C | Mostly failure diagnosis |
+| [M7 — Durable Async & Background Processing](../../milestones/m7-durable-async-background-processing/README.md) | Durable | Show accepted job state while making fulfillment jobs/outbox recoverable | C for async slice | Mostly crash/replay work |
+| [M8 — Concurrency Lab using Booking](../../milestones/m8-concurrency-booking/README.md) | Concurrent | Add a thin Air booking flow, then break/fix final-seat races in the backend | B | Small build, mostly races |
+| [M9 — Performance, Caching & Realtime using Social](../../milestones/m9-performance-caching-realtime-social/README.md) | Performant | Build an Air/HTMX feed, then diagnose load and earn one-way SSE updates | B + contextual C | Small build, mostly optimization/operation |
+| [M10 — Production Multi-tenant SaaS Capstone](../../milestones/m10-production-multitenant-saas-capstone/README.md) | Operable/sellable | Evolve the Air/FastAPI POS into a tenant-safe production candidate | C | Change, operate, recover, release |
 
-Levels are cumulative and contextual; see [QUALITY-GATES.md](QUALITY-GATES.md). M1 is production-minded at the API boundary, not a claim that an in-memory app is operationally production-ready.
+Levels are cumulative and contextual; see [quality.md](quality.md). M1 is production-minded at the API boundary, not a claim that an in-memory app is operationally production-ready.
 
-M0 begins with the [entry diagnostic](templates/ENTRY-DIAGNOSTIC.md) to select targeted remediation. It never skips or lowers a gate.
+M0 begins with the [entry diagnostic](../../templates/ENTRY-DIAGNOSTIC.md) to select targeted remediation. It never skips or lowers a gate.
 
 ## Project evolution
 
@@ -34,7 +34,9 @@ M0 begins with the [entry diagnostic](templates/ENTRY-DIAGNOSTIC.md) to select t
 - `projects/booking/`: focused M8 concurrency laboratory.
 - `projects/social/`: focused M9 performance lab.
 
-The deliberate shift from greenfield to brownfield is part of the curriculum. Seed briefs live in [challenges](challenges/README.md); learners inject or receive the described defects, but this curriculum repository does not implement them.
+The deliberate shift from greenfield to brownfield is part of the curriculum.
+Each milestone contains its seeded scenarios; learners inject or receive the
+described defects, but this curriculum repository does not implement solutions.
 
 ## Air-first web progression
 
@@ -50,13 +52,12 @@ browser never calls its own backend over an internal HTTP client.
 | M5 | Use Air forms and pages with the first-party secure cookie session. | Enforce authentication, authorization, ownership, and order state. |
 | M6 | Earn the first HTMX fragment from uncertain payment/reconciliation status. | Keep timeouts, retries, webhook verification, and reconciliation authoritative. |
 | M7–M8 | Show job and booking state through focused pages/fragments. | Keep crash/replay and race proof in deterministic backend harnesses. |
-| M9 | Use Air fragments and `SSEResponse` with the HTMX SSE extension after polling misses the stated target. | Measure query cost, cache authority, reconnect, gap, and loss semantics. |
+| M9 | Build Air fragments and server-sent events (SSE) after polling misses the stated target. | Measure query cost, cache authority, reconnect, gap, and loss semantics. |
 | M10 | Present a tenant-aware operator workflow. | Preserve tenant isolation, audit, release, readiness, and recovery controls. |
 
-The current 58-row concept matrix remains the implemented trace contract until
-BF migration adds matching challenge and acceptance evidence. Planned Air/HTML,
-form-validation, progressive-enhancement, HTMX-fragment, and Air-SSE rows must
-not be counted as traced merely because this roadmap names them.
+The 58-row concept matrix is the current trace contract. A concept is traced
+only when its named challenge and Core acceptance identifiers exist in the
+owning milestone controller; roadmap prose alone is not evidence.
 
 ## Cross-cutting learner lenses
 
@@ -69,9 +70,14 @@ Use the M0 diagnostic to locate gaps, selected milestone acceptance review promp
 
 ## Coverage notation
 
-`I` introduces the mental model through a concrete problem. `P` practices it in a challenge or failure drill. `V` proves it through objective acceptance evidence. Entries name the milestone(s) where each stage occurs. Every row routes to a challenge and acceptance file; milestone IDs in those files make evidence traceable.
+`I` introduces the mental model through a concrete problem. `P` practices it in a challenge or failure drill. `V` proves it through objective acceptance evidence. Entries name the milestone(s) where each stage occurs. Every row routes to challenge and acceptance identifiers in the owning milestone README.
 
 ## Concept coverage matrix
+
+Every row below is an identity-preserved mapping from the `8942980` baseline.
+Its `Cx` and `Ax` identifiers now resolve inside the owning milestone README;
+the semantic validator checks all 58 rows in both directions against the compact
+manifest and controller headings.
 
 | Engineering concept | Introduced | Practiced | Proven |
 |---|---|---|---|
@@ -144,7 +150,7 @@ costly-to-reverse decision, a new service, a public-contract change, or a
 material security/operations trade-off. A dependency must name the observed
 problem, alternatives, operational cost, and removal trigger.
 
-The detailed adoption/removal sequence lives in [STACK.md](STACK.md#earned-tools).
+The detailed adoption/removal sequence lives in [stack.md](stack.md#earned-tools).
 Every milestone has deterministic offline Core. Exactly one separately
 authorized Stripe-like sandbox experiment follows M6 local Core; M7 email and
 M10 storage, OAuth/OIDC, monitoring, SQLAdmin, and real deployment are optional

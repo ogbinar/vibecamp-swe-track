@@ -43,3 +43,18 @@ Preserve the minimal failing test/harness, sanitized before-output, diagnosis, a
 - Known limitations and next risk:
 
 Redact credentials and personal data. Link source/tests instead of copying them; attach large generated evidence to a release with a checksum.
+
+## Synthetic examples (shape only)
+
+These examples are not learner evidence and never establish a passing claim.
+
+| Slice | Useful evidence | Not enough |
+|---|---|---|
+| Migration | revision before/after, command, preserved legacy rows, recovery decision | “migration works” |
+| Security | synthetic actor/object request, expected denial, actual status/body, unchanged row | screenshot of login |
+| Worker | kill point, attempt history, duplicate deliveries, one semantic effect | one happy job |
+| Performance | fixed dataset/environment, query count/plan, equal-harness percentiles, correctness test | fastest run |
+| Recovery | backup checksum, isolated target, integrity/tenant/audit checks, measured RPO/RTO | backup file exists |
+
+Mark irrelevant fields `N/A — <condition not present>`; never fabricate a
+command or result.

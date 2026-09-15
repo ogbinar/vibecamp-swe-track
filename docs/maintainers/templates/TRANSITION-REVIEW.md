@@ -4,7 +4,7 @@ Transition: `<repository→M0>`
 Reviewer/mode: `<human career shifter | solo fresh-context | maintenance simulation>`  
 Environment/reference commit: `<OS, tools, commit>`
 
-Score 0–4 using [USABILITY.md](../USABILITY.md). Release requires at least
+Score 0–4 using the [usability rubric](../usability.md). Release requires at least
 85/100 and no dimension below 3.
 
 | Dimension | Weight | Score 0–4 | Weighted result | Evidence or friction |

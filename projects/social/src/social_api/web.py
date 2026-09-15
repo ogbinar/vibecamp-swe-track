@@ -1,6 +1,4 @@
-"""Air feed pages and the bounded server-sent-event transport checkpoint."""
-
-from collections.abc import AsyncIterator
+"""Air page for the neutral social feed checkpoint."""
 
 import air
 from fastapi import FastAPI
@@ -16,12 +14,6 @@ def sample_feed() -> list[dict[str, str]]:
     )
 
 
-async def feed_events() -> AsyncIterator[str]:
-    """Emit one non-durable event; reconnect and gap policy remain learner work."""
-    for item in sample_feed():
-        yield str(air.Article(air.Strong(item["author"]), air.P(item["text"])))
-
-
 def create_web_router() -> air.AirRouter:
     router = air.AirRouter(include_in_schema=False)
 
@@ -34,25 +26,9 @@ def create_web_router() -> air.AirRouter:
             air.Section(
                 *(air.Article(air.Strong(item["author"]), air.P(item["text"])) for item in items),
                 id_="feed",
-                hx_ext="sse",
-                sse_connect="/app/feed/events",
-                sse_swap="message",
-                hx_swap="beforeend",
             ),
+            air.P("Measurement, cache, and realtime transport remain learner work."),
         )
-
-    @router.get("/app/feed")
-    def feed_fragment() -> air.Section:
-        return air.Section(
-            *(
-                air.Article(air.Strong(item["author"]), air.P(item["text"]))
-                for item in sample_feed()
-            )
-        )
-
-    @router.get("/app/feed/events")
-    def feed_event_stream() -> air.SSEResponse:
-        return air.SSEResponse(feed_events())
 
     return router
 

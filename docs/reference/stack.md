@@ -78,7 +78,7 @@ operational/data cost, owner, and removal trigger.
 | SQLAdmin | M10 optional | Tenant authorization and append-only audit are already proven; every admin action retains tenant scope, authorization, and audit evidence | It creates a public/default admin surface or bypasses ordinary operator controls |
 | `pwdlib[argon2]` | M5 | The product accepts passwords; input bounds, adaptive hash parameters, verification, upgrade, and recovery policy are tested | Authentication is delegated to an earned identity provider or the product accepts no passwords |
 
-For one meaningful candidate by M4, preserve the decision to say “not yet” in the [complexity rejection record](templates/COMPLEXITY-REJECTION.md). Unlike an ADR, it records an option not adopted and a measurable revisit trigger. Revisit the record when evaluating Taskiq/Redis in M7/M9 or operational tooling in M10; rejection is provisional evidence, not ideology.
+For one meaningful candidate by M4, preserve the decision to say “not yet” in the [complexity rejection record](../../templates/COMPLEXITY-REJECTION.md). Unlike an ADR, it records an option not adopted and a measurable revisit trigger. Revisit the record when evaluating Taskiq/Redis in M7/M9 or operational tooling in M10; rejection is provisional evidence, not ideology.
 
 ## Operational boundaries
 
